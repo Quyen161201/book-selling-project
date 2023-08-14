@@ -1,0 +1,25 @@
+{
+  "name": "nodejs-backend",
+  "version": "1.0.0",
+  "description": "node js backend",
+  "main": "sever.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon ./src/sever.js"
+  },
+  "keywords": [
+    "nodejs"
+  ],
+  "author": "kha quyen",
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "^16.3.1",
+    "ejs": "^3.1.9",
+    "express": "4.18.2",
+    "mysql2": "^3.5.2"
+  },
+  "devDependencies": {
+    "@types/node": "^20.4.5",
+    "nodemon": "^3.0.1"
+  }
+}

@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+    <ul>
+        <li><a href="/">Home</a></li>
+        <li><a href="/create">Create Users</a></li>
+        <!-- <li><a href="contact.asp">Contact</a></li>
+        <li><a href="about.asp">About</a></li> -->
+    </ul>
+
+    <div class="table-container">
+        <div class="title">List users</div>
+        <div>
+            <!-- <%= JSON.stringify(listUsers) %> -->
+        </div>
+        <table>
+            <tr>
+                <th>ID</th>
+                <th>Email</th>
+                <th>My name</th>
+                <th>City</th>
+                <th>action</th>
+
+            </tr>
+            <!-- <% for (let i=0; i < listUsers.length; i++) { %>
+                <tr>
+                    <td>
+                        <%= listUsers[i].id %>
+                    </td>
+                    <td>
+                        <%= listUsers[i].email %>
+                    </td>
+                    <td>
+                        <%= listUsers[i].name %>
+                    </td>
+                    <td>
+                        <%= listUsers[i].city %>
+                    </td>
+
+                    <td>
+                        <button class="btn-edit">Edit</button>
+                        <button class="btn-delete">delete</button>
+                    </td>
+
+                </tr>
+                <% } %> -->
+
+            <% listUsers.forEach((user,index)=> {%>
+                <tr>
+                    <td>
+                        <%= user.id %>
+                    </td>
+                    <td>
+                        <%= user.email %>
+                    </td>
+                    <td>
+                        <%= user.name %>
+                    </td>
+                    <td>
+                        <%= user.city %>
+                    </td>
+                    <td>
+                        <a href="update/<%= user.id %>" class="btn-edit">Edit</a>
+                        <a href="deleteUser/<%= user.id %>" class="btn-delete">delete</a>
+                    </td>
+                </tr>
+                <% });%>
+                    <% %>
+
+        </table>
+    </div>
+
+
+
+</body>
+
+</html>
