@@ -4,6 +4,10 @@ const getindex = async (req, res) => {
     // console.log(results)
     return res.render('index.ejs')
 
+}
+
+const getDasboard = async (req, res) => {
+    return res.render('admin-dashboard.ejs')
 
 }
-module.exports = { getindex }
+module.exports = { getindex, getDasboard }

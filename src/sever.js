@@ -5,9 +5,12 @@ require('dotenv').config()
 const configViewEngine = require('./config/viewEngine')
 const connection = require('./config/database')
 const webrouter = require('./route/web')
+const fileUpload = require('express-fileupload')
 const app = express() // tạo ra express app
 const port = process.env.PORT // khai  báo port
 const hostname = process.env.HOST_NAME
+// default options
+app.use(fileUpload());
 // config req.body
 app.use(express.json()) // for json
 app.use(express.urlencoded({ extended: true })) // for form data
