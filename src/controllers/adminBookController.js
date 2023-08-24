@@ -1,9 +1,11 @@
 const connection = require('../config/database')
 const { uploadSingleFile, uploatMutiFile } = require('../service/uploadFile')
-const { postCreateBookSevice, getlistCategorySevice, getlistAuthorSevice, } = require('../service/CRUDadminBook')
+const fileUpload = require('express-fileupload');
+const { postCreateBookSevice, getAdminBooksSevice, getlistCategorySevice, getlistAuthorSevice, getUpdateBookSevice, postUpdateBookSevice, getListImageSevice, postAdminDeleteSevice } = require('../service/CRUDadminBook')
 module.exports = {
     getAdminBooks: async (req, res) => {
-        return res.render('admin-books.ejs')
+        let results = await getAdminBooksSevice();
+        return res.render('admin-books.ejs', { listAdminBooks: results })
     },
     getAddBooks: async (req, res) => {
         let resultsCate = await getlistCategorySevice();
@@ -12,29 +14,98 @@ module.exports = {
         console.log(resultAuthor)
     },
     createBook: async (req, res) => {
-        let { name, price, quantity, desciption, author, image, category, bookPdf } = req.body
+        let { name, price, quantity, desciption, author, category, price_root } = req.body;
+
         let bookUrl = "";
         let bookUrlImge = "";
-        let resultImg = []
-        if (!req.files) {
-            console.log('no file')
+        let resultImg;
+        console.log('image', req.files.image)
+        if (!req.files || Object.keys(req.files).length === 0) {
+            console.log('no files')
         }
         else {
-            if (req.body.image.length > 1) {
+            if (req.files.image.length > 1) {
+                resultImg = await uploatMutiFile(req.files.image);
+                bookUrlImge = resultImg;
+            }
+            else {
 
-                resultImg = await uploatMutiFile(req.files.image)
-            }
-            else if (req.body.image.length == 1) {
                 resultImg = await uploadSingleFile(req.files.image);
+                bookUrlImge = resultImg;
             }
-            bookUrlImge = resultImg;
+
+
+        }
+        if (!req.files) {
+
+        }
+        else {
             let result = await uploadSingleFile(req.files.bookPdf);
             bookUrl = result
         }
-        let dataBoook = { name, price, quantity, desciption, author, image: bookUrlImge, category, bookPdf: bookUrl }
+
+        let dataBoook = { name, price, price_root, quantity, desciption, author, image: bookUrlImge, category, bookPdf: bookUrl }
         let rs = await postCreateBookSevice(dataBoook);
-        console.log('<<<', bookUrl)
-        console.log('>>>>>', dataBoook)
+
+
+        res.redirect('/admin-books')
+    },
+    getUpdatebook: async (req, res) => {
+        let productID = req.params.id
+        let result = await getUpdateBookSevice(productID)
+        let resultsCate = await getlistCategorySevice();
+        let resultAuthor = await getlistAuthorSevice();
+        let listImage = await getListImageSevice(productID);
+        console.log('listImage', listImage)
+        res.render("admin-update-book.ejs", { listUpdateBook: result, listCategory: resultsCate, listAuthor: resultAuthor, listImage: listImage })
+    },
+
+    postUpdateBook: async (req, res) => {
+        let { productID, name, price, quantity, desciption, author, category, } = req.body;
+        let bookUrl = "";
+        let bookUrlImge = "";
+        let resultImg = ""
+        if (!req.files) {
+
+        }
+        else {
+
+            if (req.files.image.length > 1) {
+                resultImg = await uploatMutiFile(req.files.image);
+                bookUrlImge = resultImg;
+            }
+            else {
+                resultImg = await uploadSingleFile(req.files.image);
+                bookUrlImge = resultImg;
+            }
+
+
+        }
+        if (!req.files) {
+
+        }
+        else {
+            let result = await uploadSingleFile(req.files.bookPdf);
+            bookUrl = result
+        }
+        let dataBoook = { productID, name, price, quantity, desciption, author, image: bookUrlImge, category, bookPdf: bookUrl }
+        let rs = await postUpdateBookSevice(dataBoook);
+
+        res.redirect('/admin-books')
+
+    },
+    getdeleteBook: async (req, res) => {
+        // res.redirect('/admin-books')
+        let productID = req.params.id
+        let result = await getUpdateBookSevice(productID)
+        res.render('getAdminDelete.ejs', { confimDelete: result })
+
+    },
+    postdeleteBook: async (req, res) => {
+        let productID = req.params.id;
+
+        let result = await postAdminDeleteSevice(productID);
         res.redirect('/admin-books')
     }
+
 }
