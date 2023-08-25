@@ -95,10 +95,10 @@ module.exports = {
 
     },
     getdeleteBook: async (req, res) => {
-        // res.redirect('/admin-books')
-        let productID = req.params.id
-        let result = await getUpdateBookSevice(productID)
-        res.render('getAdminDelete.ejs', { confimDelete: result })
+        // // res.redirect('/admin-books')
+        // let productID = req.params.id
+        // let result = await getUpdateBookSevice(productID)
+        // res.render('getAdminDelete.ejs', { confimDelete: result })
 
     },
     postdeleteBook: async (req, res) => {

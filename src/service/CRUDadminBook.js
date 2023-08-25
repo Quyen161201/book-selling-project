@@ -34,7 +34,7 @@ module.exports = {
     getUpdateBookSevice: async (data) => {
         try {
 
-            let [results, fields] = await connection.query('select* from products p left join author a on p.authorId =a.authorId left join category c ON p.categoryId =c.categoryId left join images i on p.productId =i.product_id where p.productID =?', [data]);
+            let [results, fields] = await connection.query('select* from products p left join author a on p.authorId =a.authorId left join category c ON p.categoryId =c.categoryId left join images i on p.productId =i.product_id where p.productID =? and p.is_deleted=0', [data]);
             let book = results && results.length > 0 ? results[0] : {};
 
             return book
@@ -52,7 +52,7 @@ module.exports = {
             console.log(check[0][0], 'list check')
 
 
-            if (check[0][0].is_deleted == 1) {
+            if (check[0][0].is_deleted == 0) {
 
                 let results = await connection.query('update products set productName=?,unitPrice=?,quantity=?,desciption=?,authorId=?,categoryId=?,bookPdf=? where productID=?'
                     , [data.name, data.price, data.quantity, data.desciption, data.author, data.category, data.bookPdf, data.productID]);
@@ -87,7 +87,7 @@ module.exports = {
         try {
 
             let [results, fields] = await connection.query
-                ('select* from products p left join author a on p.authorId =a.authorId left join category c ON p.categoryId =c.categoryId left join images i on p.productId =i.product_id where is_deleted=1 group by productID ');
+                ('select* from products p left join author a on p.authorId =a.authorId left join category c ON p.categoryId =c.categoryId left join images i on p.productId =i.product_id where is_deleted=0 group by productID ');
 
             return results;
         } catch (error) {
@@ -133,8 +133,8 @@ module.exports = {
         try {
             let check = await connection.query('select * from products where productID=?', [productID]);
             console.log(check, 'check')
-            if (check[0][0].is_deleted == 1) {
-                let [results, fields] = await connection.query('update products set is_deleted = 0 WHERE productID=?', [productID]);
+            if (check[0][0].is_deleted == 0) {
+                let [results, fields] = await connection.query('update products set is_deleted = 1 WHERE productID=?', [productID]);
                 let resultImg = await connection.query('delete from images where product_id=?', [productID])
                 return results;
             }

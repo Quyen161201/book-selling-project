@@ -31,7 +31,7 @@ const uploadSingleFile = async (fileObject) => {
         }
     }
     catch (error) {
-
+        console.log(error)
     }
 
 

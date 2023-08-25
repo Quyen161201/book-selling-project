@@ -50,7 +50,8 @@
             <nav class="iq-sidebar-menu">
                <ul id="iq-sidebar-toggle" class="iq-menu">
                   <li><a href="admin-dashboard.html"><i class="las la-home iq-arrow-left"></i>Bảng Điều Khiển</a></li>
-                  <li><a href="admin-category.html"><i class="ri-record-circle-line"></i>Danh Mục Sách</a></li>
+                  <li><a href="/bookstore/admin/category/create"><i class="ri-record-circle-line"></i>Danh Mục Sách</a>
+                  </li>
                   <li><a href="/bookstore/admin/author"><i class="ri-record-circle-line"></i>Tác Giả</a></li>
                   <li><a href="/admin-books"><i class="ri-record-circle-line"></i>Sách</a></li>
                   <li><a href="sign-in.html"><i class="ri-record-circle-line"></i>Đăng Xuất</a></li>
@@ -379,10 +380,6 @@
                                        <td>
                                           <%= book.quantity %>
                                        </td>
-
-                                       <!-- <td><a href="/book-pdf"><i
-                                                class="ri-file-fill text-secondary font-size-18"></i></a></td>
-                                       <td> -->
                                        <td>
 
                                           <div class="flex align-items-center list-user-action">
@@ -391,10 +388,7 @@
                                                 href="/admin-update-book/<%= book.productID %>"><i
                                                    class="ri-pencil-line"></i></a>
 
-                                             <!-- <form style="width: 30px; margin-left: 2px;margin-top: 5px;"
-                                                action="/postadmin-delete-book/<%= book.productID %>" method="post">
-                                                <button class="bg-primary"><i class="ri-delete-bin-line"></i></button>
-                                             </form> -->
+
                                              <button
                                                 style="width: 24px; margin-left: 3px;margin-top: 4px; text-align: center; height: 24px; position: relative;"
                                                 type="button" class="btn btn-danger" data-target="#deleteModal"

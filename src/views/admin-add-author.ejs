@@ -17,6 +17,9 @@
    <link rel="stylesheet" href="/css/style.css">
    <!-- Responsive CSS -->
    <link rel="stylesheet" href="/css/responsive.css">
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
+      integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA=="
+      crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
 
 <body>
@@ -247,7 +250,7 @@
                <div class="iq-card">
                   <div class="iq-card-body">
                      <div class="sidebarbottom-content">
-                        <div class="image"><img src="images/page-img/side-bkg.png" alt=""></div>
+                        <div class="image2"><img src="images/page-img/side-bkg.png" alt=""></div>
                         <button type="submit" class="btn w-100 btn-primary mt-4 view-more">Become Membership</button>
                      </div>
                   </div>
@@ -584,32 +587,29 @@
                <div class="col-sm-12">
                   <div class="iq-card">
                      <div class="iq-card-header d-flex justify-content-between">
+
                         <div class="iq-header-title">
+
                            <h4 class="card-title">Thêm tác giả</h4>
+
                         </div>
+
                      </div>
+                     <!-- <div class="alert alert-success" role="alert" style="width: 100%;">
+                        Thêm mới thành công
+                     </div> -->
                      <div class="iq-card-body">
-                        <form action="admin-author.html">
+                        <form action="/bookstore/admin/createAuthor" method="post">
                            <div class="form-group">
                               <label>Tên tác giả:</label>
-                              <input type="text" class="form-control">
-                           </div>
-                           <div class="form-group">
-                              <label>Hồ sơ tác giả:</label>
-                              <div class="custom-file">
-                                 <input type="file" class="custom-file-input" id="customFile">
-                                 <label class="custom-file-label" for="customFile">Chọn tập tin</label>
-                              </div>
-                           </div>
-                           <div class="form-group">
-                              <label>Email tác giả:</label>
-                              <input type="email" class="form-control">
+                              <input type="text" required class="form-control" name="name">
                            </div>
                            <div class="form-group">
                               <label>Nội dung:</label>
-                              <textarea class="form-control" rows="4"></textarea>
+                              <textarea class="form-control" rows="4" name="description"></textarea>
                            </div>
-                           <button type="submit" class="btn btn-primary">Gửi</button>
+
+                           <button id="send" type="submit" class="btn btn-primary">Gửi</button>
                            <button type="reset" class="btn btn-danger">Trở lại</button>
                         </form>
                      </div>
@@ -640,7 +640,7 @@
    <!-- color-customizer END -->
    <!-- Optional JavaScript -->
    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-   <script src="js/jquery.min.js"></script>
+   <script src="/js/jquery.min.js"></script>
    <script src="js/popper.min.js"></script>
    <script src="js/bootstrap.min.js"></script>
    <script src="js/jquery.dataTables.min.js"></script>
@@ -695,5 +695,16 @@
    <!-- Custom JavaScript -->
    <script src="js/custom.js"></script>
 </body>
+<script>
+   let success = document.querySelector('#send')
+   success.onclick = function (e) {
+      if (window.location.reload(true)) {
+         console.log('ok')
+      }
+
+
+
+   }
+</script>
 
 </html>

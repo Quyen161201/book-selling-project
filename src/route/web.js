@@ -2,7 +2,8 @@ const express = require('express')
 const router = express.Router()
 const { getindex, getDasboard, } = require('../controllers/indexController')
 const { getAdminBooks, getAddBooks, createBook, getUpdatebook, postUpdateBook, getdeleteBook, postdeleteBook } = require('../controllers/adminBookController')
-const { getAdminAuthors, getCreateAuthors } = require('../controllers/adminAuthorController')
+const { getAdminAuthors, getCreateAuthors, postCreateAuthor, getUpdateAuthors, postUpdateAuthor, postDeleteAuthor } = require('../controllers/adminAuthorController')
+const { getCreateCategory } = require('../controllers/adminCategoryController')
 
 // index
 router.get('/index', getindex);
@@ -22,6 +23,16 @@ router.post('/postadmin-delete-book/:id', postdeleteBook)
 //admin author
 router.get('/bookstore/admin/author', getAdminAuthors);
 router.get('/bookstore/admin/author/create', getCreateAuthors);
+router.post('/bookstore/admin/createAuthor', postCreateAuthor);
+router.get('/bookstore/admin/author/update/:id', getUpdateAuthors);
+router.post('/bookstore/admin/updateAuthor', postUpdateAuthor);
+router.post('/bookstore/admin/deleteAuthor/:id', postDeleteAuthor);
+
+// adim category
+router.get('/bookstore/admin/category/create', getCreateCategory);
+
+
+
 
 
 
