@@ -35,7 +35,7 @@ module.exports = {
 
             }
             else {
-
+                console.log('k tồn tại bản ghi')
             }
 
         } catch (error) {
@@ -46,8 +46,8 @@ module.exports = {
         try {
             let [check] = await connection.query('select * from author where authorId=?', [id])
 
-            if (check != "") {
-                console.log(check, 'okok>>>>')
+            if (check[0].authorId == id) {
+
                 let [result] = await connection.query('delete from author where authorId=?', [id])
                 return result
 

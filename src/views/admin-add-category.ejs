@@ -5,21 +5,18 @@
    <!-- Required meta tags -->
    <meta charset="utf-8">
    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-   <title>Thêm sách</title>
+   <title>Thêm danh mục</title>
    <!-- Favicon -->
    <link rel="shortcut icon" href="images/favicon.ico" />
    <!-- Bootstrap CSS -->
-   <link rel="stylesheet" href="css/bootstrap.min.css">
-   <link rel="stylesheet" href="css/dataTables.bootstrap4.min.css">
+   <link rel="stylesheet" href="/css/bootstrap.min.css">
+   <link rel="stylesheet" href="/css/dataTables.bootstrap4.min.css">
    <!-- Typography CSS -->
    <link rel="stylesheet" href="css/typography.css">
    <!-- Style CSS -->
-   <link rel="stylesheet" href="css/style.css">
+   <link rel="stylesheet" href="/css/style.css">
    <!-- Responsive CSS -->
-   <link rel="stylesheet" href="css/responsive.css">
-   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
-      integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA=="
-      crossorigin="anonymous" referrerpolicy="no-referrer" />
+   <link rel="stylesheet" href="/css/responsive.css">
 </head>
 
 <body>
@@ -34,7 +31,7 @@
       <!-- Sidebar  -->
       <div class="iq-sidebar">
          <div class="iq-sidebar-logo d-flex justify-content-between">
-            <a href="/index" class="header-logo">
+            <a href="index.html" class="header-logo">
                <img src="images/logo.png" class="img-fluid rounded-normal" alt="">
                <div class="logo-title">
                   <span class="text-primary text-uppercase">Booksto</span>
@@ -71,10 +68,10 @@
                            class="las la-home iq-arrow-left"></i><span>Admin</span><i
                            class="ri-arrow-right-s-line iq-arrow-right"></i></a>
                      <ul id="admin" class="iq-submenu collapse show" data-parent="#iq-sidebar-toggle">
-                        <li><a href="/admin-dashboard"><i class="las la-house-damage"></i>Bảng điều khiển</a></li>
-                        <li><a href="/admin-category"><i class="ri-function-line"></i>Danh sách danh mục</a></li>
+                        <li><a href="admin-dashboard.html"><i class="las la-house-damage"></i>Bảng điều khiển</a></li>
+                        <li><a href="admin-category.html"><i class="ri-function-line"></i>Danh sách danh mục</a></li>
                         <li class="active"><a href="admin-author.html"><i class="ri-book-line"></i>Tác giả</a></li>
-                        <li><a href="/admin-books"><i class="ri-file-pdf-line"></i>Sách</a></li>
+                        <li><a href="admin-books.html"><i class="ri-file-pdf-line"></i>Sách</a></li>
                      </ul>
                   </li>
                   <li>
@@ -82,7 +79,7 @@
                            class="ripple rippleEffect"></span><i
                            class="las la-user-tie iq-arrow-left"></i><span>User</span><i
                            class="ri-arrow-right-s-line iq-arrow-right"></i></a>
-                     <ul id="userinfo" class="iq-submenu collapse" data-parent="#iq-sidebar-toggle">
+                     <ul id="userinfo" class="iq-submenu collapse" data-parent="#iq-sidebar-toggle" style="">
                         <li><a href="profile.html"><i class="las la-id-card-alt"></i>User Profile</a></li>
                         <li><a href="profile-edit.html"><i class="las la-edit"></i>User Edit</a></li>
                         <li><a href="add-user.html"><i class="las la-plus-circle"></i>User Add</a></li>
@@ -276,7 +273,7 @@
                   </div>
                </div>
                <div class="navbar-breadcrumb">
-                  <h4 class="mb-0 text-dark">Sách</h4>
+                  <h4 class="mb-0 text-dark">Danh sách danh mục</h4>
                   <p class="mb-0"><span class="text-primary">Xin chào </span>Chào mừng bạn trở lại hồ sơ của bạn</p>
                </div>
                <div class="iq-search-bar">
@@ -307,73 +304,9 @@
                         </a>
                         <div class="iq-sub-dropdown">
                            <div class="iq-card shadow-none m-0">
-                              <div class="iq-card-body p-0">
-                                 <div class="bg-primary p-3">
-                                    <h5 class="mb-0 text-white">All Notifications<small
-                                          class="badge  badge-light float-right pt-1">4</small></h5>
-                                 </div>
-                                 <a href="#" class="iq-sub-card">
-                                    <div class="media align-items-center">
-                                       <div class="">
-                                          <img class="avatar-40 rounded" src="images/user/01.jpg" alt="">
-                                       </div>
-                                       <div class="media-body ml-3">
-                                          <h6 class="mb-0 ">Emma Watson Barry</h6>
-                                          <small class="float-right font-size-12">Just Now</small>
-                                          <p class="mb-0">95 MB</p>
-                                       </div>
-                                    </div>
-                                 </a>
-                                 <a href="#" class="iq-sub-card">
-                                    <div class="media align-items-center">
-                                       <div class="">
-                                          <img class="avatar-40 rounded" src="images/user/02.jpg" alt="">
-                                       </div>
-                                       <div class="media-body ml-3">
-                                          <h6 class="mb-0 ">New customer is join</h6>
-                                          <small class="float-right font-size-12">5 days ago</small>
-                                          <p class="mb-0">Cyst Barry</p>
-                                       </div>
-                                    </div>
-                                 </a>
-                                 <a href="#" class="iq-sub-card">
-                                    <div class="media align-items-center">
-                                       <div class="">
-                                          <img class="avatar-40 rounded" src="images/user/03.jpg" alt="">
-                                       </div>
-                                       <div class="media-body ml-3">
-                                          <h6 class="mb-0 ">Two customer is left</h6>
-                                          <small class="float-right font-size-12">2 days ago</small>
-                                          <p class="mb-0">Cyst Barry</p>
-                                       </div>
-                                    </div>
-                                 </a>
-                                 <a href="#" class="iq-sub-card">
-                                    <div class="media align-items-center">
-                                       <div class="">
-                                          <img class="avatar-40 rounded" src="images/user/04.jpg" alt="">
-                                       </div>
-                                       <div class="media-body ml-3">
-                                          <h6 class="mb-0 ">New Mail from Fenny</h6>
-                                          <small class="float-right font-size-12">3 days ago</small>
-                                          <p class="mb-0">Cyst Barry</p>
-                                       </div>
-                                    </div>
-                                 </a>
-                              </div>
-                           </div>
-                        </div>
-                     </li>
-                     <li class="nav-item nav-icon dropdown">
-                        <a href="#" class="search-toggle iq-waves-effect text-gray rounded">
-                           <i class="ri-mail-line"></i>
-                           <span class="bg-primary dots"></span>
-                        </a>
-                        <div class="iq-sub-dropdown">
-                           <div class="iq-card shadow-none m-0">
                               <div class="iq-card-body p-0 ">
                                  <div class="bg-primary p-3">
-                                    <h5 class="mb-0 text-white">All Messages<small
+                                    <h5 class="mb-0 text-white">Tất cả tin nhắn<small
                                           class="badge  badge-light float-right pt-1">5</small></h5>
                                  </div>
                                  <a href="#" class="iq-sub-card">
@@ -383,7 +316,7 @@
                                        </div>
                                        <div class="media-body ml-3">
                                           <h6 class="mb-0 ">Barry Emma Watson</h6>
-                                          <small class="float-left font-size-12">13 Jun</small>
+                                          <small class="float-left font-size-12">12-02</small>
                                        </div>
                                     </div>
                                  </a>
@@ -394,7 +327,7 @@
                                        </div>
                                        <div class="media-body ml-3">
                                           <h6 class="mb-0 ">Lorem Ipsum Watson</h6>
-                                          <small class="float-left font-size-12">20 Apr</small>
+                                          <small class="float-left font-size-12">20-02</small>
                                        </div>
                                     </div>
                                  </a>
@@ -404,7 +337,7 @@
                                           <img class="avatar-40 rounded" src="images/user/03.jpg" alt="">
                                        </div>
                                        <div class="media-body ml-3">
-                                          <h6 class="mb-0 ">Why do we use it?</h6>
+                                          <h6 class="mb-0 ">Tại sao tôi không sử dụng được ?</h6>
                                           <small class="float-left font-size-12">30 Jun</small>
                                        </div>
                                     </div>
@@ -416,7 +349,7 @@
                                        </div>
                                        <div class="media-body ml-3">
                                           <h6 class="mb-0 ">Variations Passages</h6>
-                                          <small class="float-left font-size-12">12 Sep</small>
+                                          <small class="float-left font-size-12">12-01</small>
                                        </div>
                                     </div>
                                  </a>
@@ -427,7 +360,7 @@
                                        </div>
                                        <div class="media-body ml-3">
                                           <h6 class="mb-0 ">Lorem Ipsum generators</h6>
-                                          <small class="float-left font-size-12">5 Dec</small>
+                                          <small class="float-left font-size-12">5-01</small>
                                        </div>
                                     </div>
                                  </a>
@@ -444,7 +377,7 @@
                            <div class="iq-card shadow-none m-0">
                               <div class="iq-card-body p-0 toggle-cart-info">
                                  <div class="bg-primary p-3">
-                                    <h5 class="mb-0 text-white">All Carts<small
+                                    <h5 class="mb-0 text-white">Tất cả giỏ hàng<small
                                           class="badge  badge-light float-right pt-1">4</small></h5>
                                  </div>
                                  <a href="#" class="iq-sub-card">
@@ -500,8 +433,8 @@
                                     </div>
                                  </a>
                                  <div class="d-flex align-items-center text-center p-3">
-                                    <a class="btn btn-primary mr-2 iq-sign-btn" href="#" role="button">View Cart</a>
-                                    <a class="btn btn-primary iq-sign-btn" href="#" role="button">Shop now</a>
+                                    <a class="btn btn-primary mr-2 iq-sign-btn" href="#" role="button">Xem giỏ hàng</a>
+                                    <a class="btn btn-primary iq-sign-btn" href="#" role="button">Cửa hàng ngay</a>
                                  </div>
                               </div>
                            </div>
@@ -519,8 +452,8 @@
                            <div class="iq-card shadow-none m-0">
                               <div class="iq-card-body p-0 ">
                                  <div class="bg-primary p-3">
-                                    <h5 class="mb-0 text-white line-height">Hello Barry Tech</h5>
-                                    <span class="text-white font-size-12">Available</span>
+                                    <h5 class="mb-0 text-white line-height">Xin chào Ông Trần Thuận</h5>
+                                    <span class="text-white font-size-12">Sẵn sàng</span>
                                  </div>
                                  <a href="profile.html" class="iq-sub-card iq-bg-primary-hover">
                                     <div class="media align-items-center">
@@ -528,8 +461,8 @@
                                           <i class="ri-file-user-line"></i>
                                        </div>
                                        <div class="media-body ml-3">
-                                          <h6 class="mb-0 ">My Profile</h6>
-                                          <p class="mb-0 font-size-12">View personal profile details.</p>
+                                          <h6 class="mb-0 ">Thông tin của tôi</h6>
+                                          <p class="mb-0 font-size-12">Xem chi tiết hồ sơ cá nhân.</p>
                                        </div>
                                     </div>
                                  </a>
@@ -539,8 +472,8 @@
                                           <i class="ri-profile-line"></i>
                                        </div>
                                        <div class="media-body ml-3">
-                                          <h6 class="mb-0 ">Edit Profile</h6>
-                                          <p class="mb-0 font-size-12">Modify your personal details.</p>
+                                          <h6 class="mb-0 ">Chỉnh sửa hồ sơ</h6>
+                                          <p class="mb-0 font-size-12">Sửa đổi thông tin cá nhân của bạn.</p>
                                        </div>
                                     </div>
                                  </a>
@@ -550,8 +483,8 @@
                                           <i class="ri-account-box-line"></i>
                                        </div>
                                        <div class="media-body ml-3">
-                                          <h6 class="mb-0 ">Account settings</h6>
-                                          <p class="mb-0 font-size-12">Manage your account parameters.</p>
+                                          <h6 class="mb-0 ">Cài đặt tài khoản</h6>
+                                          <p class="mb-0 font-size-12">Quản lý các thông số tài khoản của bạn.</p>
                                        </div>
                                     </div>
                                  </a>
@@ -561,13 +494,14 @@
                                           <i class="ri-lock-line"></i>
                                        </div>
                                        <div class="media-body ml-3">
-                                          <h6 class="mb-0 ">Privacy Settings</h6>
-                                          <p class="mb-0 font-size-12">Control your privacy parameters.</p>
+                                          <h6 class="mb-0 ">Những thiết lập riêng tư</h6>
+                                          <p class="mb-0 font-size-12">Kiểm soát các thông số quyền riêng tư của bạn.
+                                          </p>
                                        </div>
                                     </div>
                                  </a>
                                  <div class="d-inline-block w-100 text-center p-3">
-                                    <a class="bg-primary iq-sign-btn" href="sign-in.html" role="button">Sign out<i
+                                    <a class="bg-primary iq-sign-btn" href="sign-in.html" role="button">Đăng xuất<i
                                           class="ri-login-box-line ml-2"></i></a>
                                  </div>
                               </div>
@@ -588,97 +522,17 @@
                   <div class="iq-card">
                      <div class="iq-card-header d-flex justify-content-between">
                         <div class="iq-header-title">
-                           <h4 class="card-title">Thêm sách</h4>
+                           <h4 class="card-title">Thêm danh mục</h4>
                         </div>
                      </div>
                      <div class="iq-card-body">
-                        <form action="/admin-books" method="post" enctype="multipart/form-data">
+                        <form action="/bookstore/admin/category/postCreate" method="post">
                            <div class="form-group">
-                              <label>Tên sách:</label>
+                              <label>Tên danh mục:</label>
                               <input type="text" class="form-control" name="name">
                            </div>
-                           <div class="form-group">
-                              <label>Danh mục sách:</label>
-                              <select style="overflow: hidden;" class="form-control" id="exampleFormControlSelect1"
-                                 name="category" aria-hidden="true" tabindex="-1" multiple>
 
-                                 <option selected="" disabled="">Danh mục sách</option>
-                                 <% listCategory.forEach((cate,index)=> {%>
-                                    <option value=" <%= cate.categoryId %>">
-                                       <%= cate.categoriesName %>
-                                    </option>
-                                    <% });%>
-                                       <% %>
-
-                              </select>
-                           </div>
-                           <div class="form-group">
-                              <label>Tác gải sách:</label>
-                              <select class="form-control" id="exampleFormControlSelect2" name="author">
-                                 <option selected="" disabled="">Tác giả sách</option>
-                                 <% listAuthor.forEach((author,index)=> {%>
-                                    <option value="<%= author.authorId %>">
-                                       <%= author.authorName %>
-                                    </option>
-                                    <% });%>
-                                       <% %>
-
-                              </select>
-                           </div>
-
-                           <!-- <div class="form-group">
-                              <label>Sách pdf:</label>
-                              <div class="custom-file">
-                                 <input type="file" class="custom-file-input"
-                                    accept="application/pdf, application/vnd.ms-excel" name="bookPdf">
-                                 <label class="custom-file-label">Chọn file</label>
-                              </div>
-                           </div> -->
-                           <div class="form-group">
-                              <label>Giá gốc:</label>
-                              <input type="text" class="form-control" name="price_root">
-                           </div>
-                           <div class="form-group">
-                              <label>Giá bán:</label>
-                              <input type="text" class="form-control" name="price">
-                           </div>
-                           <div class="form-group">
-                              <label>số lượng:</label>
-                              <input type="text" class="form-control" name="quantity">
-                           </div>
-                           <div class="form-group">
-                              <label>Nội dung:</label>
-                              <textarea class="form-control" rows="4" name="desciption"></textarea>
-                           </div>
-                           <div class="form-group row">
-                              <div class="col-md-2">
-                                 <label for="" class="font-weight-bold">thumnails
-                                    <strong class="text-danger">*</strong>
-                                 </label>
-                              </div>
-                              <div class="col-md-10">
-                                 <div class="d-flex">
-                                    <div class="payment-method-item">
-                                       <div class="payment-method-header d-flex flex-wrap">
-                                          <div class="thumb">
-                                             <div class="avatar-preview" style="position: relative;">
-                                                <img id="img" src="/images/browse-books/" alt="" width=" 200px"
-                                                   class=" rounded-lg" height="240px">
-                                             </div>
-                                          </div>
-                                          <div class="updateFile"
-                                             style="background-color: #19a2a4; border-radius: 50%; width: 50px; height: 50px; bottom: -5px;left: 184px;position: absolute; ">
-                                             <input style="cursor: pointer;" type="file" accept="image/png, image/jpeg"
-                                                name="image" id="upload" class="custom-file-input" multiple>
-                                             <label for="" style="position: absolute;right: 16px;top: 14px; "><i
-                                                   class="fa-solid fa-pen-nib" style="color: #eff3f3;"></i></label>
-                                          </div>
-                                       </div>
-                                    </div>
-                                 </div>
-                              </div>
-                           </div>
-                           <button id='send' type="submit" class="btn btn-primary">Gửi</button>
+                           <button type="submit" class="btn btn-primary">Gửi</button>
                            <button type="reset" class="btn btn-danger">Trở lại</button>
                         </form>
                      </div>
@@ -695,8 +549,8 @@
          <div class="row">
             <div class="col-lg-6">
                <ul class="list-inline mb-0">
-                  <li class="list-inline-item"><a href="privacy-policy.html">Privacy Policy</a></li>
-                  <li class="list-inline-item"><a href="terms-of-service.html">Terms of Use</a></li>
+                  <li class="list-inline-item"><a href="privacy-policy.html">Chính sách bảo mật</a></li>
+                  <li class="list-inline-item"><a href="terms-of-service.html">Điều khoản sử dụng</a></li>
                </ul>
             </div>
 
@@ -709,91 +563,60 @@
    <!-- color-customizer END -->
    <!-- Optional JavaScript -->
    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-   <script src="/js/jquery.min.js"></script>
-   <script src="/js/popper.min.js"></script>
-   <script src="/js/bootstrap.min.js"></script>
-   <script src="/js/jquery.dataTables.min.js"></script>
-   <script src="/js/dataTables.bootstrap4.min.js"></script>
+   <script src="js/jquery.min.js"></script>
+   <script src="js/popper.min.js"></script>
+   <script src="js/bootstrap.min.js"></script>
+   <script src="js/jquery.dataTables.min.js"></script>
+   <script src="js/dataTables.bootstrap4.min.js"></script>
    <!-- Appear JavaScript -->
-   <script src="/js/jquery.appear.js"></script>
+   <script src="js/jquery.appear.js"></script>
    <!-- Countdown JavaScript -->
-   <script src="/js/countdown.min.js"></script>
+   <script src="js/countdown.min.js"></script>
    <!-- Counterup JavaScript -->
-   <script src="/js/waypoints.min.js"></script>
-   <script src="/js/jquery.counterup.min.js"></script>
+   <script src="js/waypoints.min.js"></script>
+   <script src="js/jquery.counterup.min.js"></script>
    <!-- Wow JavaScript -->
-   <script src="/js/wow.min.js"></script>
+   <script src="js/wow.min.js"></script>
    <!-- Apexcharts JavaScript -->
-   <script src="/js/apexcharts.js"></script>
+   <script src="js/apexcharts.js"></script>
    <!-- Slick JavaScript -->
-   <script src="/js/slick.min.js"></script>
+   <script src="js/slick.min.js"></script>
    <!-- Select2 JavaScript -->
-   <script src="/js/select2.min.js"></script>
+   <script src="js/select2.min.js"></script>
    <!-- Owl Carousel JavaScript -->
-   <script src="/js/owl.carousel.min.js"></script>
+   <script src="js/owl.carousel.min.js"></script>
    <!-- Magnific Popup JavaScript -->
-   <script src="/js/jquery.magnific-popup.min.js"></script>
+   <script src="js/jquery.magnific-popup.min.js"></script>
    <!-- Smooth Scrollbar JavaScript -->
-   <script src="/js/smooth-scrollbar.js"></script>
+   <script src="js/smooth-scrollbar.js"></script>
    <!-- lottie JavaScript -->
-   <script src="/js/lottie.js"></script>
+   <script src="js/lottie.js"></script>
    <!-- am core JavaScript -->
-   <script src="/js/core.js"></script>
+   <script src="js/core.js"></script>
    <!-- am charts JavaScript -->
-   <script src="/js/charts.js"></script>
+   <script src="js/charts.js"></script>
    <!-- am animated JavaScript -->
-   <script src="/js/animated.js"></script>
+   <script src="js/animated.js"></script>
    <!-- am kelly JavaScript -->
-   <script src="/js/kelly.js"></script>
+   <script src="js/kelly.js"></script>
    <!-- am maps JavaScript -->
-   <script src="/js/maps.js"></script>
+   <script src="js/maps.js"></script>
    <!-- am worldLow JavaScript -->
-   <script src="/js/worldLow.js"></script>
+   <script src="js/worldLow.js"></script>
    <!-- Raphael-min JavaScript -->
-   <script src="/js/raphael-min.js"></script>
+   <script src="js/raphael-min.js"></script>
    <!-- Morris JavaScript -->
-   <script src="/js/morris.js"></script>
+   <script src="js/morris.js"></script>
    <!-- Morris min JavaScript -->
-   <script src="/js/morris.min.js"></script>
+   <script src="js/morris.min.js"></script>
    <!-- Flatpicker Js -->
-   <script src="/js/flatpickr.js"></script>
+   <script src="js/flatpickr.js"></script>
    <!-- Style Customizer -->
-   <script src="/js/style-customizer.js"></script>
+   <script src="js/style-customizer.js"></script>
    <!-- Chart Custom JavaScript -->
-   <script src="/js/chart-custom.js"></script>
+   <script src="js/chart-custom.js"></script>
    <!-- Custom JavaScript -->
-   <script src="/js/custom.js"></script>
+   <script src="js/custom.js"></script>
 </body>
-<script>
-   (function ($) {
-      $('#upload').change(function () {
-         var input = this;
-         var url = $(this).val();
-         var ext = url.substring(url.lastIndexOf('.') + 1).toLowerCase();
-         if (input.files && input.files[0] && (ext == "gif" || ext == "png" || ext == "jpeg" || ext == "jpg")) {
-            var reader = new FileReader();
-            console.log(url)
-            reader.onload = function (e) {
-               let a = $('#img').attr('src', e.target.result);
-               console.log(a)
-            }
-            reader.readAsDataURL(input.files[0]);
-
-         }
-         else {
-            $('#img').attr('src', 'images/no_preview.png');
-         }
-      });
-      console.log($('#upload'))
-      $('#send').on('click', function (e) {
-
-         if ($('#upload').val() == "") {
-            e.preventDefault();
-            alert('ảnh không được để trống')
-
-         }
-      })
-   })(jQuery);
-</script>
 
 </html>
