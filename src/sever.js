@@ -7,6 +7,7 @@ const connection = require('./config/database')
 const webrouter = require('./route/web')
 const fileUpload = require('express-fileupload')
 const app = express() // tạo ra express app
+
 const port = process.env.PORT // khai  báo port
 const hostname = process.env.HOST_NAME
 // default options
@@ -23,3 +24,5 @@ app.use('/', webrouter)
 app.listen(port, hostname, () => {
     console.log(`Example app listening on port ${port}`)
 })
+
+console.log()

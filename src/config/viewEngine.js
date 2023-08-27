@@ -5,5 +5,6 @@ const configViewEngine = (app) => {
     app.set('view engine', 'ejs') // cấu hình loại template mà mình sử dụng
     // config static
     app.use(express.static(path.join('./src', 'public')))
+
 }
 module.exports = configViewEngine

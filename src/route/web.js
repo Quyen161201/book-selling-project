@@ -21,20 +21,20 @@ router.get('/getadmin-delete-book/:id', getdeleteBook)
 router.post('/postadmin-delete-book/:id', postdeleteBook)
 
 //admin author
-router.get('/bookstore/admin/author', getAdminAuthors);
-router.get('/bookstore/admin/author/create', getCreateAuthors);
-router.post('/bookstore/admin/createAuthor', postCreateAuthor);
-router.get('/bookstore/admin/author/update/:id', getUpdateAuthors);
-router.post('/bookstore/admin/updateAuthor', postUpdateAuthor);
-router.post('/bookstore/admin/deleteAuthor/:id', postDeleteAuthor);
+router.get('/admin-author', getAdminAuthors);
+router.get('/adminAuthor-create', getCreateAuthors);
+router.post('/admin-createAuthor', postCreateAuthor);
+router.get('/adminAuthor-update/:id', getUpdateAuthors);
+router.post('/admin-updateAuthor', postUpdateAuthor);
+router.post('/admin-deleteAuthor/:id', postDeleteAuthor);
 
 // adim category
-router.get('/bookstore/admin/category', getAdminCategory);
-router.get('/bookstore/admin/category/create', getAdminCategoryCreate);
-router.post('/bookstore/admin/category/postCreate', postAdminCategoryCreate);
-router.get('/bookstore/admin/category/update/:id', getAdminUpdateCategory);
-router.post('/bookstore/admin/category/update', postAdminCategoryUpdate);
-router.post('/bookstore/admin/deleteCategory/:id', postDeleteCategory);
+router.get('/admin-category', getAdminCategory);
+router.get('/adminCategory-create', getAdminCategoryCreate);
+router.post('/adminCategory-postCreate', postAdminCategoryCreate);
+router.get('/adminCategory-update/:id', getAdminUpdateCategory);
+router.post('/adminCategory-update', postAdminCategoryUpdate);
+router.post('/admin-deleteCategory/:id', postDeleteCategory);
 
 
 

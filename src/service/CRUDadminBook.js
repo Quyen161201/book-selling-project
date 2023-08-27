@@ -1,10 +1,13 @@
 const connection = require('../config/database')
 //tạo sách
 module.exports = {
-    getlistCategorySevice: async (data) => {
+    getlistCategorySevice: async () => {
         try {
+            let [results] = await connection.query('select * from category');
 
-            let [results, fields] = await connection.query('select*from category');
+            // let [results] = await connection.query('select categoriesName from product_category,category where product_category.category_id=category.categoryId ');
+            // let cate_values = results && results.length > 0 ? results[0] : {};
+            console.log("dataCate", results);
             return results
         }
         catch (error) {
@@ -15,7 +18,7 @@ module.exports = {
         try {
 
             let [results, fields] = await connection.query('select*from author');
-            console.log('author', results)
+
             return results
         } catch (error) {
             console.log('err', error)
@@ -31,10 +34,21 @@ module.exports = {
         }
 
     },
+    getCategory: async (id) => {
+        try {
+            let [results] = await connection.query('select * from category c , product_category pc where c.categoryId =pc.category_id and pc.product_id = ?', [id]);
+            // let category = results && results.length > 0 ? results[0] : {};
+
+            return results
+        } catch (error) {
+
+        }
+    },
     getUpdateBookSevice: async (data) => {
         try {
 
-            let [results, fields] = await connection.query('select* from products p left join author a on p.authorId =a.authorId left join category c ON p.categoryId =c.categoryId left join images i on p.productId =i.product_id where p.productID =? and p.is_deleted=0', [data]);
+            let [results, fields] = await connection.query('select* from products p left join author a on p.authorId =a.authorId left join images i on p.productId =i.product_id where p.productID =? and p.is_deleted=0', [data]);
+
             let book = results && results.length > 0 ? results[0] : {};
 
             return book
@@ -53,12 +67,23 @@ module.exports = {
 
 
             if (check[0][0].is_deleted == 0) {
+                //product
+                let [results] = await connection.query('update products set productName=?,unitPrice=?,quantity=?,desciption=?,authorId=?,bookPdf=?,thumbnail=? where productID=?'
+                    , [data.name, data.price, data.quantity, data.desciption, data.author, data.bookPdf, data.image, data.productID]);
 
-                let results = await connection.query('update products set productName=?,unitPrice=?,quantity=?,desciption=?,authorId=?,categoryId=?,bookPdf=? where productID=?'
-                    , [data.name, data.price, data.quantity, data.desciption, data.author, data.category, data.bookPdf, data.productID]);
-                console.log('id', results)
+                //category
+                let category = [data.category];
+                let stringCate = category.toString();
+                let arrCate = stringCate.split(",");
+                const cate_values = []
+                for (let i = 0; i < arrCate.length; i++) {
+                    cate_values.push([data.productID, arrCate[i]]);
+                }
+                let deleteCate = await connection.query('delete from product_category where product_id=?', [data.productID])
+                let rsCategory = await connection.query('insert into product_category(product_id,category_id) values ?', [cate_values])
+
                 //update image
-                let arrImg = [data.image];
+                let arrImg = [data.gallery];
                 console.log('arrImg', arrImg)
                 let stringImg = arrImg.toString();
                 let arrRs = stringImg.split(",");
@@ -87,7 +112,7 @@ module.exports = {
         try {
 
             let [results, fields] = await connection.query
-                ('select* from products p left join author a on p.authorId =a.authorId left join category c ON p.categoryId =c.categoryId left join images i on p.productId =i.product_id where is_deleted=0 group by productID ');
+                ('select* from products p left join author a on p.authorId =a.authorId left join images i on p.productId =i.product_id where is_deleted=0 group by productID ');
 
             return results;
         } catch (error) {
@@ -96,30 +121,41 @@ module.exports = {
     },
     postCreateBookSevice: async (data) => {
         try {
-            let arrImg = [data.image];
-            console.log('arrImg', arrImg)
+            //category
+
+            let category = [data.category];
+            let stringCate = category.toString();
+            let arrCate = stringCate.split(",");
+            //image
+            let arrImg = [data.gallery];
             let stringImg = arrImg.toString();
             let arrRs = stringImg.split(",");
-            let results = await connection.query('insert into products(productName,price_root,unitPrice,quantity,desciption,authorId,categoryId,bookPdf) VALUES (?,?,?,?,?,?,?,?)'
-                , [data.name, data.price_root, data.price, data.quantity, data.desciption, data.author, data.category, data.bookPdf]);
-            console.log('rsult', results)
-            console.log('>>>>rss', results[0].insertId)
+
+            // create product
+            let results = await connection.query('insert into products(productName,price_root,unitPrice,quantity,desciption,authorId,bookPdf,thumbnail) VALUES (?,?,?,?,?,?,?,?)'
+                , [data.name, data.price_root, data.price, data.quantity, data.desciption, data.author, data.bookPdf, data.image]);
+
+
             let new_id = results[0].insertId;
+            console.log(new_id, 'new_id');
+            const cate_values = []
+            for (let i = 0; i < arrCate.length; i++) {
+                cate_values.push([new_id, arrCate[i]]);
+            }
+            let [rsCategory] = await connection.query('insert into product_category(product_id,category_id) values ?', [cate_values])
+
+
             // let dataImages = "";
             const image_values = [];
+            console.log(image_values)
             for (let i = 0; i < arrRs.length; i++) {
-                // if (i < arrRs.length - 1)
-                //     dataImages += `('${arrRs[i]}'),`;
-                // else dataImages += `('${arrRs[i]}')`;
+
                 image_values.push([arrRs[i], new_id]);
 
             }
 
             console.log(arrRs);
-            // const image_values = [
-            //     arrRs
-            // ]
-            // console.log("dataimages", dataImages)
+
             let [resultsImg, fieldsImg] = await connection.query('insert into images(name, product_id) values ?', [image_values], function (e) {
                 console.log("values: ", e);
             })

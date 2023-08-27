@@ -37,7 +37,7 @@ const uploadSingleFile = async (fileObject) => {
 
 }
 const uploatMutiFile = async (fileArr) => {
-    let uploadedFiles = [];
+    let uploadedFiles = "";
     let uploadPath = path.join(__dirname, "../public/images/browse-books")
     let file_name_time = new Date().getTime();
     let countFiles = 0;
@@ -61,7 +61,7 @@ const uploatMutiFile = async (fileArr) => {
             }
 
         }
-        console.log(uploadedFiles)
+
         return uploadedFiles
     }
     catch (error) {

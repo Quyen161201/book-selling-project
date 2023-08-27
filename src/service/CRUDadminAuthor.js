@@ -46,7 +46,7 @@ module.exports = {
         try {
             let [check] = await connection.query('select * from author where authorId=?', [id])
 
-            if (check[0].authorId == id) {
+            if (check != "") {
 
                 let [result] = await connection.query('delete from author where authorId=?', [id])
                 return result

@@ -22,27 +22,28 @@ module.exports = {
         let rsdata = await postCreateAutorSevice({ name, description });
 
 
-        res.redirect('/bookstore/admin/author')
+        res.redirect('/admin-author')
 
     },
     // sữa
     getUpdateAuthors: async (req, res) => {
         let id = req.params.id;
         let rs = await getAuthorService(id)
-        res.render('admin-update-author.ejs', { author: rs })
+        res.render('admin-add-author.ejs', { author: rs })
     },
     postUpdateAuthor: async (req, res) => {
         let { id, name, description } = req.body;
 
         let rs = await postUpdateAuthorSevice({ id, name, description });
-        res.redirect('/bookstore/admin/author')
+        res.redirect('/admin-author')
 
     },
     postDeleteAuthor: async (req, res) => {
         let id = req.params.id;
+        console.log('id', id)
         let rs = await postDeleteAuthorSevice(id);
         console.log(rs);
-        res.redirect('/bookstore/admin/author')
+        res.redirect('/admin-author')
     }
 
 
