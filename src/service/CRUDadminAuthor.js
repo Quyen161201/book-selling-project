@@ -1,4 +1,4 @@
-const { error } = require('console');
+
 const connection = require('../config/database')
 module.exports = {
     getAuthorService: async (id) => {
@@ -29,7 +29,7 @@ module.exports = {
             let [check] = await connection.query('select * from author where authorId=?', [data.id])
 
             if (check != "") {
-                console.log(check, 'okok>>>>')
+
                 let [result] = await connection.query('update author Set authorName=?,description=? where authorId=?', [data.name, data.description, data.id])
                 return result
 
@@ -45,10 +45,13 @@ module.exports = {
     postDeleteAuthorSevice: async (id) => {
         try {
             let [check] = await connection.query('select * from author where authorId=?', [id])
+            console.log('check', check)
+            console.log(check[0].author)
 
-            if (check != "") {
+            if (check[0].authorId == id) {
 
                 let [result] = await connection.query('delete from author where authorId=?', [id])
+
                 return result
 
             }

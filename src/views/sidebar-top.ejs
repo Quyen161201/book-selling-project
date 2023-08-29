@@ -26,13 +26,27 @@
             <div class="iq-search-bar">
                 <form action="#" class="searchbox">
 
-                    <input type="text" id="serch" class="text search-input" placeholder="Tìm kiếm sản phẩm...">
-                    <a class="search-link" href="#"><i class="ri-search-line"></i></a>
+                    <input type="text" id="serch" class="text search-input" placeholder="Tìm kiếm sản phẩm..."
+                        autocomplete="off" onkeyup="sendata(this)" name="payload">
+                    <a class="search-link" href="/admin-update-book/126"><i class="ri-search-line"></i></a>
+                    <div class="result-serch" tabindex="-1">
+
+                        <span class="name-serch" id="serch-title">Nhập tên sản phẩm để tìm kiếm</span>
+                        <ul class="list-group" id="list-serch">
+
+                            <!-- <li class="list-group-item ">
+                                <a href="">
+                                    <img class="img-reponsive img-rounded pull-left mr-3"
+                                        style="width: 50px;height: 50px;"
+                                        src=" /images/browse-books/1693191457209_04.jpg" alt="">
+                                    làm giàu từ chứng khoán
+                                </a>
+                            </li> -->
+
+                        </ul>
+
+                    </div>
                 </form>
-                <div class="result-serch">
-                    <img src="" alt="">
-                    <span class="name-serch">sách hay</span>
-                </div>
             </div>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
                 aria-controls="navbarSupportedContent" aria-label="Toggle navigation">

@@ -44,8 +44,11 @@
                                     <select class="form-control select2" id="exampleFormControlSelect1" name="category"
                                        aria-hidden="true" tabindex="-1" multiple>
 
-                                       <option selected="" disabled="">Danh mục sách</option>
+                                       <!-- <option selected="" disabled="" value=" <%= listCategory.categoriesName %>">
+
+                                       </option> -->
                                        <% listCategory.forEach((cate,index)=> {%>
+
                                           <option value=" <%= cate.categoryId %>">
                                              <%= cate.categoriesName %>
                                           </option>

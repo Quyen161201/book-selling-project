@@ -1,9 +1,13 @@
-const express = require('express')
+const express = require('express');
+const connection = require('../config/database')
+
 const router = express.Router()
 const { getindex, getDasboard, } = require('../controllers/indexController')
 const { getAdminBooks, getAddBooks, createBook, getUpdatebook, postUpdateBook, getdeleteBook, postdeleteBook } = require('../controllers/adminBookController')
 const { getAdminAuthors, getCreateAuthors, postCreateAuthor, getUpdateAuthors, postUpdateAuthor, postDeleteAuthor } = require('../controllers/adminAuthorController')
 const { getAdminCategory, getAdminCategoryCreate, postAdminCategoryCreate, getAdminUpdateCategory, postAdminCategoryUpdate, postDeleteCategory } = require('../controllers/adminCategoryController')
+const { searchProduct } = require('../controllers/serach');
+const { getRegister, postRegister, getLogin, postLogin } = require('../controllers/acount')
 
 // index
 router.get('/index', getindex);
@@ -35,6 +39,20 @@ router.post('/adminCategory-postCreate', postAdminCategoryCreate);
 router.get('/adminCategory-update/:id', getAdminUpdateCategory);
 router.post('/adminCategory-update', postAdminCategoryUpdate);
 router.post('/admin-deleteCategory/:id', postDeleteCategory);
+
+//search
+router.post('/getseachbook', searchProduct);
+
+// đăng ký
+
+router.get('/adminRegister', getRegister)
+router.post('/adminPostRegister', postRegister)
+router.get('/adminLogin', getLogin);
+router.post('/adminPostlogin', postLogin)
+
+
+
+
 
 
 

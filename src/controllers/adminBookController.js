@@ -5,6 +5,7 @@ const { postCreateBookSevice, getAdminBooksSevice, getlistCategorySevice, getlis
 module.exports = {
     getAdminBooks: async (req, res) => {
         let results = await getAdminBooksSevice();
+
         return res.render('admin-books.ejs', { listAdminBooks: results })
     },
     getAddBooks: async (req, res) => {
@@ -32,7 +33,7 @@ module.exports = {
             if (req.files.gallery.length > 1) {
                 resultArrImg = await uploatMutiFile(req.files.gallery);
                 bookUrlarrImg = resultArrImg;
-                console.log('image????', bookUrlarrImg);
+
             }
             else {
                 resultArrImg = await uploadSingleFile(req.files.gallery);

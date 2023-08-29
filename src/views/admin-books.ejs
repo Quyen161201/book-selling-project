@@ -3,26 +3,7 @@
 
 <head>
    <%- include ("head.ejs") %>
-      <style>
-         .iq-search-bar {
-            position: relative;
-         }
 
-         .result-serch {
-            position: absolute;
-            height: 400px;
-            width: 330px;
-            background: rgb(179, 211, 211);
-            left: 18px;
-            top: 50px;
-            display: none;
-         }
-
-
-         input.text.search-input:focus~.result-serch {
-            display: block;
-         }
-      </style>
 
 
 </head>
@@ -68,13 +49,13 @@
                                           <th style="width: 3%;">STT</th>
                                           <th style="width: 12%;">Hình ảnh</th>
                                           <th style="width: 15%;">Tên sách</th>
-                                          <th style="width: 15%;">Thể loại sách</th>
+
                                           <th style="width: 15%;">Tác giả sách</th>
                                           <th style="width: 18%;">Giá gốc</th>
                                           <th style="width: 7%;">Giá bán</th>
                                           <th style="width: 7%;">Số lượng</th>
                                           <!-- <th style="width: 7%;">Sách PDF</th> -->
-                                          <th style="width: 15%;">Hoạt động</th>
+                                          <th style="width: 4%;">Hoạt động</th>
                                        </tr>
                                     </thead>
                                     <tbody>
@@ -92,9 +73,7 @@
                                              <td>
                                                 <%= book.productName %>
                                              </td>
-                                             <td>
-                                                <%= book.categoriesName %>
-                                             </td>
+
                                              <td>
                                                 <%= book.authorName%>
                                              </td>
@@ -117,7 +96,7 @@
 
 
                                                    <button
-                                                      style="width: 24px; margin-left: 3px;margin-top: 4px; text-align: center; height: 24px; position: relative;"
+                                                      style="width: 24px; margin-left: 3px;margin-top: -2px; text-align: center; height: 25px; position: relative;"
                                                       type="button" class="btn btn-danger" data-target="#deleteModal"
                                                       data-toggle="modal"><i class="ri-delete-bin-line"
                                                          style="position: absolute; top: 2px; right: 0px;"></i></button>

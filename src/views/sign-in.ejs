@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Đăng ký</title>
+    <%- include ("head.ejs") %>
+</head>
+
+<body>
+    <div class="main">
+        <form action="/adminPostlogin" method="POST" class="form" id="form-1">
+            <h3 class="heading">Đăng nhập</h3>
+            <div class="spacer"></div>
+
+            <div class="alert alert-danger" role="alert" style="display: none;width: 300px; " id="warning">
+                Email hoặc mật khẩu không đúng
+            </div>
+
+            <div class="form-group">
+                <label for="email" class="form-lable">Email</label>
+                <input type="text" name="email" id="email" placeholder="VD: khaquyen317@gmail.com">
+                <span class="form-massage"></span>
+            </div>
+            <div class="form-group">
+                <label for="password" class="form-lable">nhập mật khẩu</label>
+                <input type="password" name="password" id="password" placeholder="nhập mật khẩu">
+                <span class="form-massage"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" id="submit" value="Đăng nhập">
+                <span style="margin-left:40px;" class="text-dark dark-color d-inline-block line-height-2"> Bạn đã có
+                    tài khoản ?
+                    <a style="color: #0dd6b8; font-weight: 500;" href="/adminRegister">Đăng ký</a>
+
+
+            </div>
+        </form>
+    </div>
+    <%- include ("boostrapJs.ejs") %>
+        <script>
+            //mong muốn của chúng ta khi sử dụng cái thư viện này trong tương lai
+            Validator({
+                form: '#form-1',
+                formGroupSelector: '.form-group',
+                errorSelect: '.form-massage',
+
+                rules: [
+                    // Validator.isRequired('#fullname', 'Vui lòng nhập tên đầy đủ'),
+                    Validator.isRequired('#email'),
+                    Validator.isEmail('#email', 'Vui lòng nhập email của bạn'),
+                    Validator.minLength('#password', 6),
+                    // Validator.passback('#passback', function () {
+                    //     return document.querySelector('#form-1 #password').value;
+                    // }, 'Mật khẩu nhập lại không chính xác'),
+                    // Validator.isRequired('#passback', 'Trường này không được để trống')
+
+                ],
+                onSubmit: function (data) {
+                    // call api
+                    (async (req, res) => {
+                        const rawResponse = await fetch('/adminPostlogin', {
+                            method: 'POST',
+                            headers: {
+                                'Accept': 'application/json',
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify({ data })
+                        });
+                        const result = await rawResponse.json();
+
+                        console.log(result.status)
+                        if (result.error == 0) {
+                            (function ($) {
+                                $('#warning').hide();
+                                $("#success").fadeIn("slow");
+                                $("#success").fadeIn(3000);
+                                $('#success').show();
+
+                            })(jQuery)
+                        }
+                        else {
+                            (function ($) {
+                                $('#success').hide();
+                                $("#warning").fadeIn("slow");
+                                $("#warning").fadeIn(3000);
+                                $('#warning').show();
+
+                            })(jQuery)
+                        }
+                        return result
+                    })();
+
+                }
+            })
+        </script>
+</body>
+
+</html>

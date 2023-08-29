@@ -29,7 +29,8 @@ module.exports = {
     getUpdateAuthors: async (req, res) => {
         let id = req.params.id;
         let rs = await getAuthorService(id)
-        res.render('admin-add-author.ejs', { author: rs })
+        console.log('update', rs)
+        res.render('admin-update-author.ejs', { author: rs })
     },
     postUpdateAuthor: async (req, res) => {
         let { id, name, description } = req.body;
