@@ -37,7 +37,7 @@ function Validator(options) {
     if (formElement) {
         //khi submit form loại bỏ mặc định
         formElement.onsubmit = function (e) {
-            // e.preventDefault();
+            e.preventDefault();
             var isFormValid = true;
             // thực hiện lặp qua từng rule và validate
             options.rules.forEach(function (rule) {

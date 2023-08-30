@@ -61,6 +61,9 @@
         $('#serch').on("focus", function (e) {
             $('.result-serch').show();
         })
+        $('.result-serch').on("blur", function (e) {
+            $('.result-serch').hide();
+        })
     })(jQuery)
     function sendata(e) {
         let serch = document.getElementById('serch-title');

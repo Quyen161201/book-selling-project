@@ -1,6 +1,21 @@
 const connection = require('../config/database')
 //tạo sách
 module.exports = {
+    getListBook: async () => {
+        try {
+            let [results] = await connection.query('select * from author a , products p where a.authorId =p.authorId and p.is_deleted = 0');
+
+
+            // let [results] = await connection.query('select categoriesName from product_category,category where product_category.category_id=category.categoryId ');
+            // let cate_values = results && results.length > 0 ? results[0] : {};
+
+            return results
+        }
+        catch (error) {
+            console.error(error)
+        }
+
+    },
     getlistCategorySevice: async () => {
         try {
             let [results] = await connection.query('select * from category');

@@ -30,20 +30,10 @@ module.exports = {
     postLoginSevice: async (email, password) => {
         try {
             let [result] = await connection.query('select email,password  from res_users where active =1 and email=?', [email])
+            return result
 
-            if (result.length > 0) {
-                const passw = result[0].password
-                console.log(password)
-
-                let check = await bcrypt.compare(password, passw); // true
-
-                console.log(check, "ok")
-            }
-            else {
-                return 'tai khoan mat khong k dung'
-            }
         } catch (error) {
-
+            console.log(error)
         }
     }
 }

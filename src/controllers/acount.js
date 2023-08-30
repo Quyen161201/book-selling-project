@@ -16,13 +16,64 @@ module.exports = {
 
     },
     getLogin: async (req, res, next) => {
-        res.render('sign-in.ejs')
+        if (typeof req.session.email === 'undefined') {
+            res.render('sign-in.ejs')
+        }
+        else res.redirect('/admin-books')
     },
     postLogin: async (req, res) => {
-        let { email, password } = req.body.data
-        let rs = await postLoginSevice(email, password)
+        let { email, password } = req.body
+        let result = await postLoginSevice(email, password)
+        if (result.length > 0) {
+            let passw = result[0].password
+
+            let check = bcrypt.compareSync(password, passw); // true
+
+            if (check === true) {
+                let session = req.session
+
+                session.email = email;
+                res.redirect('/admin-books')
+
+                let rs = {
+                    error: 0,
+                    status: 'Đăng nhập thành công'
+                }
+                // console.log(req.session.email)
+                return rs
+
+            }
+            else {
+
+                await req.session.destroy();
+                let rs = {
+                    error: 1,
+                    status: 'Tài khoản hoặc mật khẩu không chính xác'
+                }
+                res.redirect('/adminLogin')
+                return rs
+
+            }
+
+
+        }
+        else {
+            let rs = {
+                error: 1,
+                status: 'Tài khoản hoặc mật khẩu không chính xác'
+            }
+            res.redirect('/adminLogin')
+            return rs
+
+        }
 
 
 
+    },
+    getLogout: async (req, res) => {
+        console.log(req.session.email, 'test')
+        let a = await req.session.destroy();
+
+        res.redirect('/adminLogin')
     }
 }

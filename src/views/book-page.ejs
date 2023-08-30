@@ -32,83 +32,33 @@
                                              <div class="col-3">
                                                 <ul id="description-slider-nav"
                                                    class="list-inline p-0 m-0  d-flex align-items-center">
-                                                   <li>
-                                                      <a href="javascript:void(0);">
-                                                         <img src="images/book-dec/01.jpg"
-                                                            class="img-fluid rounded w-100" alt="">
-                                                      </a>
-                                                   </li>
-                                                   <li>
-                                                      <a href="javascript:void(0);">
-                                                         <img src="images/book-dec/02.jpg"
-                                                            class="img-fluid rounded w-100" alt="">
-                                                      </a>
-                                                   </li>
-                                                   <li>
-                                                      <a href="javascript:void(0);">
-                                                         <img src="images/book-dec/03.jpg"
-                                                            class="img-fluid rounded w-100" alt="">
-                                                      </a>
-                                                   </li>
-                                                   <li>
-                                                      <a href="javascript:void(0);">
-                                                         <img src="images/book-dec/04.jpg"
-                                                            class="img-fluid rounded w-100" alt="">
-                                                      </a>
-                                                   </li>
-                                                   <li>
-                                                      <a href="javascript:void(0);">
-                                                         <img src="images/book-dec/05.jpg"
-                                                            class="img-fluid rounded w-100" alt="">
-                                                      </a>
-                                                   </li>
-                                                   <li>
-                                                      <a href="javascript:void(0);">
-                                                         <img src="images/book-dec/06.jpg"
-                                                            class="img-fluid rounded w-100" alt="">
-                                                      </a>
-                                                   </li>
+                                                   <% listImg.forEach((img,index)=> {%>
+                                                      <li>
+                                                         <a href="javascript:void(0);">
+                                                            <img src="/images/browse-books/<%=img.name%>"
+                                                               class="img-fluid rounded w-100" alt="">
+                                                         </a>
+                                                      </li>
+
+                                                      <% });%>
+                                                         <% %>
+
                                                 </ul>
+
                                              </div>
                                              <div class="col-9">
                                                 <ul id="description-slider"
                                                    class="list-inline p-0 m-0  d-flex align-items-center">
                                                    <li>
-                                                      <a href="javascript:void(0);">
-                                                         <img src="images/new_realeases/img01.jpg"
-                                                            class="img-fluid w-100 rounded" alt="">
-                                                      </a>
+                                                      <% listImg.forEach((img,index)=> {%>
+                                                         <a href="javascript:void(0);">
+                                                            <img src="/images/browse-books/<%=img.name%>"
+                                                               class="img-fluid w-100 rounded" alt="">
+                                                         </a>
                                                    </li>
-                                                   <li>
-                                                      <a href="javascript:void(0);">
-                                                         <img src="images/book-dec/02.jpg"
-                                                            class="img-fluid w-100 rounded" alt="">
-                                                      </a>
-                                                   </li>
-                                                   <li>
-                                                      <a href="javascript:void(0);">
-                                                         <img src="images/book-dec/03.jpg"
-                                                            class="img-fluid w-100 rounded" alt="">
-                                                      </a>
-                                                   </li>
-                                                   <li>
-                                                      <a href="javascript:void(0);">
-                                                         <img src="images/book-dec/04.jpg"
-                                                            class="img-fluid w-100 rounded" alt="">
-                                                      </a>
-                                                   </li>
-                                                   <li>
-                                                      <a href="javascript:void(0);">
-                                                         <img src="images/book-dec/05.jpg"
-                                                            class="img-fluid w-100 rounded" alt="">
-                                                      </a>
-                                                   </li>
-                                                   <li>
-                                                      <a href="javascript:void(0);">
-                                                         <img src="images/book-dec/06.jpg"
-                                                            class="img-fluid w-100 rounded" alt="">
-                                                      </a>
-                                                   </li>
+
+                                                   <% });%>
+                                                      <% %>
                                                 </ul>
                                              </div>
                                           </div>
@@ -118,9 +68,13 @@
                                  <div class="col-md-6">
                                     <div class="iq-card-transparent iq-card-block iq-card-stretch iq-card-height">
                                        <div class="iq-card-body p-0">
-                                          <h3 class="mb-3">Payback Time - Ngày Đòi Nợ</h3>
+                                          <h3 class="mb-3">
+                                             <%=bookDetails.productName%>
+                                          </h3>
                                           <div class="price d-flex align-items-center font-weight-500 mb-2">
-                                             <span class="font-size-20 pr-2 old-price">350.000 ₫</span>
+                                             <span class="font-size-20 pr-2 old-price">
+                                                <%=bookDetails.unitPrice%>
+                                             </span>
                                              <span class="font-size-24 text-dark">299.000 ₫</span>
                                           </div>
                                           <div class="mb-3 d-block">
@@ -132,19 +86,12 @@
                                                 <i class="fa fa-star"></i>
                                              </span>
                                           </div>
-                                          <span class="text-dark mb-4 pb-4 iq-border-bottom d-block">"Trong chứng khoán
-                                             và thị
-                                             trường tài chính, dám tham gia đầu tư cũng là một thành công tâm lý ban
-                                             đầu. Dù
-                                             vậy, 95% nhà đầu tư Việt Nam thuộc nhóm nhà đầu tư nhỏ lẻ với vốn kiến thức
-                                             tài
-                                             chính vô cùng hạn chế. Họ tham gia vào thị trường chứng khoán với 100% ý
-                                             chí và
-                                             sự quyết tâm chiến thắng thị trường, nhưng thật không may mắn kết cục cuối
-                                             cùng
-                                             của họ luôn là sự thất bại và mất tiền.</span>
-                                          <div class="text-primary mb-4">Tác giả: <span
-                                                class="text-body">HappyLive</span>
+                                          <span class="text-dark mb-4 pb-4 iq-border-bottom d-block">
+                                             <%=bookDetails.desciption%>
+                                          </span>
+                                          <div class="text-primary mb-4">Tác giả: <span class="text-body"></span>
+                                             <%=bookDetails.authorName%>
+                                                </span>
                                           </div>
                                           <div class="mb-4 d-flex align-items-center">
                                              <a href="checkout.html" class="btn btn-primary view-more mr-2">Thêm vào giỏ
