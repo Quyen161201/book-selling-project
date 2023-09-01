@@ -41,9 +41,9 @@ module.exports = {
     },
     postDeleteAuthor: async (req, res) => {
         let id = req.params.id;
-        console.log('id', id)
+
         let rs = await postDeleteAuthorSevice(id);
-        console.log(rs);
+
         res.redirect('/admin-author')
     }
 

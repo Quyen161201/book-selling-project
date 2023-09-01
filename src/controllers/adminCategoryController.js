@@ -1,9 +1,10 @@
 const { adimCategoryCreate, getAdimCategory, getUpdateCategory, postUpdateCategory, postDeleteAuthorSevice } = require('../service/CRUDadminCategory')
 module.exports = {
+
     getAdminCategory: async (req, res) => {
         let result = await getAdimCategory();
         let rs = result.result
-        console.log(rs)
+
         res.render('admin-category.ejs', { listCategory: rs })
     },
     getAdminCategoryCreate: async (req, res) => {
@@ -19,13 +20,13 @@ module.exports = {
         const id = req.params.id
 
         let rs = await getUpdateCategory(id)
-        console.log(rs)
+
         res.render('adminUpdate-category.ejs', { category: rs })
     },
     postAdminCategoryUpdate: async (req, res) => {
         let { name, id } = req.body
         let rs = await postUpdateCategory(name, id);
-        console.log(rs);
+
 
         res.redirect('/admin-category')
     },

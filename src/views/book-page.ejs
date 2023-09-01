@@ -10,9 +10,10 @@
    <!-- Wrapper Start -->
    <div class="wrapper">
       <!-- Sidebar  -->
-      <%- include ("sidebar.ejs") %>
+      <%- include ("sidebarIndex.ejs") %>
          <!-- TOP Nav Bar -->
-         <%- include ("sidebar-top.ejs") %>
+         <%- include ("sidebar-top-index.ejs") %>
+
             <!-- TOP Nav Bar END -->
             <!-- Page Content  -->
             <div id="content-page" class="content-page">
@@ -68,66 +69,83 @@
                                  <div class="col-md-6">
                                     <div class="iq-card-transparent iq-card-block iq-card-stretch iq-card-height">
                                        <div class="iq-card-body p-0">
-                                          <h3 class="mb-3">
-                                             <%=bookDetails.productName%>
-                                          </h3>
-                                          <div class="price d-flex align-items-center font-weight-500 mb-2">
-                                             <span class="font-size-20 pr-2 old-price">
-                                                <%=bookDetails.unitPrice%>
-                                             </span>
-                                             <span class="font-size-24 text-dark">299.000 ₫</span>
-                                          </div>
-                                          <div class="mb-3 d-block">
-                                             <span class="font-size-20 text-warning">
-                                                <i class="fa fa-star mr-1"></i>
-                                                <i class="fa fa-star mr-1"></i>
-                                                <i class="fa fa-star mr-1"></i>
-                                                <i class="fa fa-star mr-1"></i>
-                                                <i class="fa fa-star"></i>
-                                             </span>
-                                          </div>
-                                          <span class="text-dark mb-4 pb-4 iq-border-bottom d-block">
-                                             <%=bookDetails.desciption%>
-                                          </span>
-                                          <div class="text-primary mb-4">Tác giả: <span class="text-body"></span>
-                                             <%=bookDetails.authorName%>
+                                          <form action="/cart/<%=bookDetails.productID%>" method="post">
+                                             <input style="display: none;" type="text" name="product_id"
+                                                value="<%=bookDetails.productID%>">
+
+
+                                             <h3 class="mb-3">
+                                                <input type="hidden" name="name" value=" <%=bookDetails.productName%>">
+                                                <%=bookDetails.productName%>
+                                             </h3>
+                                             <div class="price d-flex align-items-center font-weight-500 mb-2">
+
+                                                <span class="font-size-20 pr-2 old-price">
+                                                   220.000 đ
                                                 </span>
-                                          </div>
-                                          <div class="mb-4 d-flex align-items-center">
-                                             <a href="checkout.html" class="btn btn-primary view-more mr-2">Thêm vào giỏ
-                                                hàng</a>
-                                             <a href="book-pdf.html" class="btn btn-primary view-more mr-2">Mua ngay</a>
-                                          </div>
-                                          <div class="mb-3">
-                                             <a href="#" class="text-body text-center"><span
-                                                   class="avatar-30 rounded-circle bg-primary d-inline-block mr-2"><i
-                                                      class="ri-heart-fill"></i></span><span>Thêm vào danh sách yêu
-                                                   thích</span></a>
-                                          </div>
-                                          <div class="iq-social d-flex align-items-center">
-                                             <h5 class="mr-2">Chia sẻ:</h5>
-                                             <ul class="list-inline d-flex p-0 mb-0 align-items-center">
-                                                <li>
-                                                   <a href="#"
-                                                      class="avatar-40 rounded-circle bg-primary mr-2 facebook"><i
-                                                         class="fa fa-facebook" aria-hidden="true"></i></a>
-                                                </li>
-                                                <li>
-                                                   <a href="#"
-                                                      class="avatar-40 rounded-circle bg-primary mr-2 twitter"><i
-                                                         class="fa fa-twitter" aria-hidden="true"></i></a>
-                                                </li>
-                                                <li>
-                                                   <a href="#"
-                                                      class="avatar-40 rounded-circle bg-primary mr-2 youtube"><i
-                                                         class="fa fa-youtube-play" aria-hidden="true"></i></a>
-                                                </li>
-                                                <li>
-                                                   <a href="#" class="avatar-40 rounded-circle bg-primary pinterest"><i
-                                                         class="fa fa-pinterest-p" aria-hidden="true"></i></a>
-                                                </li>
-                                             </ul>
-                                          </div>
+                                                <span class="font-size-24 text-dark">
+                                                   <input type="hidden" name="price"
+                                                      value="<%=bookDetails.unitPrice.toLocaleString()%> ₫">
+                                                   <%=bookDetails.unitPrice.toLocaleString()%> ₫
+                                                </span>
+                                             </div>
+                                             <div class="mb-3 d-block">
+                                                <span class="font-size-20 text-warning">
+                                                   <i class="fa fa-star mr-1"></i>
+                                                   <i class="fa fa-star mr-1"></i>
+                                                   <i class="fa fa-star mr-1"></i>
+                                                   <i class="fa fa-star mr-1"></i>
+                                                   <i class="fa fa-star"></i>
+                                                </span>
+                                             </div>
+                                             <span class="text-dark mb-4 pb-4 iq-border-bottom d-block">
+                                                <%=bookDetails.desciption%>
+                                             </span>
+                                             <div class="text-primary mb-4">Tác giả: <span class="text-body"></span>
+                                                <%=bookDetails.authorName%>
+                                                   </span>
+                                             </div>
+                                             <div class="mb-4 d-flex align-items-center">
+
+                                                <button class="btn btn-primary view-more mr-2">Thêm vào
+                                                   giỏ
+                                                   hàng</button>
+
+                                                <a href="book-pdf.html" class="btn btn-primary view-more mr-2">Mua
+                                                   ngay</a>
+                                             </div>
+                                             <div class="mb-3">
+                                                <a href="#" class="text-body text-center"><span
+                                                      class="avatar-30 rounded-circle bg-primary d-inline-block mr-2"><i
+                                                         class="ri-heart-fill"></i></span><span>Thêm vào danh sách yêu
+                                                      thích</span></a>
+                                             </div>
+                                             <div class="iq-social d-flex align-items-center">
+                                                <h5 class="mr-2">Chia sẻ:</h5>
+                                                <ul class="list-inline d-flex p-0 mb-0 align-items-center">
+                                                   <li>
+                                                      <a href="#"
+                                                         class="avatar-40 rounded-circle bg-primary mr-2 facebook"><i
+                                                            class="fa fa-facebook" aria-hidden="true"></i></a>
+                                                   </li>
+                                                   <li>
+                                                      <a href="#"
+                                                         class="avatar-40 rounded-circle bg-primary mr-2 twitter"><i
+                                                            class="fa fa-twitter" aria-hidden="true"></i></a>
+                                                   </li>
+                                                   <li>
+                                                      <a href="#"
+                                                         class="avatar-40 rounded-circle bg-primary mr-2 youtube"><i
+                                                            class="fa fa-youtube-play" aria-hidden="true"></i></a>
+                                                   </li>
+                                                   <li>
+                                                      <a href="#"
+                                                         class="avatar-40 rounded-circle bg-primary pinterest"><i
+                                                            class="fa fa-pinterest-p" aria-hidden="true"></i></a>
+                                                   </li>
+                                                </ul>
+                                             </div>
+                                          </form>
                                        </div>
                                     </div>
                                  </div>

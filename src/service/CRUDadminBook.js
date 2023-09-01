@@ -22,7 +22,7 @@ module.exports = {
 
             // let [results] = await connection.query('select categoriesName from product_category,category where product_category.category_id=category.categoryId ');
             // let cate_values = results && results.length > 0 ? results[0] : {};
-            console.log("dataCate", results);
+
             return results
         }
         catch (error) {
@@ -78,7 +78,6 @@ module.exports = {
         try {
 
             let check = await connection.query('select * from products where productID=?', [data.productID]);
-            console.log(check[0][0], 'list check')
 
 
             if (check[0][0].is_deleted == 0) {
@@ -99,14 +98,14 @@ module.exports = {
 
                 //update image
                 let arrImg = [data.gallery];
-                console.log('arrImg', arrImg)
+
                 let stringImg = arrImg.toString();
                 let arrRs = stringImg.split(",");
                 const image_values = []
                 for (let i = 0; i < arrRs.length; i++) {
                     image_values.push([arrRs[i], data.productID]);
                 }
-                console.log('image_values', image_values)
+
                 let deleteImg = await connection.query('delete from images where product_id=?', [data.productID]);
                 let upadateImg = await connection.query('insert into images(name, product_id) values ?', [image_values])
 
@@ -152,7 +151,7 @@ module.exports = {
 
 
             let new_id = results[0].insertId;
-            console.log(new_id, 'new_id');
+
             const cate_values = []
             for (let i = 0; i < arrCate.length; i++) {
                 cate_values.push([new_id, arrCate[i]]);
@@ -162,17 +161,16 @@ module.exports = {
 
             // let dataImages = "";
             const image_values = [];
-            console.log(image_values)
+
             for (let i = 0; i < arrRs.length; i++) {
 
                 image_values.push([arrRs[i], new_id]);
 
             }
 
-            console.log(arrRs);
 
             let [resultsImg, fieldsImg] = await connection.query('insert into images(name, product_id) values ?', [image_values], function (e) {
-                console.log("values: ", e);
+
             })
             return results
         }
@@ -183,7 +181,7 @@ module.exports = {
     postAdminDeleteSevice: async (productID) => {
         try {
             let check = await connection.query('select * from products where productID=?', [productID]);
-            console.log(check, 'check')
+
             if (check[0][0].is_deleted == 0) {
                 let [results, fields] = await connection.query('update products set is_deleted = 1 WHERE productID=?', [productID]);
                 let resultImg = await connection.query('delete from images where product_id=?', [productID])

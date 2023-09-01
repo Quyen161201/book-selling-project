@@ -61,8 +61,14 @@
         $('#serch').on("focus", function (e) {
             $('.result-serch').show();
         })
-        $('.result-serch').on("blur", function (e) {
+        $('#serch').on("blur", function (e) {
             $('.result-serch').hide();
+        })
+
+        let index = 0;
+        $('.ri-shopping-cart-2-fill').on("click", function (e) {
+            $('#count-cart').html(`${index}`);
+            index++;
         })
     })(jQuery)
     function sendata(e) {

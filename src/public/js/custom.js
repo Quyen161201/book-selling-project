@@ -683,6 +683,7 @@ Index Of Script
         jQuery('#quantity').val(val + 1);
       }
     });
+    $('.qty-btn')
 
     $('.select2').select2();
 

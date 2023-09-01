@@ -9,458 +9,400 @@
    <!-- Wrapper Start -->
    <div class="wrapper">
       <!-- Sidebar  -->
-      <div class="iq-sidebar">
-         <div class="iq-sidebar-logo d-flex justify-content-between">
-            <a href="index.html" class="header-logo">
-               <img src="images/logo.png" class="img-fluid rounded-normal" alt="">
-               <div class="logo-title">
-                  <span class="text-primary text-uppercase">NHASACHTV</span>
-               </div>
-            </a>
-         </div>
-         <div id="sidebar-scrollbar">
-            <nav class="iq-sidebar-menu">
-               <ul id="iq-sidebar-toggle" class="iq-menu">
-                  <li class="active active-menu">
-                     <a href="#dashboard" class="iq-waves-effect" data-toggle="collapse" aria-expanded="true"><span
-                           class="ripple rippleEffect"></span><i class="las la-home iq-arrow-left"></i><span>Trang
-                           Chủ</span><i class="ri-arrow-right-s-line iq-arrow-right"></i></a>
-                     <ul id="dashboard" class="iq-submenu collapse show" data-parent="#iq-sidebar-toggle">
-                     </ul>
-                  </li>
-                  <li>
-                     <a href="#ui-elements" class="iq-waves-effect collapsed" data-toggle="collapse"
-                        aria-expanded="false"><i class="lab la-elementor iq-arrow-left"></i><span>Danh mục sản
-                           phẩm</span><i class="ri-arrow-right-s-line iq-arrow-right"></i></a>
-                     <ul id="ui-elements" class="iq-submenu collapse" data-parent="#iq-sidebar-toggle">
-                        <li class="elements">
-                           <a href="#sub-menu" class="iq-waves-effect collapsed" data-toggle="collapse"
-                              aria-expanded="false"><i class="ri-play-circle-line"></i><span>Sách Trong Nước</span><i
-                                 class="ri-arrow-right-s-line iq-arrow-right"></i></a>
-                        </li>
-                        <li class="elements">
-                           <a href="#sub-menu" class="iq-waves-effect collapsed" data-toggle="collapse"
-                              aria-expanded="false"><i class="ri-play-circle-line"></i><span>Sách Kinh Tế</span><i
-                                 class="ri-arrow-right-s-line iq-arrow-right"></i></a>
-                        </li>
-                        <li class="elements">
-                           <a href="#sub-menu" class="iq-waves-effect collapsed" data-toggle="collapse"
-                              aria-expanded="false"><i class="ri-play-circle-line"></i><span>Sách Ngoại Ngữ</span><i
-                                 class="ri-arrow-right-s-line iq-arrow-right"></i></a>
-                        </li>
-                        <li class="elements">
-                           <a href="#sub-menu" class="iq-waves-effect collapsed" data-toggle="collapse"
-                              aria-expanded="false"><i class="ri-play-circle-line"></i><span>Sách Văn Học</span><i
-                                 class="ri-arrow-right-s-line iq-arrow-right"></i></a>
-                        </li>
-                     </ul>
-                  </li>
-                  <li>
-                     <a href="#pages" class="iq-waves-effect collapsed" data-toggle="collapse" aria-expanded="false"><i
-                           class="las la-file-alt iq-arrow-left"></i><span>Admin Dashboard</span><i
-                           class="ri-arrow-right-s-line iq-arrow-right"></i></a>
-                     <ul id="pages" class="iq-submenu collapse" data-parent="#iq-sidebar-toggle">
-                        <li><a href="/admin-dashboard"><i class="ri-question-answer-line"></i>Dashboard</a></li>
+      <%- include ("sidebarIndex.ejs") %>
+         <!-- TOP Nav Bar -->
+         <%- include ("sidebar-top-index.ejs") %>
 
-                        <li>
-                           <a href="#extra-pages" class="iq-waves-effect collapsed" data-toggle="collapse"
-                              aria-expanded="false"><i class="ri-pantone-line"></i><span>Extra Pages</span><i
-                                 class="ri-arrow-right-s-line iq-arrow-right"></i></a>
-                           <ul id="extra-pages" class="iq-submenu collapse" data-parent="#pages">
-                              <li><a href="pages-invoice.html"><i class="ri-question-answer-line"></i>Invoice</a></li>
-                              <li><a href="pages-comingsoon.html"><i class="ri-mastercard-line"></i>Login</a></li>
-                              <li><a href="pages-faq.html"><i class="ri-compasses-line"></i>Register</a></li>
-                           </ul>
-                        </li>
-                     </ul>
-                  </li>
-                  <li><a href="book-page.html"><i class="ri-book-line"></i>Yêu Thích</a></li>
-                  <li><a href="book-pdf.html"><i class="ri-book-line"></i>Sách PDF</a></li>
-                  <li><a href="sign-in.html"><i class="ri-book-line"></i>Logout</a></li>
-
-               </ul>
-            </nav>
-         </div>
-      </div>
-      <!-- TOP Nav Bar -->
-      <%- include ("sidebar-top.ejs") %>
-
-         <!-- TOP Nav Bar END -->
-         <!-- Page Content  -->
-         <div id="content-page" class="content-page">
-            <div class="container-fluid">
-               <div class="row">
-                  <div class="col-lg-12">
-                     <div class="iq-card-transparent iq-card-block iq-card-stretch iq-card-height rounded">
-                        <div class="newrealease-contens">
-                           <ul id="newrealease-slider" class="list-inline p-0 m-0 d-flex align-items-center">
-                              <% listImg.forEach((img,index)=> {%>
-                                 <li class="item">
-                                    <a href="javascript:void(0);">
-                                       <img style="width: 130px;height: 230px;"
-                                          src="images/browse-books/<%=img.thumbnail%>" class="img-fluid w-100 rounded"
-                                          alt="">
-                                    </a>
-                                 </li>
-                                 <% });%>
-                                    <% %>
-                                       <li class="item">
-                                          <a href="javascript:void(0);">
-                                             <img src="images/new_realeases/img04.jpg" class="img-fluid w-100 rounded"
-                                                alt="">
-                                          </a>
-                                       </li>
-                                       <li class="item">
-                                          <a href="javascript:void(0);">
-                                             <img src="images/new_realeases/img05.jpg" class="img-fluid w-100 rounded"
-                                                alt="">
-                                          </a>
-                                       </li>
-                                       <li class="item">
-                                          <a href="javascript:void(0);">
-                                             <img src="images/new_realeases/01.jpg" class="img-fluid w-100 rounded"
-                                                alt="">
-                                          </a>
-                                       </li>
-                                       <li class="item">
-                                          <a href="javascript:void(0);">
-                                             <img src="images/new_realeases/07.jpg" class="img-fluid w-100 rounded"
-                                                alt="">
-                                          </a>
-                                       </li>
-                                       <li class="item">
-                                          <a href="javascript:void(0);">
-                                             <img src="images/new_realeases/08.jpg" class="img-fluid w-100 rounded"
-                                                alt="">
-                                          </a>
-                                       </li>
-                                       <li class="item">
-                                          <a href="javascript:void(0);">
-                                             <img src="images/new_realeases/09.jpg" class="img-fluid w-100 rounded"
-                                                alt="">
-                                          </a>
-                                       </li>
-                           </ul>
+            <!-- TOP Nav Bar END -->
+            <!-- Page Content  -->
+            <div id="content-page" class="content-page">
+               <div class="container-fluid">
+                  <div class="row">
+                     <div class="col-lg-12">
+                        <div class="iq-card-transparent iq-card-block iq-card-stretch iq-card-height rounded">
+                           <div class="newrealease-contens">
+                              <ul id="newrealease-slider" class="list-inline p-0 m-0 d-flex align-items-center">
+                                 <% listImg.forEach((img,index)=> {%>
+                                    <li class="item">
+                                       <a href="javascript:void(0);">
+                                          <img style="width: 130px;height: 230px;"
+                                             src="images/browse-books/<%=img.thumbnail%>"
+                                             class="img-fluid w-100 rounded" alt="">
+                                       </a>
+                                    </li>
+                                    <% });%>
+                                       <% %>
+                                          <li class="item">
+                                             <a href="javascript:void(0);">
+                                                <img src="images/new_realeases/img04.jpg"
+                                                   class="img-fluid w-100 rounded" alt="">
+                                             </a>
+                                          </li>
+                                          <li class="item">
+                                             <a href="javascript:void(0);">
+                                                <img src="images/new_realeases/img05.jpg"
+                                                   class="img-fluid w-100 rounded" alt="">
+                                             </a>
+                                          </li>
+                                          <li class="item">
+                                             <a href="javascript:void(0);">
+                                                <img src="images/new_realeases/01.jpg" class="img-fluid w-100 rounded"
+                                                   alt="">
+                                             </a>
+                                          </li>
+                                          <li class="item">
+                                             <a href="javascript:void(0);">
+                                                <img src="images/new_realeases/07.jpg" class="img-fluid w-100 rounded"
+                                                   alt="">
+                                             </a>
+                                          </li>
+                                          <li class="item">
+                                             <a href="javascript:void(0);">
+                                                <img src="images/new_realeases/08.jpg" class="img-fluid w-100 rounded"
+                                                   alt="">
+                                             </a>
+                                          </li>
+                                          <li class="item">
+                                             <a href="javascript:void(0);">
+                                                <img src="images/new_realeases/09.jpg" class="img-fluid w-100 rounded"
+                                                   alt="">
+                                             </a>
+                                          </li>
+                              </ul>
+                           </div>
                         </div>
                      </div>
-                  </div>
-                  <div class="col-lg-12">
-                     <div class="iq-card iq-card-block iq-card-stretch iq-card-height">
-                        <div class="iq-card-header d-flex justify-content-between align-items-center position-relative">
-                           <div class="iq-header-title">
-                              <h4 class="card-title mb-0">Gợi ý cho bạn</h4>
+                     <div class="col-lg-12">
+                        <div class="iq-card iq-card-block iq-card-stretch iq-card-height">
+                           <div
+                              class="iq-card-header d-flex justify-content-between align-items-center position-relative">
+                              <div class="iq-header-title">
+                                 <h4 class="card-title mb-0">Gợi ý cho bạn</h4>
+                              </div>
+                              <div class="iq-card-header-toolbar d-flex align-items-center">
+                                 <a href="category.html" class="btn btn-sm btn-primary view-more">Xem Thêm</a>
+                              </div>
                            </div>
-                           <div class="iq-card-header-toolbar d-flex align-items-center">
-                              <a href="category.html" class="btn btn-sm btn-primary view-more">Xem Thêm</a>
-                           </div>
-                        </div>
-                        <div class="iq-card-body">
-                           <div class="row">
-                              <% listImg.forEach((img,index)=> {%>
-                                 <div class="col-sm-6 col-md-4 col-lg-3">
-                                    <div
-                                       class="iq-card iq-card-block iq-card-stretch iq-card-height browse-bookcontent">
-                                       <div class="iq-card-body p-0">
-                                          <div class="d-flex align-items-center">
-                                             <div class="col-6 p-0 position-relative image-overlap-shadow">
-                                                <a href="javascript:void();"><img class="img-fluid rounded w-100"
-                                                      src="images/browse-books/<%=img.thumbnail%>" alt=""></a>
-                                                <div class="view-book">
-                                                   <a href="/book-page/<%=img.productID%>"
-                                                      class="btn btn-sm btn-white">Mua Ngay</a>
-                                                </div>
-                                             </div>
-                                             <div class="col-6">
-                                                <div class="mb-2">
-                                                   <h6 class="mb-1">
-                                                      <%=img.productName%>
-                                                   </h6>
-                                                   <p class="font-size-13 line-height mb-1">
-                                                      <%=img.authorName%>
-                                                   </p>
-                                                   <div class="d-block line-height">
-                                                      <span class="font-size-11 text-warning">
-                                                         <i class="fa fa-star"></i>
-                                                         <i class="fa fa-star"></i>
-                                                         <i class="fa fa-star"></i>
-                                                         <i class="fa fa-star"></i>
-                                                         <i class="fa fa-star"></i>
-                                                      </span>
+                           <div class="iq-card-body">
+                              <div class="row">
+                                 <% listImg.forEach((img,index)=> {%>
+                                    <div class="col-sm-6 col-md-4 col-lg-3">
+                                       <div
+                                          class="iq-card iq-card-block iq-card-stretch iq-card-height browse-bookcontent">
+                                          <div class="iq-card-body p-0">
+                                             <div class="d-flex align-items-center">
+                                                <div class="col-6 p-0 position-relative image-overlap-shadow">
+                                                   <a href="javascript:void();"><img class="img-fluid rounded w-100"
+                                                         src="images/browse-books/<%=img.thumbnail%>" alt=""></a>
+                                                   <div class="view-book">
+                                                      <a href="/book-page/<%=img.productID%>"
+                                                         class="btn btn-sm btn-white">Mua Ngay</a>
                                                    </div>
                                                 </div>
-                                                <div class="price d-flex align-items-center">
-                                                   <h6><b>
-                                                         <%=img.unitPrice%>
-                                                      </b></h6>
-                                                </div>
-                                                <div class="iq-product-action">
-                                                   <a href="javascript:void();"><i
-                                                         class="ri-shopping-cart-2-fill text-primary"></i></a>
-                                                   <a href="javascript:void();" class="ml-2"><i
-                                                         class="ri-heart-fill text-danger"></i></a>
+                                                <div class="col-6">
+                                                   <div class="mb-2">
+                                                      <h6 class="mb-1">
+                                                         <%=img.productName%>
+                                                      </h6>
+                                                      <p class="font-size-13 line-height mb-1">
+                                                         <%=img.authorName%>
+                                                      </p>
+                                                      <div class="d-block line-height">
+                                                         <span class="font-size-11 text-warning">
+                                                            <i class="fa fa-star"></i>
+                                                            <i class="fa fa-star"></i>
+                                                            <i class="fa fa-star"></i>
+                                                            <i class="fa fa-star"></i>
+                                                            <i class="fa fa-star"></i>
+                                                         </span>
+                                                      </div>
+                                                   </div>
+                                                   <div class="price d-flex align-items-center">
+                                                      <h6><b>
+                                                            <%=img.unitPrice.toLocaleString() %>₫
+                                                         </b></h6>
+                                                   </div>
+
+                                                   <div class="iq-product-action">
+                                                      <a href="/book-page/<%=img.productID%>"><i
+                                                            class="ri-shopping-cart-2-fill text-primary"></i></a>
+                                                      <a href="javascript:void();" class="ml-2"><i
+                                                            class="ri-heart-fill text-danger"></i></a>
+                                                   </div>
                                                 </div>
                                              </div>
                                           </div>
                                        </div>
                                     </div>
-                                 </div>
-                                 <% });%>
-                                    <% %>
+                                    <% });%>
+                                       <% %>
 
+                              </div>
                            </div>
                         </div>
                      </div>
-                  </div>
-                  <div class="col-lg-6">
-                     <div class="iq-card iq-card-block iq-card-stretch iq-card-height">
-                        <div class="iq-card-header d-flex justify-content-between mb-0">
-                           <div class="iq-header-title">
-                              <h4 class="card-title">Best Seller</h4>
-                           </div>
-                           <div class="iq-card-header-toolbar d-flex align-items-center">
-                              <div class="dropdown">
-                                 <span class="dropdown-toggle p-0 text-body" id="dropdownMenuButton2"
-                                    data-toggle="dropdown">
-                                    Trong ngày<i class="ri-arrow-down-s-fill"></i>
-                                 </span>
-                                 <div class="dropdown-menu dropdown-menu-right shadow-none"
-                                    aria-labelledby="dropdownMenuButton2">
-                                    <a class="dropdown-item" href="#">Ngày</a>
-                                    <a class="dropdown-item" href="#">Tuần</a>
-                                    <a class="dropdown-item" href="#">Tháng</a>
-                                 </div>
+                     <div class="col-lg-6">
+                        <div class="iq-card iq-card-block iq-card-stretch iq-card-height">
+                           <div class="iq-card-header d-flex justify-content-between mb-0">
+                              <div class="iq-header-title">
+                                 <h4 class="card-title">Best Seller</h4>
                               </div>
-                           </div>
-                        </div>
-                        <div class="iq-card-body">
-                           <div class="row align-items-center">
-                              <div class="col-sm-5 pr-0">
-                                 <a href="javascript:void();"><img class="img-fluid rounded w-100"
-                                       src="images/new_realeases/img01.jpg" alt=""></a>
-                              </div>
-                              <div class="col-sm-7 mt-3 mt-sm-0">
-                                 <h4 class="mb-2">Payback Time </br> Ngày Đòi Nợ</h4>
-                                 <p class="mb-2">Tác Giả : Phill Town</p>
-                                 <div class="mb-2 d-block">
-                                    <span class="font-size-12 text-warning">
-                                       <i class="fa fa-star"></i>
-                                       <i class="fa fa-star"></i>
-                                       <i class="fa fa-star"></i>
-                                       <i class="fa fa-star"></i>
-                                       <i class="fa fa-star"></i>
+                              <div class="iq-card-header-toolbar d-flex align-items-center">
+                                 <div class="dropdown">
+                                    <span class="dropdown-toggle p-0 text-body" id="dropdownMenuButton2"
+                                       data-toggle="dropdown">
+                                       Trong ngày<i class="ri-arrow-down-s-fill"></i>
                                     </span>
+                                    <div class="dropdown-menu dropdown-menu-right shadow-none"
+                                       aria-labelledby="dropdownMenuButton2">
+                                       <a class="dropdown-item" href="#">Ngày</a>
+                                       <a class="dropdown-item" href="#">Tuần</a>
+                                       <a class="dropdown-item" href="#">Tháng</a>
+                                    </div>
                                  </div>
-                                 <span class="text-dark mb-3 d-block">NGÀY ĐÒI NỢ – Payback Time
-                                    “Một cuộc sống hạnh phúc được bắt đầu từ những quyết định đầu tư khôn ngoan”</span>
-                                 <button type="submit" class="btn btn-primary learn-more">Xem thêm</button>
+                              </div>
+                           </div>
+                           <div class="iq-card-body">
+                              <div class="row align-items-center">
+                                 <div class="col-sm-5 pr-0">
+                                    <a href="javascript:void();"><img class="img-fluid rounded w-100"
+                                          src="images/new_realeases/img01.jpg" alt=""></a>
+                                 </div>
+                                 <div class="col-sm-7 mt-3 mt-sm-0">
+                                    <h4 class="mb-2">Payback Time </br> Ngày Đòi Nợ</h4>
+                                    <p class="mb-2">Tác Giả : Phill Town</p>
+                                    <div class="mb-2 d-block">
+                                       <span class="font-size-12 text-warning">
+                                          <i class="fa fa-star"></i>
+                                          <i class="fa fa-star"></i>
+                                          <i class="fa fa-star"></i>
+                                          <i class="fa fa-star"></i>
+                                          <i class="fa fa-star"></i>
+                                       </span>
+                                    </div>
+                                    <span class="text-dark mb-3 d-block">NGÀY ĐÒI NỢ – Payback Time
+                                       “Một cuộc sống hạnh phúc được bắt đầu từ những quyết định đầu tư khôn
+                                       ngoan”</span>
+                                    <button type="submit" class="btn btn-primary learn-more">Xem thêm</button>
+                                 </div>
                               </div>
                            </div>
                         </div>
                      </div>
-                  </div>
-                  <div class="col-lg-6">
-                     <div class="iq-card iq-card-block iq-card-stretch iq-card-height">
-                        <div class="iq-card-header d-flex justify-content-between mb-0">
-                           <div class="iq-header-title">
-                              <h4 class="card-title">Nhà Sách TV</h4>
-                           </div>
-                           <div class="iq-card-header-toolbar d-flex align-items-center">
-                              <div class="dropdown">
-                                 <span class="dropdown-toggle p-0 text-body" id="dropdownMenuButton3"
-                                    data-toggle="dropdown">
-                                    Ngày<i class="ri-arrow-down-s-fill"></i>
-                                 </span>
-                                 <div class="dropdown-menu dropdown-menu-right shadow-none"
-                                    aria-labelledby="dropdownMenuButton3">
-                                    <a class="dropdown-item" href="#">Tuần</a>
-                                    <a class="dropdown-item" href="#">Theo Tháng</a>
+                     <div class="col-lg-6">
+                        <div class="iq-card iq-card-block iq-card-stretch iq-card-height">
+                           <div class="iq-card-header d-flex justify-content-between mb-0">
+                              <div class="iq-header-title">
+                                 <h4 class="card-title">Nhà Sách TV</h4>
+                              </div>
+                              <div class="iq-card-header-toolbar d-flex align-items-center">
+                                 <div class="dropdown">
+                                    <span class="dropdown-toggle p-0 text-body" id="dropdownMenuButton3"
+                                       data-toggle="dropdown">
+                                       Ngày<i class="ri-arrow-down-s-fill"></i>
+                                    </span>
+                                    <div class="dropdown-menu dropdown-menu-right shadow-none"
+                                       aria-labelledby="dropdownMenuButton3">
+                                       <a class="dropdown-item" href="#">Tuần</a>
+                                       <a class="dropdown-item" href="#">Theo Tháng</a>
+                                    </div>
                                  </div>
                               </div>
                            </div>
-                        </div>
-                        <div class="iq-card-body">
-                           <ul class="list-inline row mb-0 align-items-center iq-scrollable-block">
-                              <li class="col-sm-6 d-flex mb-3 align-items-center">
-                                 <div class="icon iq-icon-box mr-3">
-                                    <a href="javascript:void();"><img class="img-fluid avatar-60 rounded-circle"
-                                          src="images/user/1.jpg" alt=""></a>
-                                 </div>
-                                 <div class="mt-1">
-                                    <h6>Kinh Tế</h6>
-                                    <p class="mb-0 text-primary">Publish Books: <span class="text-body">2831</span></p>
-                                 </div>
-                              </li>
-                              <li class="col-sm-6 d-flex mb-3 align-items-center">
-                                 <div class="icon iq-icon-box mr-3">
-                                    <a href="javascript:void();"><img class="img-fluid avatar-60 rounded-circle"
-                                          src="images/user/1.jpg" alt=""></a>
-                                 </div>
-                                 <div class="mt-1">
-                                    <h6>Văn Học</h6>
-                                    <p class="mb-0 text-primary">Publish Books: <span class="text-body">432</span></p>
-                                 </div>
-                              </li>
-                              <li class="col-sm-6 d-flex mb-3 align-items-center">
-                                 <div class="icon iq-icon-box mr-3">
-                                    <a href="javascript:void();"><img class="img-fluid avatar-60 rounded-circle"
-                                          src="images/user/1.jpg" alt=""></a>
-                                 </div>
-                                 <div class="mt-1">
-                                    <h6>Tâm Lý - Kĩ Năng Sống</h6>
-                                    <p class="mb-0 text-primary">Publish Books: <span class="text-body">5471</span></p>
-                                 </div>
-                              </li>
-                              <li class="col-sm-6 d-flex mb-3 align-items-center">
-                                 <div class="icon iq-icon-box mr-3">
-                                    <a href="javascript:void();"><img class="img-fluid avatar-60 rounded-circle"
-                                          src="images/user/1.jpg" alt=""></a>
-                                 </div>
-                                 <div class="mt-1">
-                                    <h6>Sách Giáo Khoa</h6>
-                                    <p class="mb-0 text-primary">Publish Books: <span class="text-body">8764</span></p>
-                                 </div>
-                              </li>
-                              <li class="col-sm-6 d-flex mb-3 align-items-center">
-                                 <div class="icon iq-icon-box mr-3">
-                                    <a href="javascript:void();"><img class="img-fluid avatar-60 rounded-circle"
-                                          src="images/user/1.jpg" alt=""></a>
-                                 </div>
-                                 <div class="mt-1">
-                                    <h6>Chính trị – pháp luật</h6>
-                                    <p class="mb-0 text-primary">Publish Books: <span class="text-body">8987</span></p>
-                                 </div>
-                              </li>
-                              <li class="col-sm-6 d-flex mb-3 align-items-center">
-                                 <div class="icon iq-icon-box mr-3">
-                                    <a href="javascript:void();"><img class="img-fluid avatar-60 rounded-circle"
-                                          src="images/user/1.jpg" alt=""></a>
-                                 </div>
-                                 <div class="mt-1">
-                                    <h6>Khoa Học - Công Nghệ </h6>
-                                    <p class="mb-0 text-primary">Publish Books: <span class="text-body">2831</span></p>
-                                 </div>
-                              </li>
+                           <div class="iq-card-body">
+                              <ul class="list-inline row mb-0 align-items-center iq-scrollable-block">
+                                 <li class="col-sm-6 d-flex mb-3 align-items-center">
+                                    <div class="icon iq-icon-box mr-3">
+                                       <a href="javascript:void();"><img class="img-fluid avatar-60 rounded-circle"
+                                             src="images/user/1.jpg" alt=""></a>
+                                    </div>
+                                    <div class="mt-1">
+                                       <h6>Kinh Tế</h6>
+                                       <p class="mb-0 text-primary">Publish Books: <span class="text-body">2831</span>
+                                       </p>
+                                    </div>
+                                 </li>
+                                 <li class="col-sm-6 d-flex mb-3 align-items-center">
+                                    <div class="icon iq-icon-box mr-3">
+                                       <a href="javascript:void();"><img class="img-fluid avatar-60 rounded-circle"
+                                             src="images/user/1.jpg" alt=""></a>
+                                    </div>
+                                    <div class="mt-1">
+                                       <h6>Văn Học</h6>
+                                       <p class="mb-0 text-primary">Publish Books: <span class="text-body">432</span>
+                                       </p>
+                                    </div>
+                                 </li>
+                                 <li class="col-sm-6 d-flex mb-3 align-items-center">
+                                    <div class="icon iq-icon-box mr-3">
+                                       <a href="javascript:void();"><img class="img-fluid avatar-60 rounded-circle"
+                                             src="images/user/1.jpg" alt=""></a>
+                                    </div>
+                                    <div class="mt-1">
+                                       <h6>Tâm Lý - Kĩ Năng Sống</h6>
+                                       <p class="mb-0 text-primary">Publish Books: <span class="text-body">5471</span>
+                                       </p>
+                                    </div>
+                                 </li>
+                                 <li class="col-sm-6 d-flex mb-3 align-items-center">
+                                    <div class="icon iq-icon-box mr-3">
+                                       <a href="javascript:void();"><img class="img-fluid avatar-60 rounded-circle"
+                                             src="images/user/1.jpg" alt=""></a>
+                                    </div>
+                                    <div class="mt-1">
+                                       <h6>Sách Giáo Khoa</h6>
+                                       <p class="mb-0 text-primary">Publish Books: <span class="text-body">8764</span>
+                                       </p>
+                                    </div>
+                                 </li>
+                                 <li class="col-sm-6 d-flex mb-3 align-items-center">
+                                    <div class="icon iq-icon-box mr-3">
+                                       <a href="javascript:void();"><img class="img-fluid avatar-60 rounded-circle"
+                                             src="images/user/1.jpg" alt=""></a>
+                                    </div>
+                                    <div class="mt-1">
+                                       <h6>Chính trị – pháp luật</h6>
+                                       <p class="mb-0 text-primary">Publish Books: <span class="text-body">8987</span>
+                                       </p>
+                                    </div>
+                                 </li>
+                                 <li class="col-sm-6 d-flex mb-3 align-items-center">
+                                    <div class="icon iq-icon-box mr-3">
+                                       <a href="javascript:void();"><img class="img-fluid avatar-60 rounded-circle"
+                                             src="images/user/1.jpg" alt=""></a>
+                                    </div>
+                                    <div class="mt-1">
+                                       <h6>Khoa Học - Công Nghệ </h6>
+                                       <p class="mb-0 text-primary">Publish Books: <span class="text-body">2831</span>
+                                       </p>
+                                    </div>
+                                 </li>
 
 
-                           </ul>
+                              </ul>
+                           </div>
                         </div>
                      </div>
-                  </div>
-                  <div class="col-lg-12">
-                     <div class="iq-card iq-card-block iq-card-stretch iq-card-height">
-                        <div class="iq-card-header d-flex justify-content-between align-items-center position-relative">
-                           <div class="iq-header-title">
-                              <h4 class="card-title mb-0">Sách yêu thích</h4>
+                     <div class="col-lg-12">
+                        <div class="iq-card iq-card-block iq-card-stretch iq-card-height">
+                           <div
+                              class="iq-card-header d-flex justify-content-between align-items-center position-relative">
+                              <div class="iq-header-title">
+                                 <h4 class="card-title mb-0">Sách yêu thích</h4>
+                              </div>
+                              <div class="iq-card-header-toolbar d-flex align-items-center">
+                                 <a href="category.html" class="btn btn-sm btn-primary view-more">Xem thêm</a>
+                              </div>
                            </div>
-                           <div class="iq-card-header-toolbar d-flex align-items-center">
-                              <a href="category.html" class="btn btn-sm btn-primary view-more">Xem thêm</a>
+                           <div class="iq-card-body favorites-contens">
+                              <ul id="favorites-slider" class="list-inline p-0 mb-0 row">
+                                 <li class="col-md-4">
+                                    <div class="d-flex align-items-center">
+                                       <div class="col-5 p-0 position-relative">
+                                          <a href="javascript:void();">
+                                             <img src="images/favorite/01.jpg" class="img-fluid rounded w-100" alt="">
+                                          </a>
+                                       </div>
+                                       <div class="col-7">
+                                          <h5 class="mb-2">D. Trump - Nghệ Thuật Đàm Phán</h5>
+                                          <p class="mb-2">Tác giả : Pedro Araez</p>
+                                          <div
+                                             class="d-flex justify-content-between align-items-center text-dark font-size-13">
+                                             <span>Đã bán</span>
+                                             <span class="mr-4">69</span>
+                                          </div>
+                                          <div class="iq-progress-bar-linear d-inline-block w-100">
+                                             <div class="iq-progress-bar iq-bg-primary">
+                                                <span class="bg-primary" data-percent="65"></span>
+                                             </div>
+                                          </div>
+                                          <a href="#" class="text-dark">Đọc ngay<i
+                                                class="ri-arrow-right-s-line"></i></a>
+                                       </div>
+                                    </div>
+                                 </li>
+                                 <li class="col-md-4">
+                                    <div class="d-flex align-items-center">
+                                       <div class="col-5 p-0 position-relative">
+                                          <a href="javascript:void();">
+                                             <img src="images/favorite/02.jpg" class="img-fluid rounded w-100" alt="">
+                                          </a>
+                                       </div>
+                                       <div class="col-7">
+                                          <h5 class="mb-2">Một Đời Quản Trị</h5>
+                                          <p class="mb-2">Tác giả : Michael klock</p>
+                                          <div
+                                             class="d-flex justify-content-between align-items-center text-dark font-size-13">
+                                             <span>Đã bán</span>
+                                             <span class="mr-4">450</span>
+                                          </div>
+                                          <div class="iq-progress-bar-linear d-inline-block w-100">
+                                             <div class="iq-progress-bar iq-bg-danger">
+                                                <span class="bg-danger" data-percent="45"></span>
+                                             </div>
+                                          </div>
+                                          <a href="#" class="text-dark">Đọc ngay<i
+                                                class="ri-arrow-right-s-line"></i></a>
+                                       </div>
+                                    </div>
+                                 </li>
+                                 <li class="col-md-4">
+                                    <div class="d-flex align-items-center">
+                                       <div class="col-5 p-0 position-relative">
+                                          <a href="javascript:void();">
+                                             <img src="images/favorite/03.jpg" class="img-fluid rounded w-100" alt="">
+                                          </a>
+                                       </div>
+                                       <div class="col-7">
+                                          <h5 class="mb-2">Người Bán Hàng Vĩ Đại Nhất Thế Giới</h5>
+                                          <p class="mb-2">Tác giả : Daniel Ace</p>
+                                          <div
+                                             class="d-flex justify-content-between align-items-center text-dark font-size-13">
+                                             <span>Đã bán</span>
+                                             <span class="mr-4">79</span>
+                                          </div>
+                                          <div class="iq-progress-bar-linear d-inline-block w-100">
+                                             <div class="iq-progress-bar iq-bg-info">
+                                                <span class="bg-info" data-percent="78"></span>
+                                             </div>
+                                          </div>
+                                          <a href="#" class="text-dark">Đọc ngay<i
+                                                class="ri-arrow-right-s-line"></i></a>
+                                       </div>
+                                    </div>
+                                 </li>
+                                 <li class="col-md-4">
+                                    <div class="d-flex align-items-center">
+                                       <div class="col-5 p-0 position-relative">
+                                          <a href="javascript:void();">
+                                             <img src="images/favorite/04.jpg" class="img-fluid rounded w-100" alt="">
+                                          </a>
+                                       </div>
+                                       <div class="col-7">
+                                          <h5 class="mb-2">Economix- Các Nền Kinh Tế Vận Hành</h5>
+                                          <p class="mb-2">Tác giả : Luka Afton</p>
+                                          <div
+                                             class="d-flex justify-content-between align-items-center text-dark font-size-13">
+                                             <span>Đã bán</span>
+                                             <span class="mr-4">900</span>
+                                          </div>
+                                          <div class="iq-progress-bar-linear d-inline-block w-100">
+                                             <div class="iq-progress-bar iq-bg-success">
+                                                <span class="bg-success" data-percent="90"></span>
+                                             </div>
+                                          </div>
+                                          <a href="#" class="text-dark">Đọc ngay<i
+                                                class="ri-arrow-right-s-line"></i></a>
+                                       </div>
+                                    </div>
+                                 </li>
+                              </ul>
                            </div>
-                        </div>
-                        <div class="iq-card-body favorites-contens">
-                           <ul id="favorites-slider" class="list-inline p-0 mb-0 row">
-                              <li class="col-md-4">
-                                 <div class="d-flex align-items-center">
-                                    <div class="col-5 p-0 position-relative">
-                                       <a href="javascript:void();">
-                                          <img src="images/favorite/01.jpg" class="img-fluid rounded w-100" alt="">
-                                       </a>
-                                    </div>
-                                    <div class="col-7">
-                                       <h5 class="mb-2">D. Trump - Nghệ Thuật Đàm Phán</h5>
-                                       <p class="mb-2">Tác giả : Pedro Araez</p>
-                                       <div
-                                          class="d-flex justify-content-between align-items-center text-dark font-size-13">
-                                          <span>Đã bán</span>
-                                          <span class="mr-4">69</span>
-                                       </div>
-                                       <div class="iq-progress-bar-linear d-inline-block w-100">
-                                          <div class="iq-progress-bar iq-bg-primary">
-                                             <span class="bg-primary" data-percent="65"></span>
-                                          </div>
-                                       </div>
-                                       <a href="#" class="text-dark">Đọc ngay<i class="ri-arrow-right-s-line"></i></a>
-                                    </div>
-                                 </div>
-                              </li>
-                              <li class="col-md-4">
-                                 <div class="d-flex align-items-center">
-                                    <div class="col-5 p-0 position-relative">
-                                       <a href="javascript:void();">
-                                          <img src="images/favorite/02.jpg" class="img-fluid rounded w-100" alt="">
-                                       </a>
-                                    </div>
-                                    <div class="col-7">
-                                       <h5 class="mb-2">Một Đời Quản Trị</h5>
-                                       <p class="mb-2">Tác giả : Michael klock</p>
-                                       <div
-                                          class="d-flex justify-content-between align-items-center text-dark font-size-13">
-                                          <span>Đã bán</span>
-                                          <span class="mr-4">450</span>
-                                       </div>
-                                       <div class="iq-progress-bar-linear d-inline-block w-100">
-                                          <div class="iq-progress-bar iq-bg-danger">
-                                             <span class="bg-danger" data-percent="45"></span>
-                                          </div>
-                                       </div>
-                                       <a href="#" class="text-dark">Đọc ngay<i class="ri-arrow-right-s-line"></i></a>
-                                    </div>
-                                 </div>
-                              </li>
-                              <li class="col-md-4">
-                                 <div class="d-flex align-items-center">
-                                    <div class="col-5 p-0 position-relative">
-                                       <a href="javascript:void();">
-                                          <img src="images/favorite/03.jpg" class="img-fluid rounded w-100" alt="">
-                                       </a>
-                                    </div>
-                                    <div class="col-7">
-                                       <h5 class="mb-2">Người Bán Hàng Vĩ Đại Nhất Thế Giới</h5>
-                                       <p class="mb-2">Tác giả : Daniel Ace</p>
-                                       <div
-                                          class="d-flex justify-content-between align-items-center text-dark font-size-13">
-                                          <span>Đã bán</span>
-                                          <span class="mr-4">79</span>
-                                       </div>
-                                       <div class="iq-progress-bar-linear d-inline-block w-100">
-                                          <div class="iq-progress-bar iq-bg-info">
-                                             <span class="bg-info" data-percent="78"></span>
-                                          </div>
-                                       </div>
-                                       <a href="#" class="text-dark">Đọc ngay<i class="ri-arrow-right-s-line"></i></a>
-                                    </div>
-                                 </div>
-                              </li>
-                              <li class="col-md-4">
-                                 <div class="d-flex align-items-center">
-                                    <div class="col-5 p-0 position-relative">
-                                       <a href="javascript:void();">
-                                          <img src="images/favorite/04.jpg" class="img-fluid rounded w-100" alt="">
-                                       </a>
-                                    </div>
-                                    <div class="col-7">
-                                       <h5 class="mb-2">Economix- Các Nền Kinh Tế Vận Hành</h5>
-                                       <p class="mb-2">Tác giả : Luka Afton</p>
-                                       <div
-                                          class="d-flex justify-content-between align-items-center text-dark font-size-13">
-                                          <span>Đã bán</span>
-                                          <span class="mr-4">900</span>
-                                       </div>
-                                       <div class="iq-progress-bar-linear d-inline-block w-100">
-                                          <div class="iq-progress-bar iq-bg-success">
-                                             <span class="bg-success" data-percent="90"></span>
-                                          </div>
-                                       </div>
-                                       <a href="#" class="text-dark">Đọc ngay<i class="ri-arrow-right-s-line"></i></a>
-                                    </div>
-                                 </div>
-                              </li>
-                           </ul>
                         </div>
                      </div>
                   </div>
                </div>
             </div>
-         </div>
    </div>
    <!-- Wrapper END -->
    <!-- Footer -->

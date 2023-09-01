@@ -36,7 +36,7 @@ module.exports = {
     postUpdateCategory: async (name, id) => {
         try {
             let [check] = await connection.query('select * from category where categoryId=?', [id]);
-            console.log(check);
+
             if (check != "") {
 
                 let [result] = await connection.query('update category set categoriesName=? where categoryId=?', [name, id]);
@@ -53,7 +53,7 @@ module.exports = {
     postDeleteAuthorSevice: async (id) => {
         try {
             let [check] = await connection.query('select * from category where categoryId=?', [id])
-            console.log(check[0].categoryId, 'id')
+
             if (check[0].categoryId == id) {
 
                 let [result] = await connection.query('delete from category where categoryId=?', [id])

@@ -45,8 +45,7 @@ module.exports = {
     postDeleteAuthorSevice: async (id) => {
         try {
             let [check] = await connection.query('select * from author where authorId=?', [id])
-            console.log('check', check)
-            console.log(check[0].author)
+
 
             if (check[0].authorId == id) {
 
