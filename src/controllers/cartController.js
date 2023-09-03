@@ -1,14 +1,13 @@
 
-const { createCart, getcartSevice } = require('../service/cartSevice')
+const { createCart, getcartSevice, updateQuantity, deleteCartSevice, coutcartSevice } = require('../service/cartSevice')
 
 module.exports = {
-    getCart: async (req, res) => {
+    getCart: async (req, res, next) => {
         let email = req.session.email
         let result = await getcartSevice(email)
+        let count = await coutcartSevice(email)
+        res.render('cart.ejs', { listcart: result, count: count })
 
-        console.log(email, 'email')
-
-        res.render('cart.ejs', { listcart: result })
         return result
     },
     postCart: async (req, res) => {
@@ -21,13 +20,13 @@ module.exports = {
         }
         let count = 0
         let quantity = rs.quatity
-        console.log('quantity:', rs)
+
         for (let i = 0; i < req.session.cart.length; i++) {
 
             if (req.session.cart[i].product_id === product_id) {
                 req.session.cart[i].quantity += 1
                 count++;
-                console.log('req.session.cart[i].quantity', req.session.cart[i].quantity)
+
             }
         }
         if (count == 0) {
@@ -38,7 +37,19 @@ module.exports = {
             }
             req.session.cart.push(data_cart);
         }
-        console.log(req.session.cart.product_id, 'ok')
+
+        res.redirect('/getCart')
+    },
+    updateCart: async (req, res) => {
+        let quantity = req.body.quantity
+        let id = req.body.id
+
+        let result = await updateQuantity(id, quantity)
+    },
+    deleteCart: async (req, res) => {
+        let id = req.params.id
+        let rs = await deleteCartSevice(id)
         res.redirect('/getCart')
     }
+
 }

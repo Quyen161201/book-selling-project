@@ -43,8 +43,9 @@
                                              <div class="row align-items-center">
                                                 <div class="col-sm-1">
                                                    <div class="form-check">
-                                                      <input class="form-check-input" type="checkbox"
-                                                         value=" <%=cart.cartId %>" id="flexCheckIndeterminate">
+                                                      <input class="form-check-input" type="checkbox" name="checkbox"
+                                                         multiple value=" <%=cart.cartId %>" id="flexCheckIndeterminate"
+                                                         onclick="checkcart(this)">
 
                                                    </div>
                                                 </div>
@@ -61,7 +62,7 @@
                                                          <%=cart.productName%>
                                                       </h5>
                                                       <p class="text-success">Còn hàng</p>
-                                                      <input type="hidden" id="price" value="<%=cart.unitPrice%>">
+
                                                       <div class="price">
                                                          <h5>
                                                             <%=cart.unitPrice.toLocaleString()%> ₫
@@ -75,11 +76,17 @@
                                                          <div class="row align-items-center mt-2">
                                                             <div class="col-sm-7 col-md-6">
                                                                <button type="button" class="fa fa-minus qty-btn"
-                                                                  id="btn-minus"></button>
-                                                               <input name="quantity" type="text" id="quantity "
+                                                                  id="btn-minus" onblur="send(this)"></button>
+
+                                                               <input class="quantity" name="quantity" type="text"
+                                                                  onchange=" sendata(this)" id="quantity"
                                                                   value="<%=cart.quatity%>">
+                                                               <input type="hidden" id="id" value="<%=cart.cartId %>">
+
+                                                               <input type="hidden" id="price"
+                                                                  value="<%=cart.unitPrice%>">
                                                                <button type="button" class="fa fa-plus qty-btn "
-                                                                  id="btn-plus%>"></button>
+                                                                  id="btn-plus%> " onblur="send(this)"></button>
                                                             </div>
                                                             <div class="col-sm-5 col-md-6">
                                                                <span class="product-price">
@@ -89,8 +96,40 @@
                                                          </div>
                                                       </div>
                                                       <div class="col-sm-2">
-                                                         <a href="javascript:void();" class="text-dark font-size-20"><i
-                                                               class="ri-delete-bin-7-fill"></i></a>
+                                                         <button
+                                                            style="width: 24px; margin-left: 3px;margin-top: 8px; text-align: center; height: 25px; position: relative;"
+                                                            type="button" class="btn btn-danger"
+                                                            data-target="#deleteModal" data-toggle="modal"><i
+                                                               class="ri-delete-bin-line"
+                                                               style="position: absolute; top: 2px; right: 0px;"></i></button>
+
+                                                      </div>
+                                                      <div class="modal fade" id="deleteModal">
+                                                         <div class="modal-dialog">
+                                                            <div class="modal-content">
+                                                               <div class="modal-header">
+                                                                  <h5 class="modal-title" id="exampleModalLabel">
+                                                                     Confirm Delete
+                                                                  </h5>
+                                                                  <button type="button" class="close"
+                                                                     data-dismiss="modal" aria-label="Close">
+                                                                     <span aria-hidden="true">&times;</span>
+                                                                  </button>
+                                                               </div>
+                                                               <div class="modal-body">
+                                                                  <p>Bạn muốn xóa sản phẩm khỏi giỏ hàng</p>
+                                                               </div>
+                                                               <div class="modal-footer">
+                                                                  <button class="btn btn-secondary" id="close-modal"
+                                                                     class="close" data-dismiss="modal"
+                                                                     aria-label="Close">No</button>
+                                                                  <form action="/deleteCart/<%=cart.cartId %>"
+                                                                     method="post">
+                                                                     <button class="btn btn-danger">Yes</button>
+                                                                  </form>
+                                                               </div>
+                                                            </div>
+                                                         </div>
                                                       </div>
                                                    </div>
                                                 </div>
@@ -113,11 +152,11 @@
                                     <p><b>Chi tiết</b></p>
                                     <div class="d-flex justify-content-between mb-1">
                                        <span>Tổng</span>
-                                       <span>
+                                       <span id="total">
 
                                        </span>
                                     </div>
-                                    <div class="d-flex justify-content-between mb-1">
+                                    <!-- <div class="d-flex justify-content-between mb-1">
                                        <span>Giảm giá</span>
                                        <span class="text-success">19.900đ</span>
                                     </div>
@@ -135,10 +174,28 @@
                                        <span class="text-dark"><strong>
 
                                           </strong></span>
-                                    </div>
+                                    </div> -->
                                     <a id="place-order" href="javascript:void();"
-                                       class="btn btn-primary d-block mt-3 next">Đặt hàng</a>
-
+                                       class="btn btn-primary d-block mt-3 next" onclick="order()">Đặt hàng</a>
+                                    <div class="modal" tabindex="-1">
+                                       <div class="modal-dialog">
+                                          <div class="modal-content">
+                                             <div class="modal-header">
+                                                <h5 class="modal-title">Modal title</h5>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                   aria-label="Close"></button>
+                                             </div>
+                                             <div class="modal-body">
+                                                <p>Modal body text goes here.</p>
+                                             </div>
+                                             <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary"
+                                                   data-bs-dismiss="modal">Close</button>
+                                                <button type="button" class="btn btn-primary">Save changes</button>
+                                             </div>
+                                          </div>
+                                       </div>
+                                    </div>
 
                                  </div>
                               </div>
@@ -344,24 +401,79 @@
    <%- include ("boostrapJs.ejs") %>
 
       <script>
+         let total = 0;
+         function checkcart(e) {
+            let checkbox = document.getElementsByName('checkbox')
+
+            let arr = []
+            let check = e.checked;
+
+            let btnminus = e.parentElement.parentElement.parentElement.childNodes[7].childNodes[1].childNodes[1].children[0].childNodes[1].childNodes[1];
+            let btninput = e.parentElement.parentElement.parentElement.childNodes[7].childNodes[1].childNodes[1].children[0].childNodes[1].childNodes[3];
+            let btnplus = e.parentElement.parentElement.parentElement.childNodes[7].childNodes[1].childNodes[1].children[0].childNodes[1].childNodes[9];
+
+            let price = e.parentElement.parentElement.parentElement.childNodes[7].childNodes[1].childNodes[1].children[0].childNodes[1].childNodes[7].value;
+            let quantity = e.parentElement.parentElement.parentElement.childNodes[7].childNodes[1].childNodes[1].children[0].childNodes[1].childNodes[3].value;
+            let tong = document.getElementById('total')
+            if (check === true) {
+               total += quantity * price
+               btnminus.setAttribute('disabled', '');
+               btninput.setAttribute('disabled', '');
+               btnplus.setAttribute('disabled', '');
+
+               tong.innerText = `${total.toLocaleString()} ₫`
+
+            }
+
+            else {
+               total -= quantity * price
+               btnminus.removeAttribute('disabled');
+               btninput.removeAttribute('disabled');
+               btnplus.removeAttribute('disabled')
+               tong.innerText = `${total.toLocaleString()} ₫`
+
+            }
+         }
+         function order(e) {
+            let total = document.getElementById('total')
+            let modal = document.getElementsByClassName('modal')[2]
+            console.log(modal)
+
+            if (total.innerText == "" || total.innerText == '0 ₫') {
+               alert("Bạn chưa chọn sản phẩm")
+               window.location.assign('/getcart')
+            }
+         }
+         function sendata(e) {
+            let price = e.parentElement.childNodes[7].value
+            let soluong = e.value
+            let total = soluong * price
+            console.log(total, 'total')
+            let id = e.parentElement.childNodes[5];
+            let span = e.parentElement.parentElement.childNodes[3].childNodes[1]
+            span.innerText = `${total.toLocaleString()} ₫`
+            console.log(span)
+            setTimeout(() => {
+               fetch('updateCart', {
+                  method: 'post',
+                  headers: { 'content-type': 'application/json' },
+                  body: JSON.stringify({ quantity: e.value, id: id.value })
+               })
+            }, 2000);
+
+         }
+         function send(e) {
+
+            let id = e.parentElement.childNodes[5]
+            let quantity = e.parentElement.childNodes[3]
+            fetch('updateCart', {
+               method: 'post',
+               headers: { 'content-type': 'application/json' },
+               body: JSON.stringify({ quantity: quantity.value, id: id.value })
+            })
 
 
-
-
-         // (function ($) {
-         //    let listquantity = document.getElementsByName('quantity')
-         //    let index = 1;
-
-
-         //    $(this).on("change", function (e) {
-         //       let price = $('#price').val();
-         //       let quantity = $(`#soluong`).val();
-         //       console.log('quantity', quantity)
-         //       $('.product-price').html(`${price * quantity.toLocaleString()}`);
-
-         //    })
-         // }
-         // )(jQuery)
+         }
 
       </script>
 </body>

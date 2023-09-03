@@ -11,7 +11,7 @@ const { searchProduct } = require('../controllers/serach');
 const { getRegister, postRegister, getLogin, postLogin, getLogout } = require('../controllers/acount')
 const { checkSesssion } = require('../middleware/userMiddle')
 
-const { getCart, postCart } = require('../controllers/cartController')
+const { getCart, postCart, updateCart, deleteCart } = require('../controllers/cartController')
 
 
 // index
@@ -63,6 +63,9 @@ router.get('/book-page/:id', checkSesssion, bookDetails)
 // cart
 router.get('/getcart', checkSesssion, getCart)
 router.post('/cart/:id', checkSesssion, postCart)
+router.post('/updateCart', updateCart)
+router.post('/deleteCart/:id', deleteCart)
+
 
 
 

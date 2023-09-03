@@ -668,19 +668,36 @@ Index Of Script
     jQuery('.qty-btn').on('click', function () {
       var id = jQuery(this).attr('id');
 
-      var val = parseInt(jQuery('#quantity').val());
+      let price = jQuery(this).parent().find('#price').val()
 
+      let productPrice = jQuery(this).parent().parent().find('.product-price')
+      console.log('Product', productPrice[0].innerText)
+
+
+      var val = parseInt(jQuery(this).parent().find('.quantity').val());
+      let tolal = 0;
       if (id == 'btn-minus') {
         if (val != 0) {
-          jQuery('#quantity').val(val - 1);
+          let quantity = jQuery(this).parent().find('.quantity').val(val - 1);
+          tolal = quantity.val() * price
+          tolal = quantity.val() * price;
+          productPrice[0].innerText = `${tolal.toLocaleString()} ₫`
+
         }
         else {
-          jQuery('#quantity').val(0);
+          let quantity = jQuery(this).parent().find('.quantity').val(0);
+          tolal = quantity.val() * price;
+          productPrice[0].innerText = `${tolal.toLocaleString()} ₫`
+
         }
 
       }
       else {
-        jQuery('#quantity').val(val + 1);
+        let quantity = jQuery(this).parent().find('.quantity').val(val + 1);
+        tolal = quantity.val() * price;
+        tolal = quantity.val() * price;
+        productPrice[0].innerText = `${tolal.toLocaleString()} ₫`
+
       }
     });
     $('.qty-btn')
