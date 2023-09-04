@@ -6,7 +6,7 @@ module.exports = {
             let [rs] = await connection.query('select user_id from res_users where email=?', [email])
             let user_id = rs[0].user_id
 
-            let [result] = await connection.query('select cartId,user_id,p.thumbnail ,p.productID ,quatity ,p.productName ,p.unitPrice  from cart c,products p where c.product_id =p.productID and user_id=? ', [user_id])
+            let [result] = await connection.query('select cartId,user_id,p.thumbnail ,p.productID ,quatity ,p.productName ,p.unitPrice,status  from cart c,products p where c.product_id =p.productID and user_id=? ', [user_id])
 
             return result
         } catch (error) {
@@ -16,15 +16,17 @@ module.exports = {
     updateQuantity: async (id, quantity) => {
         try {
             let [check] = await connection.query('select quatity from cart where cartId=?', [id])
-
-            if (check[0].quatity != quantity) {
+            let [checkunitstock] = await connection.query('select c.cartId,p.productName ,p.quantity,c.quatity  from cart c, products p where c.product_id =p.productID and c.cartId=?', [id]);
+            console.log(checkunitstock[0].quantity)
+            if (check[0].quatity != quantity && checkunitstock[0].quantity >= quantity && quantity > 0) {
 
                 let [rs] = await connection.query('update cart set quatity=? where cartId=?', [quantity, id])
-                return rs
-            }
-            else {
 
             }
+            else {
+                console.log('vuot qua hang trong kho')
+            }
+            return check
         }
         catch (error) {
             console.log('error', error)
@@ -72,6 +74,14 @@ module.exports = {
             console.log('Error', error)
         }
 
+    },
+    checkquantity: async (id) => {
+        try {
+            let [result] = await connection.query('select c.cartId,p.productName ,p.quantity,c.quatity  from cart c, products p where c.product_id =p.productID and c.cartId=?', [id])
+            return result
+        } catch (error) {
+            console.log(error)
+        }
     }
 
 }

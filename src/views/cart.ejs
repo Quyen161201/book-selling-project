@@ -61,7 +61,14 @@
                                                       <h5>
                                                          <%=cart.productName%>
                                                       </h5>
-                                                      <p class="text-success">Còn hàng</p>
+                                                      <p class="text-success">
+                                                         <% if(cart.status==1){ %>
+                                                            Còn hàng
+                                                            <% } else{ %>
+                                                               <p style="color: rgb(248, 71, 71);">Hết hàng</p>
+                                                               <% } %>
+
+                                                      </p>
 
                                                       <div class="price">
                                                          <h5>
@@ -76,17 +83,17 @@
                                                          <div class="row align-items-center mt-2">
                                                             <div class="col-sm-7 col-md-6">
                                                                <button type="button" class="fa fa-minus qty-btn"
-                                                                  id="btn-minus" onblur="send(this)"></button>
+                                                                  id="btn-minus" onclick="send(this)"></button>
 
-                                                               <input class="quantity" name="quantity" type="text"
-                                                                  onchange=" sendata(this)" id="quantity"
+                                                               <input aria-valuenow class="quantity" name="quantity"
+                                                                  type="text" onchange=" sendata(this)" id="quantity"
                                                                   value="<%=cart.quatity%>">
                                                                <input type="hidden" id="id" value="<%=cart.cartId %>">
 
                                                                <input type="hidden" id="price"
                                                                   value="<%=cart.unitPrice%>">
                                                                <button type="button" class="fa fa-plus qty-btn "
-                                                                  id="btn-plus%> " onblur="send(this)"></button>
+                                                                  id="btn-plus" onclick="send(this)"></button>
                                                             </div>
                                                             <div class="col-sm-5 col-md-6">
                                                                <span class="product-price">
@@ -113,7 +120,8 @@
                                                                   </h5>
                                                                   <button type="button" class="close"
                                                                      data-dismiss="modal" aria-label="Close">
-                                                                     <span aria-hidden="true">&times;</span>
+                                                                     <span aria-hidden="true"
+                                                                        id="close-span">&times;</span>
                                                                   </button>
                                                                </div>
                                                                <div class="modal-body">
@@ -177,25 +185,6 @@
                                     </div> -->
                                     <a id="place-order" href="javascript:void();"
                                        class="btn btn-primary d-block mt-3 next" onclick="order()">Đặt hàng</a>
-                                    <div class="modal" tabindex="-1">
-                                       <div class="modal-dialog">
-                                          <div class="modal-content">
-                                             <div class="modal-header">
-                                                <h5 class="modal-title">Modal title</h5>
-                                                <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                                   aria-label="Close"></button>
-                                             </div>
-                                             <div class="modal-body">
-                                                <p>Modal body text goes here.</p>
-                                             </div>
-                                             <div class="modal-footer">
-                                                <button type="button" class="btn btn-secondary"
-                                                   data-bs-dismiss="modal">Close</button>
-                                                <button type="button" class="btn btn-primary">Save changes</button>
-                                             </div>
-                                          </div>
-                                       </div>
-                                    </div>
 
                                  </div>
                               </div>
@@ -445,32 +434,112 @@
             }
          }
          function sendata(e) {
+            let modal = document.querySelector('.modal')
+            console.log(modal)
             let price = e.parentElement.childNodes[7].value
             let soluong = e.value
             let total = soluong * price
-            console.log(total, 'total')
             let id = e.parentElement.childNodes[5];
             let span = e.parentElement.parentElement.childNodes[3].childNodes[1]
-            span.innerText = `${total.toLocaleString()} ₫`
             console.log(span)
+            span.innerText = `${total.toLocaleString()} ₫`
+
+            fetch('updateCart', {
+               method: 'post',
+               headers: { 'content-type': 'application/json' },
+               body: JSON.stringify({ quantity: e.value, id: id.value })
+            }).then(res => res.json()).then(data => {
+               console.log(e.value)
+               if (data.checkdata >= e.value) {
+                  let btnPlus = e.parentElement.childNodes[9]
+
+               }
+               else {
+                  alert('Số lượng bạn chọn  vượt quá số lượng trong kho');
+                  e.value = data.sendata
+                  span.innerText = `${(data.sendata * price).toLocaleString()} ₫`
+               }
+               let closeModal = document.querySelector('#close-modal')
+               closeModal.onclick = (e) => {
+                  modal.style.display = "none";
+                  modal.classList = "modal fade";
+                  let spanClose = closeSpan.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.childNodes[1].childNodes[1].childNodes[3].childNodes[1]
+
+                  spanClose.innerText = `${(data.sendata * price).toLocaleString()} ₫`
+               }
+               let closeSpan = document.querySelector('#close-span')
+               closeSpan.onclick = (e) => {
+                  modal.style.display = "none";
+                  modal.classList = "modal fade";
+                  let spanClose = closeSpan.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.childNodes[1].childNodes[1].childNodes[3].childNodes[1]
+
+                  spanClose.innerText = `${(data.sendata * price).toLocaleString()} ₫`
+               }
+               console.log('soluong', soluong)
+               if (soluong <= 0) {
+                  modal.classList = "modal fade show";
+                  modal.style.display = "block";
+                  e.value = data.sendata
+
+
+               }
+
+
+
+            })
+
+         };
+
+         function send(e) {
+            let modal = document.querySelector('.modal')
+            let id = e.parentElement.childNodes[5]
+            let quantity = e.parentElement.childNodes[3]
+            let price = e.parentElement.parentElement.childNodes[1].childNodes[7].value
+
             setTimeout(() => {
                fetch('updateCart', {
                   method: 'post',
                   headers: { 'content-type': 'application/json' },
-                  body: JSON.stringify({ quantity: e.value, id: id.value })
+                  body: JSON.stringify({ quantity: quantity.value, id: id.value })
+               }).then(res => res.json()).then(data => {
+                  console.log(data);
+                  if (data.checkdata >= quantity.value) {
+                     let btnPlus = e.parentElement.childNodes[9]
+                     btnPlus.removeAttribute('disabled', '');
+
+                  }
+                  else {
+                     alert('Số lượng bạn chọn  vượt quá số lượng trong kho');
+                     e.setAttribute('disabled', '');
+
+                     quantity.value -= 1
+                  }
+                  let closeModal = document.querySelector('#close-modal')
+                  closeModal.onclick = (e) => {
+                     modal.style.display = "none";
+                     modal.classList = "modal fade";
+                     let spanClose = closeSpan.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.childNodes[1].childNodes[1].childNodes[3].childNodes[1]
+
+                     spanClose.innerText = `${(data.sendata * price).toLocaleString()} ₫`
+                  }
+                  let closeSpan = document.querySelector('#close-span')
+                  closeSpan.onclick = (e) => {
+                     modal.style.display = "none";
+                     modal.classList = "modal fade";
+                     let spanClose = closeSpan.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.childNodes[1].childNodes[1].childNodes[3].childNodes[1]
+                     spanClose.innerText = `${(data.sendata * price).toLocaleString()} ₫`
+                  }
+
+                  if (quantity.value <= 0) {
+                     modal.classList = "modal fade show";
+                     modal.style.display = "block";
+                     quantity.value = data.sendata
+
+                  }
+
                })
-            }, 2000);
+            }, 200);
 
-         }
-         function send(e) {
-
-            let id = e.parentElement.childNodes[5]
-            let quantity = e.parentElement.childNodes[3]
-            fetch('updateCart', {
-               method: 'post',
-               headers: { 'content-type': 'application/json' },
-               body: JSON.stringify({ quantity: quantity.value, id: id.value })
-            })
 
 
          }

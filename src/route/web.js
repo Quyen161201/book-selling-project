@@ -11,6 +11,8 @@ const { searchProduct } = require('../controllers/serach');
 const { getRegister, postRegister, getLogin, postLogin, getLogout } = require('../controllers/acount')
 const { checkSesssion } = require('../middleware/userMiddle')
 
+const { profile, postprofile } = require('../controllers/profileController')
+
 const { getCart, postCart, updateCart, deleteCart } = require('../controllers/cartController')
 
 
@@ -65,6 +67,11 @@ router.get('/getcart', checkSesssion, getCart)
 router.post('/cart/:id', checkSesssion, postCart)
 router.post('/updateCart', updateCart)
 router.post('/deleteCart/:id', deleteCart)
+
+//profile
+router.get('/profile', checkSesssion, profile);
+router.post('/postProfile', checkSesssion, postprofile)
+
 
 
 

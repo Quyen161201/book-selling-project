@@ -1,5 +1,5 @@
 
-const { createCart, getcartSevice, updateQuantity, deleteCartSevice, coutcartSevice } = require('../service/cartSevice')
+const { createCart, getcartSevice, updateQuantity, deleteCartSevice, coutcartSevice, checkquantity } = require('../service/cartSevice')
 
 module.exports = {
     getCart: async (req, res, next) => {
@@ -42,9 +42,16 @@ module.exports = {
     },
     updateCart: async (req, res) => {
         let quantity = req.body.quantity
+        console.log(quantity)
         let id = req.body.id
-
+        let check = await checkquantity(id)
+        let checkdata = check[0].quantity
         let result = await updateQuantity(id, quantity)
+        let sendata = result[0].quatity
+        return res.json({
+            checkdata,
+            sendata
+        })
     },
     deleteCart: async (req, res) => {
         let id = req.params.id

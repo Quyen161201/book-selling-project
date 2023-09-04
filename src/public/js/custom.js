@@ -675,9 +675,11 @@ Index Of Script
 
 
       var val = parseInt(jQuery(this).parent().find('.quantity').val());
+      console.log(val, 'val ')
       let tolal = 0;
       if (id == 'btn-minus') {
-        if (val != 0) {
+        if (val > 0) {
+
           let quantity = jQuery(this).parent().find('.quantity').val(val - 1);
           tolal = quantity.val() * price
           tolal = quantity.val() * price;
@@ -699,6 +701,7 @@ Index Of Script
         productPrice[0].innerText = `${tolal.toLocaleString()} ₫`
 
       }
+
     });
     $('.qty-btn')
 

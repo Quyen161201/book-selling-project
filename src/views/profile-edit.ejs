@@ -1,0 +1,395 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+   <!-- Required meta tags -->
+   <%- include ("head.ejs") %>
+</head>
+
+<body class="sidebar-main-active right-column-fixed">
+   <!-- loader Start -->
+   <div id="loading">
+      <div id="loading-center">
+      </div>
+   </div>
+   <!-- loader END -->
+   <!-- Wrapper Start -->
+   <div class="wrapper">
+      <!-- Sidebar  -->
+      <%- include ("sidebarIndex.ejs") %>
+         <!-- TOP Nav Bar -->
+         <%- include ("sidebar-top-index.ejs") %>
+
+            <!-- TOP Nav Bar END -->
+            <!-- Page Content  -->
+            <div id="content-page" class="content-page">
+               <div class="container-fluid">
+                  <div class="row">
+                     <div class="col-lg-12">
+                        <div class="iq-card">
+                           <div class="iq-card-body p-0">
+                              <div class="iq-edit-list">
+                                 <ul class="iq-edit-profile d-flex nav nav-pills">
+                                    <li class="col-md-3 p-0">
+                                       <a class="nav-link active" data-toggle="pill" href="#personal-information">
+                                          Thông tin cá nhân
+                                       </a>
+                                    </li>
+                                    <li class="col-md-3 p-0">
+                                       <a class="nav-link" data-toggle="pill" href="#chang-pwd">
+                                          Đổi mật khẩu
+                                       </a>
+                                    </li>
+                                    <li class="col-md-3 p-0">
+                                       <a class="nav-link" data-toggle="pill" href="#emailandsms">
+                                          Email và SMS
+                                       </a>
+                                    </li>
+                                    <li class="col-md-3 p-0">
+                                       <a class="nav-link" data-toggle="pill" href="#manage-contact">
+                                          Quản lý liên hệ
+                                       </a>
+                                    </li>
+                                 </ul>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                     <div class="col-lg-12">
+                        <div class="iq-edit-list-data">
+                           <div class="tab-content">
+                              <div class="tab-pane fade active show" id="personal-information" role="tabpanel">
+                                 <div class="iq-card">
+                                    <div class="iq-card-header d-flex justify-content-between">
+                                       <div class="iq-header-title">
+                                          <h4 class="card-title">Thông tin cá nhân</h4>
+                                       </div>
+                                    </div>
+                                    <div class="iq-card-body">
+                                       <form action="/postProfile" method="post" enctype="multipart/form-data">
+                                          <div class="form-group row align-items-center">
+                                             <div class="col-md-12">
+                                                <div class="profile-img-edit">
+                                                   <img class="profile-pic"
+                                                      src="/images/browse-books/<%=profile.thumbnail%>"
+                                                      alt="profile-pic">
+                                                   <div class="p-image">
+                                                      <i class="ri-pencil-line upload-button"></i>
+                                                      <input class="file-upload" type="file" accept="image/*"
+                                                         name="thumbnail" />
+                                                   </div>
+                                                </div>
+                                             </div>
+                                          </div>
+                                          <div class=" row align-items-center">
+                                             <div class="form-group col-sm-6">
+                                                <label for="fname">First Name:</label>
+                                                <input type="text" class="form-control" id="fname" name="fname"
+                                                   value="<%=profile.firstname%>" required>
+                                             </div>
+                                             <div class="form-group col-sm-6">
+                                                <label for="lname">Last Name:</label>
+                                                <input type="text" class="form-control" id="lname" name="lname"
+                                                   value="<%=profile.lastname%>" required>
+                                             </div>
+                                             <div class="form-group col-sm-6">
+                                                <label for="uname">Tên tài khoản:</label>
+                                                <input type="text" class="form-control" id="uname" name="username"
+                                                   value="<%=profile.name%>" required>
+                                             </div>
+
+                                             <div class="form-group col-sm-6">
+                                                <label class="d-block">Giới tính:</label>
+                                                <div class="custom-control custom-radio custom-control-inline">
+                                                   <input type="radio" value="1" id="customRadio6" name="customRadio1"
+                                                      class="custom-control-input" checked="">
+                                                   <label class="custom-control-label" for="customRadio6"> Nam </label>
+                                                </div>
+                                                <div class="custom-control custom-radio custom-control-inline">
+                                                   <input type="radio" value="0" id="customRadio7" name="customRadio1"
+                                                      class="custom-control-input">
+                                                   <label class="custom-control-label" for="customRadio7"> Nữ </label>
+                                                </div>
+
+                                             </div>
+
+                                             <div class="form-group col-sm-6">
+                                                <div class="form-group col-sm-6">
+                                                   <label for="dob">Ngày sinh:</label>
+                                                   <input type="date" class="form-control" id="dob" value="" name="date"
+                                                      required>
+                                                </div>
+                                                <div class="form-group">
+                                                   <label>Tỉnh/Thành phố:</label>
+                                                   <select class="form-control" id="city" name="city" required>
+                                                      <% if(profile.city){ %>
+                                                         <option value="">
+                                                            <%=profile.city%>
+                                                         </option>
+                                                         <% } else{ %>
+                                                            <option value="">
+                                                               Chọn tỉnh thành
+                                                            </option>
+                                                            <% } %>
+
+                                                   </select>
+                                                </div>
+                                                <div class="form-group">
+                                                   <label>Quận/huyện</label>
+                                                   <select class="form-control" id="district" name="district" required>
+                                                      <% if(profile.city){ %>
+                                                         <option value="">
+                                                            <%=profile.district%>
+                                                         </option>
+                                                         <% } else{ %>
+                                                            <option value="">
+                                                               Chọn
+                                                            </option>
+                                                            <% } %>
+
+
+                                                   </select>
+                                                </div>
+                                                <div class="form-group">
+                                                   <label for="">Phường/Xã</label>
+                                                   <select class="form-control" id="ward" name="ward">
+
+                                                      <% if(profile.city){ %>
+                                                         <option value="">
+                                                            <%=profile.ward%>
+                                                         </option>
+                                                         <% } else{ %>
+                                                            <option value="">
+                                                               Chọn
+                                                            </option>
+                                                            <% } %>
+
+
+                                                   </select>
+                                                </div>
+                                             </div>
+                                             <div class="form-group col-sm-6">
+                                                <label>Địa chỉ:</label>
+                                                <textarea class="form-control" name="address" rows="5"
+                                                   style="line-height: 22px;">
+                                                   <%=profile.address%>
+                                                </textarea>
+                                             </div>
+
+
+
+                                          </div>
+                                          <button type="submit" class="btn btn-primary mr-2">Gửi</button>
+                                          <button type="reset" class="btn iq-bg-danger">Hủy bỏ</button>
+                                       </form>
+                                    </div>
+                                 </div>
+                              </div>
+                              <div class="tab-pane fade" id="chang-pwd" role="tabpanel">
+                                 <div class="iq-card">
+                                    <div class="iq-card-header d-flex justify-content-between">
+                                       <div class="iq-header-title">
+                                          <h4 class="card-title">Đổi mật khẩu</h4>
+                                       </div>
+                                    </div>
+                                    <div class="iq-card-body">
+                                       <form>
+                                          <div class="form-group">
+                                             <label for="cpass">Mật khẩu hiện tại:</label>
+                                             <a href="javascripe:void();" class="float-right">Quên mật khẩu</a>
+                                             <input type="Password" class="form-control" id="cpass" value="">
+                                          </div>
+                                          <div class="form-group">
+                                             <label for="npass">Mật khẩu mới:</label>
+                                             <input type="Password" class="form-control" id="npass" value="">
+                                          </div>
+                                          <div class="form-group">
+                                             <label for="vpass">Xác nhận lại mật khẩu:</label>
+                                             <input type="Password" class="form-control" id="vpass" value="">
+                                          </div>
+                                          <button type="submit" class="btn btn-primary mr-2">Gửi</button>
+                                          <button type="reset" class="btn iq-bg-danger">Hủy bỏ</button>
+                                       </form>
+                                    </div>
+                                 </div>
+                              </div>
+                              <div class="tab-pane fade" id="emailandsms" role="tabpanel">
+                                 <div class="iq-card">
+                                    <div class="iq-card-header d-flex justify-content-between">
+                                       <div class="iq-header-title">
+                                          <h4 class="card-title">Email và SMS</h4>
+                                       </div>
+                                    </div>
+                                    <div class="iq-card-body">
+                                       <form>
+                                          <div class="form-group row align-items-center">
+                                             <label class="col-8 col-md-3" for="emailnotification">Thông báo tới Email
+                                                :</label>
+                                             <div class="col-4 col-md-9 custom-control custom-switch">
+                                                <input type="checkbox" class="custom-control-input"
+                                                   id="emailnotification" checked="">
+                                                <label class="custom-control-label" for="emailnotification"></label>
+                                             </div>
+                                          </div>
+                                          <div class="form-group row align-items-center">
+                                             <label class="col-8 col-md-3" for="smsnotification">Thông báo tới
+                                                SMS:</label>
+                                             <div class="col-4 col-md-9 custom-control custom-switch">
+                                                <input type="checkbox" class="custom-control-input" id="smsnotification"
+                                                   checked="">
+                                                <label class="custom-control-label" for="smsnotification"></label>
+                                             </div>
+                                          </div>
+                                          <div class="form-group row align-items-center">
+                                             <label class="col-md-3" for="npass">Khi nào gửi Email</label>
+                                             <div class="col-md-9">
+                                                <div class="custom-control custom-checkbox">
+                                                   <input type="checkbox" class="custom-control-input" id="email01">
+                                                   <label class="custom-control-label" for="email01">Bạn có thông báo
+                                                      mới.</label>
+                                                </div>
+                                                <div class="custom-control custom-checkbox">
+                                                   <input type="checkbox" class="custom-control-input" id="email02">
+                                                   <label class="custom-control-label" for="email02">Bạn đã gửi một tin
+                                                      nhắn trực tiếp</label>
+                                                </div>
+                                                <div class="custom-control custom-checkbox">
+                                                   <input type="checkbox" class="custom-control-input" id="email03"
+                                                      checked="">
+                                                   <label class="custom-control-label" for="email03">Ai đó thêm bạn làm
+                                                      kết nối</label>
+                                                </div>
+                                             </div>
+                                          </div>
+                                          <div class="form-group row align-items-center">
+                                             <label class="col-md-3" for="npass">Khi nào cần báo email</label>
+                                             <div class="col-md-9">
+                                                <div class="custom-control custom-checkbox">
+                                                   <input type="checkbox" class="custom-control-input" id="email04">
+                                                   <label class="custom-control-label" for="email04"> Theo đơn đặt hàng
+                                                      mới.</label>
+                                                </div>
+                                                <div class="custom-control custom-checkbox">
+                                                   <input type="checkbox" class="custom-control-input" id="email05">
+                                                   <label class="custom-control-label" for="email05"> Phê duyệt thành
+                                                      viên mới</label>
+                                                </div>
+                                                <div class="custom-control custom-checkbox">
+                                                   <input type="checkbox" class="custom-control-input" id="email06"
+                                                      checked="">
+                                                   <label class="custom-control-label" for="email06"> Đăng ký thành
+                                                      viên</label>
+                                                </div>
+                                             </div>
+                                          </div>
+                                          <button type="submit" class="btn btn-primary mr-2">Gửi</button>
+                                          <button type="reset" class="btn iq-bg-danger">Hủy bỏ</button>
+                                       </form>
+                                    </div>
+                                 </div>
+                              </div>
+                              <div class="tab-pane fade" id="manage-contact" role="tabpanel">
+                                 <div class="iq-card">
+                                    <div class="iq-card-header d-flex justify-content-between">
+                                       <div class="iq-header-title">
+                                          <h4 class="card-title">Quản lý liên hệ</h4>
+                                       </div>
+                                    </div>
+                                    <div class="iq-card-body">
+                                       <form>
+                                          <div class="form-group">
+                                             <label for="cno">Số liên lạc:</label>
+                                             <input type="text" class="form-control" id="cno" value="089">
+                                          </div>
+                                          <div class="form-group">
+                                             <label for="email">Email:</label>
+                                             <input type="text" class="form-control" id="email" value="tvtean@ttnm.com">
+                                          </div>
+                                          <div class="form-group">
+                                             <label for="url">Url:</label>
+                                             <input type="text" class="form-control" id="url"
+                                                value="https://nhasachtv.com">
+                                          </div>
+                                          <button type="submit" class="btn btn-primary mr-2">Gửi</button>
+                                          <button type="reset" class="btn iq-bg-danger">Hủy bỏ</button>
+                                       </form>
+                                    </div>
+                                 </div>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+            </div>
+   </div>
+   <!-- Wrapper END -->
+   <!-- Footer -->
+   <footer class="iq-footer">
+      <div class="container-fluid">
+         <div class="row">
+            <div class="col-lg-6">
+               <ul class="list-inline mb-0">
+                  <li class="list-inline-item"><a href="privacy-policy.html">Chính sách bảo mật</a></li>
+                  <li class="list-inline-item"><a href="terms-of-service.html">Điều khoản sử dụng</a></li>
+               </ul>
+            </div>
+            <div class="col-lg-6 text-right">
+               Copyright 2020 <a href="#">TVteam</a> Đã đăng ký.
+            </div>
+         </div>
+      </div>
+   </footer>
+   <!-- Footer END -->
+   <!-- Optional JavaScript -->
+   <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+   <%- include ("boostrapJs.ejs") %>
+</body>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" referrerpolicy="no-referrer"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
+<script>
+   const host = "https://provinces.open-api.vn/api/";
+   var callAPI = (api) => {
+      return axios.get(api)
+         .then((response) => {
+            renderData(response.data, "city");
+         });
+   }
+   callAPI('https://provinces.open-api.vn/api/?depth=1');
+   var callApiDistrict = (api) => {
+      return axios.get(api)
+         .then((response) => {
+            renderData(response.data.districts, "district");
+         });
+   }
+   var callApiWard = (api) => {
+      return axios.get(api)
+         .then((response) => {
+            renderData(response.data.wards, "ward");
+         });
+   }
+
+   var renderData = (array, select) => {
+      let row = ' <option disable value="">Chọn</option>';
+      array.forEach(element => {
+         row += `<option data-id="${element.code}" value="${element.name}">${element.name}</option>`
+      });
+      document.querySelector("#" + select).innerHTML = row
+   }
+
+   $("#city").change(() => {
+      callApiDistrict(host + "p/" + $("#city").find(':selected').data('id') + "?depth=2");
+      printResult();
+   });
+   $("#district").change(() => {
+      callApiWard(host + "d/" + $("#district").find(':selected').data('id') + "?depth=2");
+      printResult();
+   });
+   $("#ward").change(() => {
+      printResult();
+   })
+
+
+</script>
+
+</html>
