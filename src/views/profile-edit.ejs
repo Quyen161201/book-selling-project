@@ -3,7 +3,13 @@
 
 <head>
    <!-- Required meta tags -->
+
    <%- include ("head.ejs") %>
+      <style>
+         .form-massage {
+            color: red;
+         }
+      </style>
 </head>
 
 <body class="sidebar-main-active right-column-fixed">
@@ -22,6 +28,7 @@
 
             <!-- TOP Nav Bar END -->
             <!-- Page Content  -->
+
             <div id="content-page" class="content-page">
                <div class="container-fluid">
                   <div class="row">
@@ -75,8 +82,10 @@
                                                       alt="profile-pic">
                                                    <div class="p-image">
                                                       <i class="ri-pencil-line upload-button"></i>
-                                                      <input class="file-upload" type="file" accept="image/*"
+                                                      <input class="file-upload" type="file" accept="image/*" value=""
                                                          name="thumbnail" />
+                                                      <input type="hidden" value="<%=profile.thumbnail%>"
+                                                         name="fakethumbnail">
                                                    </div>
                                                 </div>
                                              </div>
@@ -101,14 +110,28 @@
                                              <div class="form-group col-sm-6">
                                                 <label class="d-block">Giới tính:</label>
                                                 <div class="custom-control custom-radio custom-control-inline">
-                                                   <input type="radio" value="1" id="customRadio6" name="customRadio1"
-                                                      class="custom-control-input" checked="">
-                                                   <label class="custom-control-label" for="customRadio6"> Nam </label>
+                                                   <% if(profile.sex==1){ %>
+                                                      <input type="radio" value="1" id="customRadio6"
+                                                         name="customRadio1" class="custom-control-input" checked="">
+                                                      <% } else{ %>
+                                                         <input type="radio" value="1" id="customRadio6"
+                                                            name="customRadio1" class="custom-control-input">
+                                                         <% } %>
+                                                            <label class="custom-control-label" for="customRadio6">
+                                                               Nam
+                                                            </label>
                                                 </div>
                                                 <div class="custom-control custom-radio custom-control-inline">
-                                                   <input type="radio" value="0" id="customRadio7" name="customRadio1"
-                                                      class="custom-control-input">
-                                                   <label class="custom-control-label" for="customRadio7"> Nữ </label>
+                                                   <% if(profile.sex==0){ %>
+                                                      <input type="radio" value="0" id="customRadio" name="customRadio1"
+                                                         class="custom-control-input" checked="">
+                                                      <% } else{ %>
+                                                         <input type="radio" value="0" id="customRadio7"
+                                                            name="customRadio1" class="custom-control-input">
+                                                         <% } %>
+                                                            <label class="custom-control-label" for="customRadio7">
+                                                               Nữ
+                                                            </label>
                                                 </div>
 
                                              </div>
@@ -116,28 +139,25 @@
                                              <div class="form-group col-sm-6">
                                                 <div class="form-group col-sm-6">
                                                    <label for="dob">Ngày sinh:</label>
-                                                   <input type="date" class="form-control" id="dob" value="" name="date"
+                                                   <input type="date" class="form-control" id="dob" name="date" value=""
                                                       required>
                                                 </div>
                                                 <div class="form-group">
                                                    <label>Tỉnh/Thành phố:</label>
+
                                                    <select class="form-control" id="city" name="city" required>
-                                                      <% if(profile.city){ %>
-                                                         <option value="">
-                                                            <%=profile.city%>
-                                                         </option>
-                                                         <% } else{ %>
-                                                            <option value="">
-                                                               Chọn tỉnh thành
-                                                            </option>
-                                                            <% } %>
+                                                      <!-- <input type="text" class="form-control" name="city"
+                                                         value=" <%=profile.city%>" required> -->
+                                                      <option value=""></option>
+
 
                                                    </select>
                                                 </div>
                                                 <div class="form-group">
                                                    <label>Quận/huyện</label>
                                                    <select class="form-control" id="district" name="district" required>
-                                                      <% if(profile.city){ %>
+
+                                                      <% if(profile.district){ %>
                                                          <option value="">
                                                             <%=profile.district%>
                                                          </option>
@@ -148,13 +168,14 @@
                                                             <% } %>
 
 
+
                                                    </select>
                                                 </div>
                                                 <div class="form-group">
                                                    <label for="">Phường/Xã</label>
                                                    <select class="form-control" id="ward" name="ward">
 
-                                                      <% if(profile.city){ %>
+                                                      <% if(profile.ward){ %>
                                                          <option value="">
                                                             <%=profile.ward%>
                                                          </option>
@@ -187,25 +208,39 @@
                               </div>
                               <div class="tab-pane fade" id="chang-pwd" role="tabpanel">
                                  <div class="iq-card">
+
                                     <div class="iq-card-header d-flex justify-content-between">
                                        <div class="iq-header-title">
                                           <h4 class="card-title">Đổi mật khẩu</h4>
                                        </div>
                                     </div>
                                     <div class="iq-card-body">
-                                       <form>
+                                       <form action="/updatePassword" method="post" id="form-1">
+                                          <div style="display: none; width: 100%;text-align: center;"
+                                             class="alert alert-success" role="alert" id="success">
+                                             Đổi mật khẩu thành công
+                                          </div>
+                                          <div class="alert alert-danger" role="alert"
+                                             style="display: none;width: 100%;text-align: center;" id="warning">
+                                             Mật khẩu cũ không chính xác
+                                          </div>
                                           <div class="form-group">
                                              <label for="cpass">Mật khẩu hiện tại:</label>
                                              <a href="javascripe:void();" class="float-right">Quên mật khẩu</a>
-                                             <input type="Password" class="form-control" id="cpass" value="">
+                                             <input type="Password" class="form-control" id="cpass" name="cpass"
+                                                value="">
+                                             <span class="form-massage"></span>
                                           </div>
-                                          <div class="form-group">
+                                          <div class="form-group ">
                                              <label for="npass">Mật khẩu mới:</label>
-                                             <input type="Password" class="form-control" id="npass" value="">
+                                             <input type="Password" class="form-control" id="npass" name="npass">
+                                             <span class="form-massage"></span>
                                           </div>
                                           <div class="form-group">
                                              <label for="vpass">Xác nhận lại mật khẩu:</label>
-                                             <input type="Password" class="form-control" id="vpass" value="">
+                                             <input type="Password" class="form-control" id="vpass" name="vpass"
+                                                value="">
+                                             <span class="form-massage"></span>
                                           </div>
                                           <button type="submit" class="btn btn-primary mr-2">Gửi</button>
                                           <button type="reset" class="btn iq-bg-danger">Hủy bỏ</button>
@@ -223,7 +258,8 @@
                                     <div class="iq-card-body">
                                        <form>
                                           <div class="form-group row align-items-center">
-                                             <label class="col-8 col-md-3" for="emailnotification">Thông báo tới Email
+                                             <label class="col-8 col-md-3" for="emailnotification">Thông báo tới
+                                                Email
                                                 :</label>
                                              <div class="col-4 col-md-9 custom-control custom-switch">
                                                 <input type="checkbox" class="custom-control-input"
@@ -250,13 +286,15 @@
                                                 </div>
                                                 <div class="custom-control custom-checkbox">
                                                    <input type="checkbox" class="custom-control-input" id="email02">
-                                                   <label class="custom-control-label" for="email02">Bạn đã gửi một tin
+                                                   <label class="custom-control-label" for="email02">Bạn đã gửi một
+                                                      tin
                                                       nhắn trực tiếp</label>
                                                 </div>
                                                 <div class="custom-control custom-checkbox">
                                                    <input type="checkbox" class="custom-control-input" id="email03"
                                                       checked="">
-                                                   <label class="custom-control-label" for="email03">Ai đó thêm bạn làm
+                                                   <label class="custom-control-label" for="email03">Ai đó thêm bạn
+                                                      làm
                                                       kết nối</label>
                                                 </div>
                                              </div>
@@ -266,7 +304,8 @@
                                              <div class="col-md-9">
                                                 <div class="custom-control custom-checkbox">
                                                    <input type="checkbox" class="custom-control-input" id="email04">
-                                                   <label class="custom-control-label" for="email04"> Theo đơn đặt hàng
+                                                   <label class="custom-control-label" for="email04"> Theo đơn đặt
+                                                      hàng
                                                       mới.</label>
                                                 </div>
                                                 <div class="custom-control custom-checkbox">
@@ -282,7 +321,7 @@
                                                 </div>
                                              </div>
                                           </div>
-                                          <button type="submit" class="btn btn-primary mr-2">Gửi</button>
+                                          <button type="submit" id="submit" class="btn btn-primary mr-2">Gửi</button>
                                           <button type="reset" class="btn iq-bg-danger">Hủy bỏ</button>
                                        </form>
                                     </div>
@@ -348,48 +387,128 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" referrerpolicy="no-referrer"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
 <script>
-   const host = "https://provinces.open-api.vn/api/";
-   var callAPI = (api) => {
-      return axios.get(api)
-         .then((response) => {
-            renderData(response.data, "city");
-         });
-   }
-   callAPI('https://provinces.open-api.vn/api/?depth=1');
-   var callApiDistrict = (api) => {
-      return axios.get(api)
-         .then((response) => {
-            renderData(response.data.districts, "district");
-         });
-   }
-   var callApiWard = (api) => {
-      return axios.get(api)
-         .then((response) => {
-            renderData(response.data.wards, "ward");
-         });
-   }
+   (function ($) {
+      const host = "https://provinces.open-api.vn/api/";
+      var callAPI = (api) => {
+         return axios.get(api)
+            .then((response) => {
+               renderData(response.data, "city");
 
-   var renderData = (array, select) => {
-      let row = ' <option disable value="">Chọn</option>';
-      array.forEach(element => {
-         row += `<option data-id="${element.code}" value="${element.name}">${element.name}</option>`
+            })
+      }
+
+      callAPI('https://provinces.open-api.vn/api/?depth=1');
+      var callApiDistrict = (api) => {
+         return axios.get(api)
+            .then((response) => {
+               renderData(response.data.districts, "district");
+
+            });
+      }
+      var callApiWard = (api) => {
+         return axios.get(api)
+            .then((response) => {
+               renderData(response.data.wards, "ward");
+            });
+      }
+
+      var renderData = (array, select) => {
+
+         let row = ` 
+         
+         <option disable value="">Chọn</option>`;
+
+
+         array.forEach(element => {
+            row += `<option data-id="${element.code}" value="${element.name}">${element.name}</option>`
+            // console.log('element ', element.code, 'element Name', element.name)
+
+         });
+
+
+         document.querySelector("#" + select).innerHTML = row
+      }
+
+      $("#city").change(() => {
+         callApiDistrict(host + "p/" + $("#city").find(':selected').data('id') + "?depth=2");
+
       });
-      document.querySelector("#" + select).innerHTML = row
-   }
+      $("#district").change(() => {
+         callApiWard(host + "d/" + $("#district").find(':selected').data('id') + "?depth=2");
 
-   $("#city").change(() => {
-      callApiDistrict(host + "p/" + $("#city").find(':selected').data('id') + "?depth=2");
-      printResult();
-   });
-   $("#district").change(() => {
-      callApiWard(host + "d/" + $("#district").find(':selected').data('id') + "?depth=2");
-      printResult();
-   });
-   $("#ward").change(() => {
-      printResult();
+      });
+      $("#ward").change(() => {
+
+      })
+   })(jQuery)
+
+
+</script>
+<script src="./js/register.js"></script>
+<script>
+   //mong muốn của chúng ta khi sử dụng cái thư viện này trong tương lai
+   Validator({
+      form: '#form-1',
+      formGroupSelector: '.form-group',
+      errorSelect: '.form-massage',
+
+      rules: [
+
+
+         Validator.minLength('#cpass', 6),
+         Validator.minLength('#vpass', 6),
+         Validator.minLength('#npass', 6),
+         Validator.passback('#vpass', function () {
+            return document.querySelector('#form-1 #npass').value;
+         }, 'Mật khẩu nhập lại không chính xác'),
+         Validator.isRequired('#cpass', 'Trường này không được để trống'),
+         Validator.isRequired('#npass', 'Trường này không được để trống'),
+         Validator.isRequired('#vpass', 'Trường này không được để trống')
+
+      ],
+      onSubmit: function (data) {
+         // call api
+         (async (req, res) => {
+            const rawResponse = await fetch('updatePassword', {
+               method: 'POST',
+               headers: {
+                  'Accept': 'application/json',
+                  'Content-Type': 'application/json'
+               },
+               body: JSON.stringify({ data })
+            });
+            const result = await rawResponse.json();
+
+
+            if (result.error == 0) {
+               (function ($) {
+                  $('#warning').hide();
+                  $("#success").fadeIn("slow");
+                  $("#success").fadeIn(3000);
+                  $('#success').show();
+                  console.log('error')
+               })(jQuery)
+            }
+            else {
+               (function ($) {
+                  $('#success').hide();
+                  $("#warning").fadeIn("slow");
+                  $("#warning").fadeIn(3000);
+                  $('#warning').show();
+
+               })(jQuery)
+            }
+            return result
+         })();
+
+      }
    })
+</script>
+<script>
 
-
+   date = new Date('<%= profile.birddate %>');
+   let rs = document.getElementById('dob')
+   let a = rs.valueAsDate = date
 </script>
 
 </html>

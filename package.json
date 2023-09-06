@@ -23,6 +23,7 @@
     "express-session": "^1.17.3",
     "jquery": "^3.7.0",
     "mysql2": "^3.5.2",
+    "nodemailer": "^6.9.5",
     "passport-local": "^1.0.0"
   },
   "devDependencies": {

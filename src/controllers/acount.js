@@ -1,5 +1,7 @@
-const { postRegisterSevice, postLoginSevice } = require('../service/acountSevice')
+const { postRegisterSevice, postLoginSevice } = require('../service/acountSevice');
+const nodemailer = require("nodemailer");
 const bcrypt = require('bcrypt');
+
 module.exports = {
     getRegister: async (req, res) => {
         res.render('sign-up.ejs')
@@ -7,8 +9,30 @@ module.exports = {
     postRegister: async (req, res) => {
         let { fullname, email, password } = req.body.data
         const hashedPassword = await bcrypt.hash(password, 10);
-
         let data = { fullname, email, password: hashedPassword }
+        console.log(data.email)
+        const transporter = nodemailer.createTransport({
+            service: "gmail",
+            secure: true,
+            auth: {
+                user: process.env.EMAIL_MAILER,
+                pass: process.env.PASS_MAILLER
+            },
+        });
+
+        // send mail with defined transport object
+        await transporter.sendMail({
+            from: process.env.EMAIL_MAILER, // sender address
+            to: `${data.email}`, // list of receivers
+            subject: "Hello ✔", // Subject line
+            text: "Hello world?", // plain text body
+            html: "<b>Hello world?</b>", // html body
+        },
+            (err) => {
+                console.log(err);
+            }
+        )
+
 
         let rs = await postRegisterSevice(data)
 

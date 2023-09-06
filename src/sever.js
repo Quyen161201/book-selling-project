@@ -10,6 +10,7 @@ const session = require('express-session')
 const cookieParser = require('cookie-parser')
 const { checkSesssion } = require('./middleware/userMiddle')
 
+
 const app = express() // tạo ra express app
 
 const port = process.env.PORT // khai  báo port

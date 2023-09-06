@@ -4,7 +4,6 @@ module.exports = {
         let [userid] = await connection.query('select user_id from res_users where email=?', [email])
         let user_id = userid[0].user_id
         let [result] = await connection.query('select * from customers c, res_users r where c.user_id=r.user_id and c.user_id =?', [user_id])
-        console.log(result)
         let profile = result && result.length > 0 ? result[0] : {};
         return profile
     },
@@ -21,6 +20,18 @@ module.exports = {
         }
         catch (error) {
             console.log(error)
+        }
+    },
+
+    updatePassSevice: async (data) => {
+        try {
+            let [updatepass] = await connection.query('update res_users set password=?  where active =1 and email=?', [data.npass, data.email]);
+            return updatepass
+
+
+        }
+        catch (error) {
+
         }
     }
 }
