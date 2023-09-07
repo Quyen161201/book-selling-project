@@ -3,6 +3,9 @@ const { uploadSingleFile, uploatMutiFile } = require('../service/uploadFile')
 const { createProfile, getProfile, updatePassSevice } = require('../service/profileSevice');
 const { postLoginSevice } = require('../service/acountSevice')
 const bcrypt = require('bcrypt');
+const nodemailer = require("nodemailer");
+const session = require('express-session');
+const { assign } = require('nodemailer/lib/shared');
 module.exports = {
     profile: async (req, res) => {
         let email = req.session.email
@@ -62,6 +65,66 @@ module.exports = {
         else {
             console.log('tai khoa khong hop le')
         }
+
+    },
+    sendMail: async (req, res) => {
+        let email = req.session.email
+        if (email) {
+            let code = Math.random().toString().slice(2, 8)
+            req.session.code = code;
+            const transporter = nodemailer.createTransport({
+                service: "gmail",
+                secure: true,
+                auth: {
+                    user: process.env.EMAIL_MAILER,
+                    pass: process.env.PASS_MAILLER
+                },
+            });
+
+            await transporter.sendMail({
+                from: process.env.EMAIL_MAILER, // sender address
+                to: `${email}`, // list of receivers
+                subject: "Bookstore ✔", // Subject line
+                text: "Xác thực tài khoản", // plain text body
+                html: `<b>BookStore</b><br> 
+                    Mã xác thực của bạn : ${code}
+                `
+            },
+
+                (err) => {
+
+                },
+            )
+
+            return res.json({
+                error: 0
+            })
+        }
+        else {
+            console.log('mail không tồn tại')
+        }
+
+
+    },
+    postcode: async (req, res, next) => {
+        let code = req.session.code
+        console.log(code, 'code')
+        let payload = req.body.payload;
+        console.log('playload', payload)
+        if (code == payload) {
+            return res.status(200).json({
+                error: 0,
+                status: 'Success'
+            })
+        }
+        else {
+            console.log('no oke')
+            return res.status(400).json({
+                error: 1,
+                status: 'error'
+            })
+        }
+
 
     }
 

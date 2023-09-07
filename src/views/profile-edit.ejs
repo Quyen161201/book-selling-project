@@ -226,7 +226,10 @@
                                           </div>
                                           <div class="form-group">
                                              <label for="cpass">Mật khẩu hiện tại:</label>
-                                             <a href="javascripe:void();" class="float-right">Quên mật khẩu</a>
+
+                                             <button style="border: none; color: #0dd6b8; background-color: #fff;"
+                                                class="float-right" type="button" class="btn btn-danger"
+                                                data-target="#deleteModal" data-toggle="modal">Quên mật khẩu</button>
                                              <input type="Password" class="form-control" id="cpass" name="cpass"
                                                 value="">
                                              <span class="form-massage"></span>
@@ -246,6 +249,118 @@
                                           <button type="reset" class="btn iq-bg-danger">Hủy bỏ</button>
                                        </form>
                                     </div>
+                                    <div class="modal fade" id="deleteModal">
+                                       <div class="modal-dialog">
+                                          <div class="modal-content">
+                                             <div class="modal-header">
+                                                <h5 class="modal-title" id="exampleModalLabel">
+                                                   Quên mật khẩu
+                                                </h5>
+                                                <button type="button" class="close" data-dismiss="modal"
+                                                   aria-label="Close">
+                                                   <span aria-hidden="true">&times;</span>
+                                                </button>
+                                             </div>
+                                             <div class="modal-body">
+                                                <p>Bạn muốn gửi yêu cầu lấy mã xác thực qua gmail </p>
+                                             </div>
+                                             <div class="modal-footer">
+
+                                                <button class="btn btn-secondary" id="close-modal" class="close"
+                                                   data-dismiss="modal" aria-label="Close">No</button>
+                                                <form action="/sendMail" method="post">
+                                                   <button type="button" onclick="sendmail(this)" data-toggle="modal"
+                                                      data-target="#modalcode" class="btn btn-danger">Yes
+                                                   </button>
+                                                </form>
+                                             </div>
+                                          </div>
+                                       </div>
+                                    </div>
+                                    <button style="display: none" type="button" data-toggle="modal"
+                                       data-target="#modalPass" class="btn btn-danger">Yes
+                                    </button>
+
+                                    <!-- lấy mã xác thực  -->
+                                    <div class="modal fade" id="modalcode" tabindex="-1" role="dialog"
+                                       aria-labelledby="myModalLabel" aria-hidden="true">
+                                       <div class="modal-dialog" role="document">
+                                          <div class="modal-content">
+                                             <div class="modal-header text-center">
+                                                <h4 class="modal-title w-100 font-weight-bold">Quên mật khẩu</h4>
+                                                <button type="button" class="close" data-dismiss="modal"
+                                                   aria-label="Close">
+                                                   <span aria-hidden="true">&times;</span>
+                                                </button>
+                                             </div>
+                                             <div class="modal-body mx-3">
+                                                <span> Vui lòng kiểm tra mã trong email của bạn. Mã này gồm 6 chữ
+                                                   số.</span><br>
+                                                <a href="">Bạn chưa có mã ?</a><br>
+
+                                                <div class="md-form mb-4">
+                                                   <label data-error="wrong" data-success="right"
+                                                      for="defaultForm-pass">Nhập mã gồm 6 chữ số </label>
+                                                   <input type="text" id="defaultForm-pass value-code"
+                                                      class="form-control validate" placeholder="######">
+
+                                                </div>
+
+                                             </div>
+                                             <div class="modal-footer d-flex justify-content-center">
+                                                <form action="" method="post">
+                                                   <button type="button" onclick="nhapma(this)" data-toggle="modal"
+                                                      class="btn btn-primary mr-2">Tiếp
+                                                      tục</button>
+                                                </form>
+                                             </div>
+                                          </div>
+                                       </div>
+                                    </div>
+
+                                    <!-- forget pass -->
+
+                                    <div class="modal fade" id="modalPass" tabindex="-1" role="dialog"
+                                       aria-labelledby="myModalLabel" aria-hidden="true">
+                                       <div class="modal-dialog" role="document">
+                                          <div class="modal-content">
+                                             <div class="modal-header text-center">
+                                                <h4 class="modal-title w-100 font-weight-bold">Quên mật khẩu</h4>
+                                                <button type="button" class="close" data-dismiss="modal"
+                                                   aria-label="Close">
+                                                   <span aria-hidden="true">&times;</span>
+                                                </button>
+                                             </div>
+                                             <div class="modal-body mx-3">
+                                                <span> Nhập mật khẩu mới </span><br>
+
+
+                                                <div class="md-form mb-4">
+                                                   <label data-error="wrong" data-success="right"
+                                                      for="defaultForm-pass">Nhập mật khẩu </label>
+                                                   <input type="password" id="defaultForm-pass" value=""
+                                                      class="form-control validate" placeholder="******">
+
+                                                </div>
+                                                <div class="md-form mb-4">
+                                                   <label data-error="wrong" data-success="right"
+                                                      for="defaultForm-pass">Nhập lại mật khẩu </label>
+                                                   <input type="password" id="defaultForm-pass"
+                                                      class="form-control validate" placeholder="******">
+
+                                                </div>
+
+                                             </div>
+                                             <div class="modal-footer d-flex justify-content-center">
+                                                <form action="" method="post">
+                                                   <button class="btn btn-primary mr-2">Đổi mật khẩu</button>
+                                                </form>
+                                             </div>
+                                          </div>
+                                       </div>
+                                    </div>
+
+
                                  </div>
                               </div>
                               <div class="tab-pane fade" id="emailandsms" role="tabpanel">
@@ -384,9 +499,9 @@
    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
    <%- include ("boostrapJs.ejs") %>
 </body>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" referrerpolicy="no-referrer"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
-<script>
+<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" referrerpolicy="no-referrer"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script> -->
+<!-- <script>
    (function ($) {
       const host = "https://provinces.open-api.vn/api/";
       var callAPI = (api) => {
@@ -443,7 +558,7 @@
    })(jQuery)
 
 
-</script>
+</script> -->
 <script src="./js/register.js"></script>
 <script>
    //mong muốn của chúng ta khi sử dụng cái thư viện này trong tương lai
@@ -509,6 +624,41 @@
    date = new Date('<%= profile.birddate %>');
    let rs = document.getElementById('dob')
    let a = rs.valueAsDate = date
+</script>
+<script>
+   function sendmail(e) {
+      console.log(e.value)
+      fetch('sendMail', {
+         method: 'POST',
+         headers: { 'content-type': 'application/json' },
+         body: JSON.stringify({})
+      })
+         .then(res => res.json()).then(data => {
+
+         })
+   }
+   function nhapma(e) {
+      let payload = e.parentElement.parentElement.parentElement.childNodes[3].childNodes[7].childNodes[3].value
+      console.log(payload)
+      fetch('postCode', {
+         method: 'POST',
+         headers: { 'content-type': 'application/json' },
+         body: JSON.stringify({ payload: payload })
+      })
+         .then(res => res.json()).then(data => {
+            if (data.error == 0) {
+               let modalPass = document.getElementById('modalPass')
+               console.log(modalPass)
+               modalPass.classList = "modal fade show"
+
+            }
+            else {
+               console.log('no ok')
+            }
+
+         })
+
+   }
 </script>
 
 </html>

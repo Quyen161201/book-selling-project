@@ -9,7 +9,7 @@ const fileUpload = require('express-fileupload')
 const session = require('express-session')
 const cookieParser = require('cookie-parser')
 const { checkSesssion } = require('./middleware/userMiddle')
-
+const querystring = require('querystring');
 
 const app = express() // tạo ra express app
 

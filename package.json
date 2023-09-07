@@ -24,7 +24,8 @@
     "jquery": "^3.7.0",
     "mysql2": "^3.5.2",
     "nodemailer": "^6.9.5",
-    "passport-local": "^1.0.0"
+    "passport-local": "^1.0.0",
+    "query-string": "^8.1.0"
   },
   "devDependencies": {
     "@types/node": "^20.4.5",

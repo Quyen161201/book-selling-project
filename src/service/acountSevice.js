@@ -29,11 +29,21 @@ module.exports = {
 
     postLoginSevice: async (email, password) => {
         try {
-            let [result] = await connection.query('select email,password  from res_users where active =1 and email=?', [email])
-            return result
+            let [check] = await connection.query('select email,password  from res_users where active =1 and email=?', [email])
+            return check
 
         } catch (error) {
             console.log(error)
         }
+    },
+
+    updateVeryfiSevice: async (email) => {
+        try {
+            let [result] = await connection.query('update res_users set veryfi_email=now() where email=? and active=1', [email])
+            return result
+        } catch (error) {
+            console.log(error)
+        }
+
     }
 }

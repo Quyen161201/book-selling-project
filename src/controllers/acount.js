@@ -1,4 +1,4 @@
-const { postRegisterSevice, postLoginSevice } = require('../service/acountSevice');
+const { postRegisterSevice, postLoginSevice, updateVeryfiSevice } = require('../service/acountSevice');
 const nodemailer = require("nodemailer");
 const bcrypt = require('bcrypt');
 
@@ -20,27 +20,43 @@ module.exports = {
             },
         });
 
-        // send mail with defined transport object
-        await transporter.sendMail({
-            from: process.env.EMAIL_MAILER, // sender address
-            to: `${data.email}`, // list of receivers
-            subject: "Hello ✔", // Subject line
-            text: "Hello world?", // plain text body
-            html: "<b>Hello world?</b>", // html body
-        },
-            (err) => {
-                console.log(err);
-            }
-        )
+
 
 
         let rs = await postRegisterSevice(data)
+        if (rs.error == 0) {
 
+            // hast email
+            const hashedEmail = await bcrypt.hash(data.email, 10);
+
+            // send mail with defined transport object
+
+            await transporter.sendMail({
+                from: process.env.EMAIL_MAILER, // sender address
+                to: `${data.email}`, // list of receivers
+                subject: "Bookstore ✔", // Subject line
+                text: "Xác thực tài khoản", // plain text body
+                html: `<b>BookStore</b><br> 
+               <div class="sendEmail" style="width:300px;height=40px; background-color:#0dd6b8; border-radius:4px; margin-top:20px"><a class="link-veryfi" href="http://localhost:8086/veryfi?email=${data.email}&token=${hashedEmail}">Xác thực tài khoản ${data.fullname}</a></div>`, // html body
+            },
+
+                (err) => {
+
+                },
+
+            )
+            console.log(`<a href="http://localhost:8086/veryfi?email=${data.email}&token=${hashedEmail}">Xac thuc</a>`)
+
+        }
+        else {
+
+        }
         return res.json(rs)
 
     },
     getLogin: async (req, res, next) => {
         if (typeof req.session.email === 'undefined') {
+
             res.render('sign-in.ejs')
         }
         else res.redirect('/admin-books')
@@ -48,6 +64,7 @@ module.exports = {
     postLogin: async (req, res) => {
         let { email, password } = req.body
         let result = await postLoginSevice(email, password)
+        console.log(result)
         if (result.length > 0) {
             let passw = result[0].password
 
@@ -95,9 +112,21 @@ module.exports = {
 
     },
     getLogout: async (req, res) => {
-        console.log(req.session.email, 'test')
+
         let a = await req.session.destroy();
 
         res.redirect('/adminLogin')
+    },
+    checkveryfi: async (req, res) => {
+        let check = bcrypt.compareSync(req.query.email, req.query.token)
+        if (check == true) {
+            let rs = await updateVeryfiSevice(req.query.email)
+            res.redirect('/adminLogin')
+        }
+        else {
+
+            res.redirect('/404')
+        }
+
     }
 }
