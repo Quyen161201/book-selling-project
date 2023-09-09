@@ -293,17 +293,28 @@
                                                    <span aria-hidden="true">&times;</span>
                                                 </button>
                                              </div>
+
+                                             <div class="alert alert-danger" role="alert"
+                                                style="display: none;width: 100%;text-align: center;" id="warning2">
+                                                Mật mã không chính xác
+                                             </div>
                                              <div class="modal-body mx-3">
                                                 <span> Vui lòng kiểm tra mã trong email của bạn. Mã này gồm 6 chữ
                                                    số.</span><br>
-                                                <a href="">Bạn chưa có mã ?</a><br>
+                                                <form action="/sendMail" method="post">
+                                                   <button style="border: none; color: #0dd6b8; background-color: #fff;"
+                                                      type="button" onclick="sendmail(this)">Bạn chưa có mã
+                                                      ?</button><br>
+
+                                                </form>
 
                                                 <div class="md-form mb-4">
                                                    <label data-error="wrong" data-success="right"
                                                       for="defaultForm-pass">Nhập mã gồm 6 chữ số </label>
-                                                   <input type="text" id="defaultForm-pass value-code"
-                                                      class="form-control validate" placeholder="######">
-
+                                                   <form action="" autocomplete="off">
+                                                      <input type="text" autocomplete="on" id="value-code"
+                                                         class="form-control validate" value="" placeholder="######">
+                                                   </form>
                                                 </div>
 
                                              </div>
@@ -326,36 +337,46 @@
                                           <div class="modal-content">
                                              <div class="modal-header text-center">
                                                 <h4 class="modal-title w-100 font-weight-bold">Quên mật khẩu</h4>
-                                                <button type="button" class="close" data-dismiss="modal"
+                                                <button type="button" class="close" id="close-pass" data-dismiss="modal"
                                                    aria-label="Close">
                                                    <span aria-hidden="true">&times;</span>
                                                 </button>
                                              </div>
-                                             <div class="modal-body mx-3">
-                                                <span> Nhập mật khẩu mới </span><br>
+                                             <form action="/forgetPassword" method="post" id="form-2">
+                                                <div class="modal-body mx-3">
+                                                   <!-- <span> Nhập mật khẩu mới </span><br> -->
 
+                                                   <div style="display: none; width: 100%;text-align: center;"
+                                                      class="alert alert-success" role="alert" id="success2">
+                                                      Đổi mật khẩu thành công
+                                                   </div>
+                                                   <div class="alert alert-danger" role="alert"
+                                                      style="display: none;width: 100%;text-align: center;"
+                                                      id="warning2">
+                                                      Đổi mật khẩu thất bại
+                                                   </div>
+                                                   <div class="md-form mb-4">
+                                                      <div class="form-group ">
+                                                         <label for="npass">Mật khẩu mới:</label>
+                                                         <input type="Password" class="form-control" id="password"
+                                                            name="password">
+                                                         <span class="form-massage"></span>
+                                                      </div>
+                                                   </div>
 
-                                                <div class="md-form mb-4">
-                                                   <label data-error="wrong" data-success="right"
-                                                      for="defaultForm-pass">Nhập mật khẩu </label>
-                                                   <input type="password" id="defaultForm-pass" value=""
-                                                      class="form-control validate" placeholder="******">
-
+                                                   <div class="md-form mb-4">
+                                                      <div class="form-group">
+                                                         <label for="vpass">Xác nhận lại mật khẩu:</label>
+                                                         <input type="Password" class="form-control" id="confPass"
+                                                            name="confPass" value="">
+                                                         <span class="form-massage"></span>
+                                                      </div>
+                                                   </div>
                                                 </div>
-                                                <div class="md-form mb-4">
-                                                   <label data-error="wrong" data-success="right"
-                                                      for="defaultForm-pass">Nhập lại mật khẩu </label>
-                                                   <input type="password" id="defaultForm-pass"
-                                                      class="form-control validate" placeholder="******">
-
-                                                </div>
-
-                                             </div>
-                                             <div class="modal-footer d-flex justify-content-center">
-                                                <form action="" method="post">
+                                                <div class="modal-footer d-flex justify-content-center">
                                                    <button class="btn btn-primary mr-2">Đổi mật khẩu</button>
-                                                </form>
-                                             </div>
+                                                </div>
+                                             </form>
                                           </div>
                                        </div>
                                     </div>
@@ -499,9 +520,9 @@
    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
    <%- include ("boostrapJs.ejs") %>
 </body>
-<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" referrerpolicy="no-referrer"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script> -->
-<!-- <script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" referrerpolicy="no-referrer"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
+<script>
    (function ($) {
       const host = "https://provinces.open-api.vn/api/";
       var callAPI = (api) => {
@@ -558,7 +579,7 @@
    })(jQuery)
 
 
-</script> -->
+</script>
 <script src="./js/register.js"></script>
 <script>
    //mong muốn của chúng ta khi sử dụng cái thư viện này trong tương lai
@@ -620,6 +641,119 @@
    })
 </script>
 <script>
+   //mong muốn của chúng ta khi sử dụng cái thư viện này trong tương lai
+   Validator({
+      form: '#form-1',
+      formGroupSelector: '.form-group',
+      errorSelect: '.form-massage',
+
+      rules: [
+
+
+         Validator.minLength('#cpass', 6),
+         Validator.minLength('#vpass', 6),
+         Validator.minLength('#npass', 6),
+         Validator.passback('#vpass', function () {
+            return document.querySelector('#form-1 #npass').value;
+         }, 'Mật khẩu nhập lại không chính xác'),
+         Validator.isRequired('#cpass', 'Trường này không được để trống'),
+         Validator.isRequired('#npass', 'Trường này không được để trống'),
+         Validator.isRequired('#vpass', 'Trường này không được để trống')
+
+      ],
+      onSubmit: function (data) {
+         // call api
+         (async (req, res) => {
+            const rawResponse = await fetch('updatePassword', {
+               method: 'POST',
+               headers: {
+                  'Accept': 'application/json',
+                  'Content-Type': 'application/json'
+               },
+               body: JSON.stringify({ data })
+            });
+            const result = await rawResponse.json();
+
+
+            if (result.error == 0) {
+               (function ($) {
+                  $('#warning').hide();
+                  $("#success").fadeIn("slow");
+                  $("#success").fadeIn(3000);
+                  $('#success').show();
+                  console.log('error')
+               })(jQuery)
+            }
+            else {
+               (function ($) {
+                  $('#success').hide();
+                  $("#warning").fadeIn("slow");
+                  $("#warning").fadeIn(3000);
+                  $('#warning').show();
+
+               })(jQuery)
+            }
+            return result
+         })();
+
+      }
+   })
+</script>
+<script>
+   Validator({
+      form: '#form-2',
+      formGroupSelector: '.form-group',
+      errorSelect: '.form-massage',
+
+      rules: [
+         Validator.minLength('#password', 6),
+         Validator.minLength('#confPass', 6),
+         Validator.passback('#confPass', function () {
+            return document.querySelector('#form-2 #password').value;
+         }, 'Mật khẩu nhập lại không chính xác'),
+         Validator.isRequired('#confPass', 'Trường này không được để trống'),
+         Validator.isRequired('#password', 'Trường này không được để trống')
+
+      ],
+      onSubmit: function (data) {
+         // call api
+         (async (req, res) => {
+            const rawResponse = await fetch('forgetPassword', {
+               method: 'POST',
+               headers: {
+                  'Accept': 'application/json',
+                  'Content-Type': 'application/json'
+               },
+               body: JSON.stringify({ data })
+            });
+            const result = await rawResponse.json();
+
+
+            if (result.error == 0) {
+               (function ($) {
+                  $('#warning2').hide();
+                  $("#success2").fadeIn("slow");
+                  $("#success2").fadeIn(3000);
+                  $('#success2').show();
+                  console.log('error')
+               })(jQuery)
+            }
+            else {
+               (function ($) {
+                  $('#success2').hide();
+                  $("#warning2").fadeIn("slow");
+                  $("#warning2").fadeIn(3000);
+                  $('#warning2').show();
+
+               })(jQuery)
+            }
+            return result
+         })();
+
+      }
+   })
+</script>
+<script>
 
    date = new Date('<%= profile.birddate %>');
    let rs = document.getElementById('dob')
@@ -627,19 +761,17 @@
 </script>
 <script>
    function sendmail(e) {
-      console.log(e.value)
+
       fetch('sendMail', {
          method: 'POST',
          headers: { 'content-type': 'application/json' },
          body: JSON.stringify({})
       })
-         .then(res => res.json()).then(data => {
 
-         })
    }
    function nhapma(e) {
-      let payload = e.parentElement.parentElement.parentElement.childNodes[3].childNodes[7].childNodes[3].value
-      console.log(payload)
+      let payload = document.getElementById('value-code').value
+      console.log(payload, 'playload')
       fetch('postCode', {
          method: 'POST',
          headers: { 'content-type': 'application/json' },
@@ -648,15 +780,35 @@
          .then(res => res.json()).then(data => {
             if (data.error == 0) {
                let modalPass = document.getElementById('modalPass')
-               console.log(modalPass)
-               modalPass.classList = "modal fade show"
+               let modalcode = document.getElementById('modalcode')
+               modalcode.classList = "modal fade";
+               modalcode.style.display = "none";
+               modalPass.classList = "modal fade show";
+               modalPass.style.display = "block";
 
             }
             else {
-               console.log('no ok')
+               (function ($) {
+                  $('#warning2').hide();
+                  $("#warning2").fadeIn("slow");
+                  $("#warning2").fadeIn(3000);
+                  $('#warning2').show();
+
+               })(jQuery)
             }
 
          })
+
+   }
+   let closepass = document.getElementById('close-pass')
+   closepass.onclick = (e) => {
+      let modalPass = document.getElementById('modalPass')
+      let modalbackup = document.getElementsByClassName('modal-backdrop')[1]
+      console.log(modalbackup)
+      modalPass.classList = "modal fade show";
+      modalPass.style.display = "none";
+      modalbackup.classList = "backdrop fade show";
+      modalbackup.style.display = "none";
 
    }
 </script>

@@ -1,11 +1,11 @@
 const { coutcartSevice, getcartSevice } = require('../service/cartSevice')
 const { uploadSingleFile, uploatMutiFile } = require('../service/uploadFile')
-const { createProfile, getProfile, updatePassSevice } = require('../service/profileSevice');
+const { createProfile, getProfile, updatePassSevice, forgetPassService } = require('../service/profileSevice');
 const { postLoginSevice } = require('../service/acountSevice')
 const bcrypt = require('bcrypt');
 const nodemailer = require("nodemailer");
 const session = require('express-session');
-const { assign } = require('nodemailer/lib/shared');
+// const { assign } = require('nodemailer/lib/shared');
 module.exports = {
     profile: async (req, res) => {
         let email = req.session.email
@@ -63,7 +63,7 @@ module.exports = {
             }
         }
         else {
-            console.log('tai khoa khong hop le')
+
         }
 
     },
@@ -71,58 +71,98 @@ module.exports = {
         let email = req.session.email
         if (email) {
             let code = Math.random().toString().slice(2, 8)
-            req.session.code = code;
-            const transporter = nodemailer.createTransport({
-                service: "gmail",
-                secure: true,
-                auth: {
-                    user: process.env.EMAIL_MAILER,
-                    pass: process.env.PASS_MAILLER
+
+            if (req.session.code === null || !req.session.code) {
+                let send = req.session.code = code;
+                setTimeout(() => {
+                    req.session.code = null;
+                    req.session.save();
+                }, 300000);
+                const transporter = nodemailer.createTransport({
+                    service: "gmail",
+                    secure: true,
+                    auth: {
+                        user: process.env.EMAIL_MAILER,
+                        pass: process.env.PASS_MAILLER
+                    },
+                });
+                await transporter.sendMail({
+
+                    from: process.env.EMAIL_MAILER, // sender address
+                    to: `${email}`, // list of receivers
+                    subject: "Bookstore ✔", // Subject line
+                    text: "Xác thực tài khoản", // plain text body
+                    html: `<b>BookStore</b><br> 
+                        Mã xác thực của bạn : ${send}
+                    `
                 },
-            });
 
-            await transporter.sendMail({
-                from: process.env.EMAIL_MAILER, // sender address
-                to: `${email}`, // list of receivers
-                subject: "Bookstore ✔", // Subject line
-                text: "Xác thực tài khoản", // plain text body
-                html: `<b>BookStore</b><br> 
-                    Mã xác thực của bạn : ${code}
-                `
-            },
+                    (err) => {
 
-                (err) => {
+                    },
+                )
 
-                },
-            )
-
-            return res.json({
-                error: 0
-            })
-        }
-        else {
-            console.log('mail không tồn tại')
+                return res.json({
+                    error: 0
+                })
+            }
+            else {
+                console.log('mail không tồn tại')
+            }
         }
 
 
     },
     postcode: async (req, res, next) => {
-        let code = req.session.code
-        console.log(code, 'code')
+        let code = req.session.code;
         let payload = req.body.payload;
-        console.log('playload', payload)
-        if (code == payload) {
-            return res.status(200).json({
-                error: 0,
-                status: 'Success'
-            })
+        if (payload != '') {
+
+            if (code == payload) {
+                return res.status(200).json({
+                    error: 0,
+                    status: 'Success'
+                })
+            }
+            else {
+
+                return res.status(400).json({
+                    error: 1,
+                    status: 'error'
+                })
+            }
         }
         else {
-            console.log('no oke')
             return res.status(400).json({
                 error: 1,
                 status: 'error'
             })
+        }
+
+
+    },
+    forgetPass: async (req, res, next) => {
+        let email = req.session.email;
+        const hashedPassword = await bcrypt.hash(req.body.data.password, 10);
+        let data = { email, npass: hashedPassword }
+        if (email) {
+            let rs = await updatePassSevice(data);
+            let result = {
+                error: 0,
+                status: 'đổi mật khẩu thành công'
+            }
+            setTimeout(() => {
+                req.session.code = null;
+                req.session.save();
+            }, 10000);
+            return res.json(result)
+        }
+        else {
+            let result = {
+                error: 1,
+                status: 'Đổi mật khẩu không thành công'
+            }
+            return res.json(result)
         }
 
 

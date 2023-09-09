@@ -34,7 +34,9 @@ app.use(session({
     resave: false,
     saveUninitialized: true,
     cookie: { maxAge: oneDay },
-}))
+}),
+
+);
 
 // khai báo route
 app.use('/', webrouter)

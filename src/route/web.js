@@ -11,7 +11,7 @@ const { searchProduct } = require('../controllers/serach');
 const { getRegister, postRegister, getLogin, postLogin, getLogout, checkveryfi } = require('../controllers/acount')
 const { checkSesssion } = require('../middleware/userMiddle')
 
-const { profile, postprofile, updatepass, sendMail, postcode } = require('../controllers/profileController')
+const { profile, postprofile, updatepass, sendMail, postcode, forgetPass } = require('../controllers/profileController')
 
 const { getCart, postCart, updateCart, deleteCart } = require('../controllers/cartController')
 
@@ -80,6 +80,7 @@ router.get('/veryfi', checkveryfi)
 
 router.post('/sendMail', sendMail)
 router.post('/postCode', postcode)
+router.post('/forgetPassword', forgetPass)
 
 
 
