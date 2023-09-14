@@ -3,9 +3,23 @@ module.exports = {
     getProfile: async (email) => {
         let [userid] = await connection.query('select user_id from res_users where email=?', [email])
         let user_id = userid[0].user_id
-        let [result] = await connection.query('select * from customers c, res_users r where c.user_id=r.user_id and c.user_id =?', [user_id])
+        let [result] = await connection.query('select * from customers c, res_users r where c.user_id=r.user_id and c.user_id =?', [user_id]);
+
         let profile = result && result.length > 0 ? result[0] : {};
+
         return profile
+    },
+    getContactSevice: async (email) => {
+        try {
+            if (email) {
+                let [result] = await connection.query('select phone from res_users where email=?', [email])
+                let contact = result && result.length > 0 ? result[0] : {};
+                return contact;
+            }
+            else { }
+        } catch (error) {
+            console.log(error)
+        }
     },
     createProfile: async (data) => {
         try {
@@ -33,5 +47,30 @@ module.exports = {
         catch (error) {
 
         }
+    },
+    updateContactSevice: async (email, phone, checkemail) => {
+        try {
+
+            console.log(checkemail, 'checkemail')
+            let [checkmail] = await connection.query('select email from res_users where email=? limit 1', [email]);
+            let [checkphone] = await connection.query('select phone from res_users where  phone=? limit 1', [phone]);
+
+            if (checkmail == '' && checkphone == '') {
+                let [result] = await connection.query('update res_users set email=?,phone=? where active =1 and email=?', [email, phone, checkemail]);
+                return result
+            }
+            else {
+                console.log('email hoac dt da ton tai')
+            }
+
+
+        }
+        catch (error) {
+            console.log(error)
+        }
     }
+
+
+
+
 }

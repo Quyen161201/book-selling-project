@@ -121,7 +121,17 @@ Validator.isEmail = function (selector, message) {
         selector: selector,
         test: function (value) {
             var regex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
-            return regex.test(value) ? undefined : message || 'Vui lòng nhập trường này';
+            return regex.test(value) ? undefined : message || 'Vui lòng nhập đúng định dạng email';
+
+        }
+    }
+}
+Validator.isPhone = function (selector, message) {
+    return {
+        selector: selector,
+        test: function (value) {
+            var regex = /(84|0[3|5|7|8|9])+([0-9]{8})\b/g;
+            return regex.test(value) ? undefined : message || 'Vui lòng nhập đúng định dạng số điện thoại';
 
         }
     }

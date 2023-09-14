@@ -1,10 +1,13 @@
 const { coutcartSevice, getcartSevice } = require('../service/cartSevice')
 const { uploadSingleFile, uploatMutiFile } = require('../service/uploadFile')
-const { createProfile, getProfile, updatePassSevice, forgetPassService } = require('../service/profileSevice');
+const { createProfile, getProfile, getContactSevice, updatePassSevice, updateContactSevice } = require('../service/profileSevice');
+const { getnotifiSevice } = require('../service/notificationSevice')
 const { postLoginSevice } = require('../service/acountSevice')
 const bcrypt = require('bcrypt');
 const nodemailer = require("nodemailer");
 const session = require('express-session');
+const { sendMailer } = require('../controllers/mailerController')
+
 // const { assign } = require('nodemailer/lib/shared');
 module.exports = {
     profile: async (req, res) => {
@@ -12,7 +15,11 @@ module.exports = {
         let data = await getProfile(email)
         let result = await getcartSevice(email)
         let count = await coutcartSevice(email)
-        res.render('profile-edit.ejs', { profile: data, listcart: result, count: count })
+        let notifi = await getnotifiSevice(email)
+        let contact = await getContactSevice(email)
+        console.log(contact, 'contact')
+
+        res.render('profile-edit.ejs', { profile: data, contact: contact, email: email, listcart: result, count: count, notifi: notifi[0] })
     },
     postprofile: async (req, res) => {
         let email = req.session.email
@@ -69,39 +76,21 @@ module.exports = {
     },
     sendMail: async (req, res) => {
         let email = req.session.email
+
         if (email) {
             let code = Math.random().toString().slice(2, 8)
+            let notifi = await getnotifiSevice(email)
+            console.log(notifi[0].email_notifi, 'notifi')
 
-            if (req.session.code === null || !req.session.code) {
+            if (req.session.code === null || !req.session.code && notifi[0].email_notifi == 1) {
                 let send = req.session.code = code;
                 setTimeout(() => {
                     req.session.code = null;
                     req.session.save();
                 }, 300000);
-                const transporter = nodemailer.createTransport({
-                    service: "gmail",
-                    secure: true,
-                    auth: {
-                        user: process.env.EMAIL_MAILER,
-                        pass: process.env.PASS_MAILLER
-                    },
-                });
-                await transporter.sendMail({
-
-                    from: process.env.EMAIL_MAILER, // sender address
-                    to: `${email}`, // list of receivers
-                    subject: "Bookstore ✔", // Subject line
-                    text: "Xác thực tài khoản", // plain text body
-                    html: `<b>BookStore</b><br> 
-                        Mã xác thực của bạn : ${send}
-                    `
-                },
-
-                    (err) => {
-
-                    },
-                )
-
+                let html = `<b>BookStore</b><br> 
+                Mã xác thực của bạn : ${send}`
+                await sendMailer(process.env.EMAIL_MAILER, process.env.PASS_MAILLER, email, html)
                 return res.json({
                     error: 0
                 })
@@ -116,6 +105,7 @@ module.exports = {
     postcode: async (req, res, next) => {
         let code = req.session.code;
         let payload = req.body.payload;
+        console.log(code)
         if (payload != '') {
 
             if (code == payload) {
@@ -163,6 +153,38 @@ module.exports = {
                 status: 'Đổi mật khẩu không thành công'
             }
             return res.json(result)
+        }
+
+
+    },
+    updateContact: async (req, res) => {
+        const checkemail = req.session.email;
+        let { cno, email } = req.body.data;
+        let rs = await updateContactSevice(email, cno, checkemail);
+
+        if (typeof rs === 'undefined') {
+
+            return res.json({
+                error: 1,
+                status: 'Cap nhat tai khoan k thanh cong'
+
+            })
+        }
+        else {
+            const hashedEmail = await bcrypt.hash(email, 10);
+            let html = `<b>BookStore</b><br> 
+           <div class="sendEmail" style="width:300px;height=40px; background-color:#0dd6b8; border-radius:4px; margin-top:20px"><a class="link-veryfi" href="http://localhost:8086/veryfi?email=${email}&token=${hashedEmail}">Xác thực tài khoản</a></div>`; // html body
+            await sendMailer(process.env.EMAIL_MAILER, process.env.PASS_MAILLER, email, html)
+            setTimeout(() => {
+
+                req.session.destroy()
+            }, 2000);
+            return res.status(200).json({
+
+                error: 0,
+                status: 'Cap nhat tai khoan thanh cong'
+
+            })
         }
 
 

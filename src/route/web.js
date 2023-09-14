@@ -8,10 +8,12 @@ const { getAdminBooks, getAddBooks, createBook, getUpdatebook, postUpdateBook, g
 const { getAdminAuthors, getCreateAuthors, postCreateAuthor, getUpdateAuthors, postUpdateAuthor, postDeleteAuthor } = require('../controllers/adminAuthorController')
 const { getAdminCategory, getAdminCategoryCreate, postAdminCategoryCreate, getAdminUpdateCategory, postAdminCategoryUpdate, postDeleteCategory } = require('../controllers/adminCategoryController')
 const { searchProduct } = require('../controllers/serach');
-const { getRegister, postRegister, getLogin, postLogin, getLogout, checkveryfi } = require('../controllers/acount')
-const { checkSesssion } = require('../middleware/userMiddle')
+const { getRegister, postRegister, getLogin, postLogin, getLogout } = require('../controllers/acount');
+const { checkveryfi } = require('../controllers/mailerController')
+const { checkSesssion } = require('../middleware/userMiddle');
+const { notifycation } = require('../middleware/notifycation')
 
-const { profile, postprofile, updatepass, sendMail, postcode, forgetPass } = require('../controllers/profileController')
+const { profile, postprofile, updatepass, sendMail, postcode, forgetPass, updateContact } = require('../controllers/profileController')
 
 const { getCart, postCart, updateCart, deleteCart } = require('../controllers/cartController')
 
@@ -72,15 +74,18 @@ router.post('/deleteCart/:id', deleteCart)
 router.get('/profile', checkSesssion, profile);
 router.post('/postProfile', checkSesssion, postprofile);
 router.post('/updatePassword', checkSesssion, updatepass);
+router.post('/updateContact', checkSesssion, updateContact);
+
 
 
 
 // veryfi email
-router.get('/veryfi', checkveryfi)
+router.get('/veryfi', checkveryfi);
 
-router.post('/sendMail', sendMail)
-router.post('/postCode', postcode)
-router.post('/forgetPassword', forgetPass)
+router.post('/sendMail', sendMail);
+router.post('/postCode', postcode);
+router.post('/forgetPassword', forgetPass);
+router.post('/notification', notifycation)
 
 
 

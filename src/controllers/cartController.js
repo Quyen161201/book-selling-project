@@ -1,12 +1,14 @@
 
 const { createCart, getcartSevice, updateQuantity, deleteCartSevice, coutcartSevice, checkquantity } = require('../service/cartSevice')
+const { getProfile } = require('../service/profileSevice');
 
 module.exports = {
     getCart: async (req, res, next) => {
         let email = req.session.email
+        let profile = await getProfile(email)
         let result = await getcartSevice(email)
         let count = await coutcartSevice(email)
-        res.render('cart.ejs', { listcart: result, count: count })
+        res.render('cart.ejs', { profile: profile, listcart: result, count: count })
 
         return result
     },

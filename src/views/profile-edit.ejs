@@ -148,7 +148,7 @@
                                                    <select class="form-control" id="city" name="city" required>
                                                       <!-- <input type="text" class="form-control" name="city"
                                                          value=" <%=profile.city%>" required> -->
-                                                      <option value=""></option>
+                                                      <option value="">chọn</option>
 
 
                                                    </select>
@@ -156,36 +156,17 @@
                                                 <div class="form-group">
                                                    <label>Quận/huyện</label>
                                                    <select class="form-control" id="district" name="district" required>
-
-                                                      <% if(profile.district){ %>
-                                                         <option value="">
-                                                            <%=profile.district%>
-                                                         </option>
-                                                         <% } else{ %>
-                                                            <option value="">
-                                                               Chọn
-                                                            </option>
-                                                            <% } %>
-
-
-
+                                                      <option value="">
+                                                         Chọn
+                                                      </option>
                                                    </select>
                                                 </div>
                                                 <div class="form-group">
                                                    <label for="">Phường/Xã</label>
                                                    <select class="form-control" id="ward" name="ward">
-
-                                                      <% if(profile.ward){ %>
-                                                         <option value="">
-                                                            <%=profile.ward%>
-                                                         </option>
-                                                         <% } else{ %>
-                                                            <option value="">
-                                                               Chọn
-                                                            </option>
-                                                            <% } %>
-
-
+                                                      <option value="">
+                                                         Chọn
+                                                      </option>
                                                    </select>
                                                 </div>
                                              </div>
@@ -392,15 +373,17 @@
                                        </div>
                                     </div>
                                     <div class="iq-card-body">
-                                       <form>
+                                       <form action="/notification" method="post">
                                           <div class="form-group row align-items-center">
                                              <label class="col-8 col-md-3" for="emailnotification">Thông báo tới
                                                 Email
                                                 :</label>
                                              <div class="col-4 col-md-9 custom-control custom-switch">
-                                                <input type="checkbox" class="custom-control-input"
-                                                   id="emailnotification" checked="">
-                                                <label class="custom-control-label" for="emailnotification"></label>
+                                                <% let checked=notifi.email_notifi==1 ? "checked" : "" %>
+                                                   <input type="checkbox" class="custom-control-input"
+                                                      id="emailnotification" name="checksendmail" <%=checked %>
+                                                   onclick="mailnotifi(this)" />
+                                                   <label class="custom-control-label" for="emailnotification"></label>
                                              </div>
                                           </div>
                                           <div class="form-group row align-items-center">
@@ -412,7 +395,7 @@
                                                 <label class="custom-control-label" for="smsnotification"></label>
                                              </div>
                                           </div>
-                                          <div class="form-group row align-items-center">
+                                          <!-- <div class="form-group row align-items-center">
                                              <label class="col-md-3" for="npass">Khi nào gửi Email</label>
                                              <div class="col-md-9">
                                                 <div class="custom-control custom-checkbox">
@@ -434,8 +417,8 @@
                                                       kết nối</label>
                                                 </div>
                                              </div>
-                                          </div>
-                                          <div class="form-group row align-items-center">
+                                          </div> -->
+                                          <!-- <div class="form-group row align-items-center">
                                              <label class="col-md-3" for="npass">Khi nào cần báo email</label>
                                              <div class="col-md-9">
                                                 <div class="custom-control custom-checkbox">
@@ -456,7 +439,7 @@
                                                       viên</label>
                                                 </div>
                                              </div>
-                                          </div>
+                                          </div> -->
                                           <button type="submit" id="submit" class="btn btn-primary mr-2">Gửi</button>
                                           <button type="reset" class="btn iq-bg-danger">Hủy bỏ</button>
                                        </form>
@@ -471,21 +454,29 @@
                                        </div>
                                     </div>
                                     <div class="iq-card-body">
-                                       <form>
+                                       <form method="post" id="form-3">
+                                          <div style="display: none; width: 100%;text-align: center;"
+                                             class="alert alert-success" role="alert" id="success3">
+                                             Cập nhật thông tin thành công
+                                          </div>
+                                          <div class="alert alert-danger" role="alert"
+                                             style="display: none;width: 100%;text-align: center;" id="warning3">
+                                             Số diện thoại hoặc email đã tồn tại
+                                          </div>
                                           <div class="form-group">
                                              <label for="cno">Số liên lạc:</label>
-                                             <input type="text" class="form-control" id="cno" value="089">
+                                             <input type="text" class="form-control" id="cno" <% if(contact.phone) {%>
+                                             value="<%= contact.phone %>" <% } %> name="cno">
+                                                   <span class="form-massage"></span>
                                           </div>
                                           <div class="form-group">
                                              <label for="email">Email:</label>
-                                             <input type="text" class="form-control" id="email" value="tvtean@ttnm.com">
+                                             <input type="text" class="form-control" id="email" value="<%=email%>"
+                                                name="email">
+                                             <span class="form-massage"></span>
                                           </div>
-                                          <div class="form-group">
-                                             <label for="url">Url:</label>
-                                             <input type="text" class="form-control" id="url"
-                                                value="https://nhasachtv.com">
-                                          </div>
-                                          <button type="submit" class="btn btn-primary mr-2">Gửi</button>
+
+                                          <button type="submit" id="submit" class="btn btn-primary mr-2">Gửi</button>
                                           <button type="reset" class="btn iq-bg-danger">Hủy bỏ</button>
                                        </form>
                                     </div>
@@ -520,67 +511,112 @@
    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
    <%- include ("boostrapJs.ejs") %>
 </body>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" referrerpolicy="no-referrer"></script>
+<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" referrerpolicy="no-referrer"></script> -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
 <script>
-   (function ($) {
-      const host = "https://provinces.open-api.vn/api/";
-      var callAPI = (api) => {
-         return axios.get(api)
-            .then((response) => {
-               renderData(response.data, "city");
 
-            })
-      }
+   const host = "https://provinces.open-api.vn/api/";
 
-      callAPI('https://provinces.open-api.vn/api/?depth=1');
-      var callApiDistrict = (api) => {
-         return axios.get(api)
-            .then((response) => {
-               renderData(response.data.districts, "district");
-
-            });
-      }
-      var callApiWard = (api) => {
-         return axios.get(api)
-            .then((response) => {
-               renderData(response.data.wards, "ward");
-            });
-      }
-
-      var renderData = (array, select) => {
-
-         let row = ` 
-         
-         <option disable value="">Chọn</option>`;
-
-
-         array.forEach(element => {
-            row += `<option data-id="${element.code}" value="${element.name}">${element.name}</option>`
-            // console.log('element ', element.code, 'element Name', element.name)
+   var callAPI = (api) => {
+      return axios.get(api)
+         .then((response) => {
+            console.log(response.data);
+            renderData(response.data, "city");
 
          });
+   }
+   callAPI('https://provinces.open-api.vn/api/?depth=1');
+   var callApiDistrict = (api) => {
+      return axios.get(api)
+         .then((response) => {
+            renderData(response.data.districts, "district");
+         });
+   }
+   var callApiWard = (api) => {
+      return axios.get(api)
+         .then((response) => {
+            renderData(response.data.wards, "ward");
+         });
+   }
 
-
-         document.querySelector("#" + select).innerHTML = row
-      }
-
-      $("#city").change(() => {
-         callApiDistrict(host + "p/" + $("#city").find(':selected').data('id') + "?depth=2");
-
+   var renderData = (array, select) => {
+      let row = ' <option disable value="">Chọn</option>';
+      array.forEach(element => {
+         row += `<option data-id="${element.code}" value="${element.name}">${element.name}</option>`
+         console.log(element.code)
       });
-      $("#district").change(() => {
-         callApiWard(host + "d/" + $("#district").find(':selected').data('id') + "?depth=2");
+      document.querySelector("#" + select).innerHTML = row
+   }
 
-      });
-      $("#ward").change(() => {
+   $("#city").change(() => {
+      callApiDistrict(host + "p/" + $("#city").find(':selected').data('id') + "?depth=2");
 
-      })
-   })(jQuery)
+   });
+   $("#district").change(() => {
+      callApiWard(host + "d/" + $("#district").find(':selected').data('id') + "?depth=2");
 
+   });
+   $("#ward").change(() => {
+
+   })
 
 </script>
 <script src="./js/register.js"></script>
+<script>
+   Validator({
+      form: '#form-3',
+      formGroupSelector: '.form-group',
+      errorSelect: '.form-massage',
+
+      rules: [
+
+         Validator.isEmail('#email'),
+         Validator.isPhone('#cno'),
+         Validator.isRequired('#cno', 'Trường này không được để trống'),
+         Validator.isRequired('#email', 'Trường này không được để trống'),
+
+      ],
+      onSubmit: function (data) {
+         // call api
+         (async (req, res) => {
+            const rawResponse = await fetch('/updateContact', {
+               method: 'POST',
+               headers: {
+                  'Accept': 'application/json',
+                  'Content-Type': 'application/json'
+               },
+
+               body: JSON.stringify({ data })
+            });
+
+            const result = await rawResponse.json();
+            console.log(result.error)
+
+            if (result.error == 0) {
+               (function ($) {
+                  $('#warning3').hide();
+                  $("#success3").fadeIn("slow");
+                  $("#success3").fadeIn(3000);
+                  $('#success3').show();
+
+                  window.location.replace("http://localhost:8086/adminLogin");
+               })(jQuery)
+            }
+            else {
+               (function ($) {
+                  $('#success3').hide();
+                  $("#warning3").fadeIn("slow");
+                  $("#warning3").fadeIn(3000);
+                  $('#warning3').show();
+
+               })(jQuery)
+            }
+            return result
+         })()
+      }
+   })
+
+</script>
 <script>
    //mong muốn của chúng ta khi sử dụng cái thư viện này trong tương lai
    Validator({
@@ -760,7 +796,29 @@
    let a = rs.valueAsDate = date
 </script>
 <script>
+
+   const mailnotifi = e => {
+      let checksendmail = document.getElementById('emailnotification');
+      console.log(e.checked)
+      fetch('/notification', {
+         method: 'POST',
+         headers: { 'content-type': 'application/json' },
+         body: JSON.stringify({ payload: e.checked })
+
+      })
+         .then(res => res.json()).then(data => {
+            if (data.status == 0) {
+               checksendmail.removeAttribute("checked");
+               console.log(e)
+            }
+            else {
+               checksendmail.setAttribute("checked", "checked");
+               console.log(e)
+            }
+         })
+   }
    function sendmail(e) {
+
 
       fetch('sendMail', {
          method: 'POST',
@@ -812,5 +870,7 @@
 
    }
 </script>
+
+
 
 </html>
