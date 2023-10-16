@@ -54,23 +54,71 @@
 <script src="/js/custom.js"></script>
 <!--validation-->
 <script src="/js/formvalidation.js"></script>
-
+<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
 <script>
-    (function ($) {
 
-        $('#serch').on("focus", function (e) {
-            $('.result-serch').show();
-        })
-        $('#serch').on("blur", function (e) {
-            $('.result-serch').hide();
-        })
+    const host = "https://provinces.open-api.vn/api/";
 
-        let index = 0;
-        $('.ri-shopping-cart-2-fill').on("click", function (e) {
-            $('#count-cart').html(`${index}`);
-            index++;
-        })
-    })(jQuery)
+    var callAPI = (api) => {
+        return axios.get(api)
+            .then((response) => {
+                console.log(response.data);
+                renderData(response.data, "city");
+
+            });
+    }
+    callAPI('https://provinces.open-api.vn/api/?depth=1');
+    var callApiDistrict = (api) => {
+        return axios.get(api)
+            .then((response) => {
+                renderData(response.data.districts, "district");
+            });
+    }
+    var callApiWard = (api) => {
+        return axios.get(api)
+            .then((response) => {
+                renderData(response.data.wards, "ward");
+            });
+    }
+
+    var renderData = (array, select) => {
+        let row = ' <option disable value="">Chọn</option>';
+        array.forEach(element => {
+            row += `<option data-id="${element.code}" value="${element.name}">${element.name}</option>`
+
+        });
+        document.querySelector("#" + select).innerHTML = row
+    }
+
+    $("#city").change(() => {
+        callApiDistrict(host + "p/" + $("#city").find(':selected').data('id') + "?depth=2");
+
+    });
+    $("#district").change(() => {
+        callApiWard(host + "d/" + $("#district").find(':selected').data('id') + "?depth=2");
+
+    });
+    $("#ward").change(() => {
+
+    })
+
+</script>
+<script>
+        (function ($) {
+
+            $('#serch').on("focus", function (e) {
+                $('.result-serch').show();
+            })
+            $('#serch').on("blur", function (e) {
+                $('.result-serch').hide();
+            })
+
+            let index = 0;
+            $('.ri-shopping-cart-2-fill').on("click", function (e) {
+                $('#count-cart').html(`${index}`);
+                index++;
+            })
+        })(jQuery)
     function sendata(e) {
         let serch = document.getElementById('serch-title');
         let rs = document.getElementById('list-serch');

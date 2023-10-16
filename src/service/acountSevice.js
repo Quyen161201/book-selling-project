@@ -2,6 +2,7 @@ const connection = require('../config/database')
 const bcrypt = require('bcrypt');
 
 module.exports = {
+
     postRegisterSevice: async (data) => {
         try {
             let [result] = await connection.query('select email  from res_users where active =1 and email=?', [data.email])
@@ -16,7 +17,7 @@ module.exports = {
             else {
                 return {
                     error: 1,
-                    status: 'email đã tồ tại',
+                    status: 'email đã tồn tại',
 
                 }
             }

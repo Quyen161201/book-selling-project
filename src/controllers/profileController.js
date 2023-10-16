@@ -17,7 +17,7 @@ module.exports = {
         let count = await coutcartSevice(email)
         let notifi = await getnotifiSevice(email)
         let contact = await getContactSevice(email)
-        console.log(contact, 'contact')
+
 
         res.render('profile-edit.ejs', { profile: data, contact: contact, email: email, listcart: result, count: count, notifi: notifi[0] })
     },

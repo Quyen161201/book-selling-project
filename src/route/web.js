@@ -11,11 +11,13 @@ const { searchProduct } = require('../controllers/serach');
 const { getRegister, postRegister, getLogin, postLogin, getLogout } = require('../controllers/acount');
 const { checkveryfi } = require('../controllers/mailerController')
 const { checkSesssion } = require('../middleware/userMiddle');
-const { notifycation } = require('../middleware/notifycation')
+const { notifycation } = require('../middleware/notifycation');
+const { createVnpay, createOder } = require('../controllers/bankkingVnpay');
+
 
 const { profile, postprofile, updatepass, sendMail, postcode, forgetPass, updateContact } = require('../controllers/profileController')
 
-const { getCart, postCart, updateCart, deleteCart } = require('../controllers/cartController')
+const { getCart, postCart, updateCart, deleteCart, postContact, deleteContact } = require('../controllers/cartController')
 
 
 // index
@@ -69,6 +71,8 @@ router.get('/getcart', checkSesssion, getCart)
 router.post('/cart/:id', checkSesssion, postCart)
 router.post('/updateCart', updateCart)
 router.post('/deleteCart/:id', deleteCart)
+router.post('/postcontact', postContact)
+router.post('/deleteContact/:id', deleteContact)
 
 //profile
 router.get('/profile', checkSesssion, profile);
@@ -85,7 +89,11 @@ router.get('/veryfi', checkveryfi);
 router.post('/sendMail', sendMail);
 router.post('/postCode', postcode);
 router.post('/forgetPassword', forgetPass);
-router.post('/notification', notifycation)
+router.post('/notification', notifycation);
+
+// thanh toán vn pay
+router.post('/create_payment_url', checkSesssion, createVnpay);
+router.get('/create_payment_oder', checkSesssion, createOder)
 
 
 

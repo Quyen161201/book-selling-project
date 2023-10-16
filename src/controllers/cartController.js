@@ -1,6 +1,6 @@
 
 const { createCart, getcartSevice, updateQuantity, deleteCartSevice, coutcartSevice, checkquantity } = require('../service/cartSevice')
-const { getProfile } = require('../service/profileSevice');
+const { getProfile, getContactsSevice, createContactSevice } = require('../service/profileSevice');
 
 module.exports = {
     getCart: async (req, res, next) => {
@@ -8,7 +8,10 @@ module.exports = {
         let profile = await getProfile(email)
         let result = await getcartSevice(email)
         let count = await coutcartSevice(email)
-        res.render('cart.ejs', { profile: profile, listcart: result, count: count })
+        let contact = await getContactsSevice(email)
+        console.log("contact", contact)
+        // let contact = await getContactSevice(email);
+        res.render('cart.ejs', { profile: profile, listcart: result, count: count, contact: contact });
 
         return result
     },
@@ -59,6 +62,19 @@ module.exports = {
         let id = req.params.id
         let rs = await deleteCartSevice(id)
         res.redirect('/getCart')
+    },
+    postContact: async (req, res) => {
+        let email = req.session.email
+        let { address, fname, phone, city, district, ward } = req.body
+        let data = { address, fname, phone, city, district, ward, email }
+        let rs = await createContactSevice(data)
+       
+        res.redirect('/getCart');
+    },
+
+    deleteContact: async (req, res) => {
+        res.send('ok')
     }
+
 
 }

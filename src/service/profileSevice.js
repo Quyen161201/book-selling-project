@@ -68,7 +68,36 @@ module.exports = {
         catch (error) {
             console.log(error)
         }
+    },
+    createContactSevice: async (data) => {
+        try {
+            let [userid] = await connection.query('select user_id from res_users where email=?', [data.email]);
+            let user_id = userid[0].user_id;
+
+            let [customerid] = await connection.query('select id from customers where user_id=?', [user_id]);
+            const customer_id = customerid[0].id;
+
+
+            let [result] = await connection.query('insert into contact_customer(address,district,ward,city,customer_id,phone,name,create_at) values(?,?,?,?,?,?,?,now())', [data.address, data.district, data.ward, data.city, customer_id, data.phone, data.fname]);
+            return result
+
+
+        }
+        catch (error) {
+            console.log(error);
+        }
+    },
+    getContactsSevice: async (email) => {
+        let [userid] = await connection.query('select user_id from res_users where email=?', [email]);
+        let user_id = userid[0].user_id;
+
+        let [customerid] = await connection.query('select id from customers where user_id=?', [user_id]);
+        const customer_id = customerid[0].id;
+        let [result] = await connection.query('select * from contact_customer where customer_id=?', [customer_id])
+
+        return result;
     }
+
 
 
 

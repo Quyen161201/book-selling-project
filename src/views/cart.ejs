@@ -108,7 +108,8 @@
                                                             type="button" class="btn btn-danger"
                                                             data-target="#deleteModal" data-toggle="modal"><i
                                                                class="ri-delete-bin-line"
-                                                               style="position: absolute; top: 2px; right: 0px;"></i></button>
+                                                               style="position: absolute; top: 2px; right: 0px;"></i>
+                                                         </button>
 
                                                       </div>
                                                       <div class="modal fade" id="deleteModal">
@@ -225,7 +226,7 @@
                                     </div>
                                  </div>
                                  <div class="iq-card-body">
-                                    <form onsubmit="required()">
+                                    <form onsubmit="required() " method="post" action="/postcontact">
                                        <div class="row mt-3">
                                           <div class="col-md-6">
                                              <div class="form-group">
@@ -236,60 +237,166 @@
                                           <div class="col-md-6">
                                              <div class="form-group">
                                                 <label>Số điện thoại: *</label>
-                                                <input type="text" class="form-control" name="mno" required="">
+                                                <input type="text" class="form-control" name="phone" required="">
                                              </div>
                                           </div>
                                           <div class="col-md-6">
                                              <div class="form-group">
-                                                <label>Địa chỉ: *</label>
-                                                <input type="text" class="form-control" name="houseno" required="">
-                                             </div>
-                                          </div>
-                                          <div class="col-md-6">
-                                             <div class="form-group">
-                                                <label>Tỉnh/thành phố: *</label>
-                                                <input type="text" class="form-control" name="city" required="">
-                                             </div>
-                                          </div>
-                                          <div class="col-md-6">
-                                             <div class="form-group">
-                                                <label>Phường: *</label>
-                                                <input type="text" class="form-control" name="state" required="">
-                                             </div>
-                                          </div>
-                                          <div class="col-md-6">
-                                             <div class="form-group">
-                                                <label for="addtype">Loại địa chỉ</label>
-                                                <select class="form-control" id="addtype">
-                                                   <option>Nhà riêng</option>
-                                                   <option>Công ty</option>
+                                                <label>Tỉnh/Thành phố:</label>
+
+                                                <select class="form-control" id="city" name="city" required>
+                                                   <!-- <input type="text" class="form-control" name="city"
+                                                   value=" <%=profile.city%>" required> -->
+                                                   <option value="">chọn</option>
+
                                                 </select>
                                              </div>
                                           </div>
                                           <div class="col-md-6">
-                                             <button id="savenddeliver" type="submit" class="btn btn-primary">Lưu và
-                                                giao tại
-                                                đây</button>
+                                             <div class="form-group">
+                                                <label>Quận/huyện</label>
+                                                <select class="form-control" id="district" name="district" required>
+                                                   <option value="">
+                                                      Chọn
+                                                   </option>
+                                                </select>
+                                             </div>
                                           </div>
+                                       </div>
+                                       <div class="col-md-6">
+                                          <div class="form-group">
+                                             <label for="">Phường/Xã</label>
+                                             <select class="form-control" id="ward" name="ward">
+                                                <option value="">
+                                                   Chọn
+                                                </option>
+                                             </select>
+                                          </div>
+                                       </div>
+                                       <div class="col-md-6">
+                                          <div class="form-group">
+                                             <label for="">số nhà/đường</label>
+                                             <input type="text" class="form-control" name="address" required>
+                                          </div>
+                                       </div>
+                                       <div class="col-md-6">
+                                          <button id="savenddeliver" type="submit" class="btn btn-primary">Lưu và
+                                             giao tại
+                                             đây</button>
                                        </div>
                                     </form>
                                  </div>
                               </div>
                            </div>
+
                            <div class="col-lg-4">
-                              <div class="iq-card">
-                                 <div class="iq-card-body">
-                                    <h4 class="mb-2">Ông Trần Thuận</h4>
-                                    <div class="shipping-address">
-                                       <p class="mb-0">11 Thành Thái</p>
-                                       <p>Thành phố Đà Nẵng</p>
-                                       <p>0789-999-999</p>
+                              <form action="" method="post">
+                                 <div class="iq-card">
+                                    <div class="iq-card-body">
+                                       <h4 class="mb-2">
+                                          <%=profile.firstname%>
+                                             <%=profile.lastname%>
+                                       </h4>
+                                       <div class="shipping-address">
+                                          <p class="mb-0">
+                                             <%=profile.address%>
+                                          </p>
+                                          <p>
+                                             <%=profile.ward%>
+                                          </p>
+                                          <p>
+                                             <%=profile.district%>
+                                          </p>
+                                          <p>
+                                             <%=profile.city%>
+                                          </p>
+                                          <p>
+                                             <%=profile.phone%>
+                                          </p>
+                                       </div>
+                                       <hr>
+                                       <a id="deliver-address" onclick="sendContact(this)" href="javascript:void();"
+                                          class="btn btn-primary d-block mt-1 next">Tiếp tục</a>
+
+
+
+
                                     </div>
-                                    <hr>
-                                    <a id="deliver-address" href="javascript:void();"
-                                       class="btn btn-primary d-block mt-1 next">Tiếp tục</a>
+
                                  </div>
-                              </div>
+                              </form>
+                              <form action="" method="post">
+                                 <% if(contact.length> 0){ %>
+                                    <% contact.forEach(function(contact) { %>
+                                       <div class="iq-card">
+                                          <div class="iq-card-body">
+                                             <h4 class="mb-2">
+                                                <%=contact.name%>
+
+                                             </h4>
+                                             <div class="shipping-address">
+                                                <p class="mb-0">
+                                                   <%=contact.address%>
+                                                </p>
+                                                <p>
+                                                   <%=contact.ward%>
+                                                </p>
+                                                <p>
+                                                   <%=contact.district%>
+                                                </p>
+                                                <p>
+                                                   <%=contact.city%>
+                                                </p>
+                                                <p>
+                                                   <%=contact.phone%>
+                                                </p>
+
+                                             </div>
+
+                                             <hr>
+                                             <a id="deliver-address" onclick="sendContact(this)" href="
+                                                javascript:void();" class="btn btn-primary d-block mt-1 next">Tiếp
+                                                tục</a>
+                                             <button type="button" class="btn btn-danger" data-target="#deleteModal2"
+                                                style="width: 100%; margin-top: 10px;" data-toggle="modal"> Xoa
+                                             </button>
+
+                                          </div>
+
+                                       </div>
+                                       <div class="modal fade" id="deleteModal2">
+                                          <div class="modal-dialog">
+                                             <div class="modal-content">
+                                                <div class="modal-header">
+                                                   <h5 class="modal-title" id="exampleModalLabel">
+                                                      Confirm Delete
+                                                   </h5>
+                                                   <button type="button" class="close" data-dismiss="modal"
+                                                      aria-label="Close">
+                                                      <span aria-hidden="true" id="close-span">&times;</span>
+                                                   </button>
+                                                </div>
+                                                <div class="modal-body">
+                                                   <p>Bạn muốn xóa dia chi nay ?</p>
+                                                </div>
+                                                <div class="modal-footer">
+                                                   <button class="btn btn-secondary" id="close-modal" class="close"
+                                                      data-dismiss="modal" aria-label="Close">No</button>
+                                                   <form action="/deleteContact/<%=contact.id %>" method="post">
+                                                      <button class="btn btn-danger">Yes</button>
+                                                   </form>
+                                                </div>
+                                             </div>
+                                          </div>
+                                       </div>
+
+                                       <% }); %>
+                                          <% } else{ %>
+                                             <p></p>
+                                             <% } %>
+
+                              </form>
+
                            </div>
                         </div>
                      </div>
@@ -315,24 +422,29 @@
                                     <hr>
                                     <div class="card-lists">
                                        <div class="form-group">
-                                          <div class="custom-control custom-radio">
+                                          <!-- <div class="custom-control custom-radio">
                                              <input type="radio" id="credit" name="customRadio"
                                                 class="custom-control-input">
-                                             <label class="custom-control-label" for="credit"> Thẻ Tín dụng / Ghi nợ /
+                                             <label class="custom-control-label" for="credit"> Thẻ Tín dụng / Ghi
+                                                nợ /
                                                 ATM</label>
-                                          </div>
+                                          </div> -->
                                           <div class="custom-control custom-radio">
-                                             <input type="radio" id="netbaking" name="customRadio"
-                                                class="custom-control-input">
-                                             <label class="custom-control-label" for="netbaking"> Momo/ZaloPay</label>
+                                             <form action="/create_payment_oder" method="get">
+                                                <button name="vnpay" class="btn btn-primary">Thanh
+                                                   toán
+                                                   VNPay </button>
+
+                                             </form>
+
+                                             <!-- <label class="custom-control-label" for="netbaking">
+                                                </label> -->
                                           </div>
-                                          <div class="custom-control custom-radio">
-                                             <input type="radio" id="emi" name="emi" class="custom-control-input">
-                                             <label class="custom-control-label" for="emi"> Trả góp</label>
-                                          </div>
+
                                           <div class="custom-control custom-radio">
                                              <input type="radio" id="cod" name="cod" class="custom-control-input">
-                                             <label class="custom-control-label" for="cod"> Thanh toán khi giao hàng
+                                             <label class="custom-control-label" for="cod"> Thanh toán khi giao
+                                                hàng
                                              </label>
                                           </div>
                                        </div>
@@ -349,8 +461,9 @@
                                  <div class="iq-card-body">
                                     <h4 class="mb-2">Chi tiết</h4>
                                     <div class="d-flex justify-content-between">
-                                       <span>Giá 3 sản phẩm</span>
-                                       <span><strong>329.900đ</strong></span>
+                                       <span id="quantity-final"></span>
+                                       <span id="total2"><strong></strong></span>
+
                                     </div>
                                     <div class="d-flex justify-content-between">
                                        <span>Phí vận chuyển</span>
@@ -359,7 +472,7 @@
                                     <hr>
                                     <div class="d-flex justify-content-between">
                                        <span>Số tiền phải trả</span>
-                                       <span><strong>329.900đ</strong></span>
+                                       <span id="total-final"><strong>0đ</strong></span>
                                     </div>
                                  </div>
                               </div>
@@ -391,6 +504,7 @@
 
       <script>
          let total = 0;
+         let quantity2 = 0;
          function checkcart(e) {
             let checkbox = document.getElementsByName('checkbox')
 
@@ -400,17 +514,28 @@
             let btnminus = e.parentElement.parentElement.parentElement.childNodes[7].childNodes[1].childNodes[1].children[0].childNodes[1].childNodes[1];
             let btninput = e.parentElement.parentElement.parentElement.childNodes[7].childNodes[1].childNodes[1].children[0].childNodes[1].childNodes[3];
             let btnplus = e.parentElement.parentElement.parentElement.childNodes[7].childNodes[1].childNodes[1].children[0].childNodes[1].childNodes[9];
+            let productname = e.parentElement.parentElement.parentElement.childNodes[5].childNodes[1].childNodes[1].innerText
 
             let price = e.parentElement.parentElement.parentElement.childNodes[7].childNodes[1].childNodes[1].children[0].childNodes[1].childNodes[7].value;
             let quantity = e.parentElement.parentElement.parentElement.childNodes[7].childNodes[1].childNodes[1].children[0].childNodes[1].childNodes[3].value;
-            let tong = document.getElementById('total')
+            let tong = document.getElementById('total');
+
+            let totalFinal = document.getElementById('total-final');
+            let total2 = document.getElementById('total2')
+            let quantityFinal = document.getElementById('quantity-final');
             if (check === true) {
                total += quantity * price
+
                btnminus.setAttribute('disabled', '');
                btninput.setAttribute('disabled', '');
                btnplus.setAttribute('disabled', '');
-
+               console.log(price)
+               let quantity3 = Number(quantity)
+               quantity2 += quantity3;
                tong.innerText = `${total.toLocaleString()} ₫`
+               quantityFinal.innerText = `${quantity2} sản phẩm thanh toán`
+               totalFinal.innerText = `${total.toLocaleString()} ₫`
+               total2.innerText = `${total.toLocaleString()} ₫`
 
             }
 
@@ -426,7 +551,6 @@
          function order(e) {
             let total = document.getElementById('total')
             let modal = document.getElementsByClassName('modal')[2]
-            console.log(modal)
 
             if (total.innerText == "" || total.innerText == '0 ₫') {
                alert("Bạn chưa chọn sản phẩm")
@@ -435,7 +559,7 @@
          }
          function sendata(e) {
             let modal = document.querySelector('.modal')
-            console.log(modal)
+
             let price = e.parentElement.childNodes[7].value
             let soluong = e.value
             let total = soluong * price
@@ -456,8 +580,11 @@
                }
                else {
                   alert('Số lượng bạn chọn  vượt quá số lượng trong kho');
+
+                  let a = span.innerText = `${(data.sendata * price).toLocaleString()} ₫`
                   e.value = data.sendata
-                  span.innerText = `${(data.sendata * price).toLocaleString()} ₫`
+
+
                }
                let closeModal = document.querySelector('#close-modal')
                closeModal.onclick = (e) => {
@@ -475,7 +602,6 @@
 
                   spanClose.innerText = `${(data.sendata * price).toLocaleString()} ₫`
                }
-               console.log('soluong', soluong)
                if (soluong <= 0) {
                   modal.classList = "modal fade show";
                   modal.style.display = "block";
@@ -490,59 +616,25 @@
 
          };
 
-         function send(e) {
-            let modal = document.querySelector('.modal')
-            let id = e.parentElement.childNodes[5]
-            let quantity = e.parentElement.childNodes[3]
-            let price = e.parentElement.parentElement.childNodes[1].childNodes[7].value
 
-            setTimeout(() => {
-               fetch('updateCart', {
-                  method: 'post',
-                  headers: { 'content-type': 'application/json' },
-                  body: JSON.stringify({ quantity: quantity.value, id: id.value })
-               }).then(res => res.json()).then(data => {
-                  console.log(data);
-                  if (data.checkdata >= quantity.value) {
-                     let btnPlus = e.parentElement.childNodes[9]
-                     btnPlus.removeAttribute('disabled', '');
+         // function createvnpay() {
+         //    const url = 'https://sandbox.vnpayment.vn/paymentv2/vpcpay.html';
 
-                  }
-                  else {
-                     alert('Số lượng bạn chọn  vượt quá số lượng trong kho');
-                     e.setAttribute('disabled', '');
+         //    fetch(url)
+         //       .then(response => {
+         //          if (!response.ok) {
+         //             throw new Error('Network response was not ok');
+         //          }
+         //          return response.text(); // hoặc response.json() nếu kết quả trả về là JSON
+         //       })
+         //       .then(data => {
+         //          console.log(data);
+         //       })
+         //       .catch(error => {
+         //          console.log('There was a problem with the fetch operation:', error.message);
+         //       });
 
-                     quantity.value -= 1
-                  }
-                  let closeModal = document.querySelector('#close-modal')
-                  closeModal.onclick = (e) => {
-                     modal.style.display = "none";
-                     modal.classList = "modal fade";
-                     let spanClose = closeSpan.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.childNodes[1].childNodes[1].childNodes[3].childNodes[1]
-
-                     spanClose.innerText = `${(data.sendata * price).toLocaleString()} ₫`
-                  }
-                  let closeSpan = document.querySelector('#close-span')
-                  closeSpan.onclick = (e) => {
-                     modal.style.display = "none";
-                     modal.classList = "modal fade";
-                     let spanClose = closeSpan.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.childNodes[1].childNodes[1].childNodes[3].childNodes[1]
-                     spanClose.innerText = `${(data.sendata * price).toLocaleString()} ₫`
-                  }
-
-                  if (quantity.value <= 0) {
-                     modal.classList = "modal fade show";
-                     modal.style.display = "block";
-                     quantity.value = data.sendata
-
-                  }
-
-               })
-            }, 200);
-
-
-
-         }
+         // }
 
       </script>
 </body>
