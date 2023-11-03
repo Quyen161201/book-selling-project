@@ -7,9 +7,56 @@ const moment = require('moment');
 const dayjs = require('dayjs');
 
 module.exports = {
+
+
     createOder: (req, res) => {
-        res.render('order.jade', { title: 'Tạo mới đơn hàng', amount: 10000 })
+        res.render('order.ejs', { title: 'Tạo mới đơn hàng', amount: 10000 })
     },
+    returnUrlPayment: (req, res) => {
+        function sortObject(obj) {
+            let sorted = {};
+            let str = [];
+            let key;
+            for (key in obj) {
+                if (obj.hasOwnProperty(key)) {
+                    str.push(encodeURIComponent(key));
+                }
+            }
+            str.sort();
+            for (key = 0; key < str.length; key++) {
+                sorted[str[key]] = encodeURIComponent(obj[str[key]]).replace(/%20/g, "+");
+            }
+            return sorted;
+        }
+        let vnp_Params = req.query;
+
+        let secureHash = vnp_Params['vnp_SecureHash'];
+
+        delete vnp_Params['vnp_SecureHash'];
+        delete vnp_Params['vnp_SecureHashType'];
+
+        vnp_Params = sortObject(vnp_Params);
+
+
+        let tmnCode = 'EU2KXDL3';
+        let secretKey = 'SECTWBHKWQTUUYQMGVRHPZCHHNVDKUGA';
+
+        let querystring = require('qs');
+        let signData = querystring.stringify(vnp_Params, { encode: false });
+        let crypto = require("crypto");
+        let hmac = crypto.createHmac("sha512", secretKey);
+        let signed = hmac.update(new Buffer(signData, 'utf-8')).digest("hex");
+
+        if (secureHash === signed) {
+            //Kiem tra xem du lieu trong db co hop le hay khong va thong bao ket qua
+
+            res.render('success.ejs', { code: vnp_Params['vnp_ResponseCode'] })
+        } else {
+            res.render('error.ejs', { code: '97' })
+        }
+    },
+
+
     createVnpay: (req, res) => {
         process.env.TZ = 'Asia/Ho_Chi_Minh';
         function sortObject(obj) {
@@ -36,7 +83,7 @@ module.exports = {
         let tmnCode = 'EU2KXDL3';
         let secretKey = 'SECTWBHKWQTUUYQMGVRHPZCHHNVDKUGA';
         let vnpUrl = 'https://sandbox.vnpayment.vn/paymentv2/vpcpay.html';
-        let returnUrl = "http://localhost:8888/order/vnpay_return";
+        let returnUrl = "http://localhost:8086/returnUrl";
         // var tmnCode = process.env.vnp_TmnCode;
         // var secretKey = process.env.vnp_HashSecret
         // var vnpUrl = process.env.vnp_Url
@@ -86,5 +133,6 @@ module.exports = {
 
         res.redirect(vnpUrl)
 
-    }
+    },
+
 }

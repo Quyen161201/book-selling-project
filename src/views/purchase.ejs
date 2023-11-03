@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <%- include ("head.ejs") %>
+        <title>Đơn hàng của tôi</title>
+        <style>
+            #order-container {
+                width: 60%;
+                margin-top: 120px;
+                margin-left: 360px;
+
+                position: relative;
+                text-align: center;
+                z-index: 2000;
+            }
+
+            #order-table {
+                width: 100%;
+                margin-top: 20px;
+                border-collapse: collapse;
+            }
+
+            #order-table th,
+            #order-table td {
+                border: 1px solid #ddd;
+                padding: 8px;
+            }
+
+            #order-table th {
+                background-color: #f2f2f2;
+            }
+        </style>
+</head>
+
+<body>
+    <div class="wrapper">
+        <!-- Sidebar  -->
+        <%- include ("sidebarIndex.ejs") %>
+            <!-- TOP Nav Bar -->
+            <%- include ("sidebar-top-index.ejs") %>
+                <div id="order-container">
+
+                    <table id="order-table">
+                        <thead>
+                            <tr>
+                                <th>Tên đơn hàng</th>
+                                <th>Ngày đặt hàng</th>
+                                <th>Tổng tiền</th>
+                                <th>Trạng thái</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- Các dòng đơn hàng sẽ được thêm vào đây bằng JavaScript -->
+                        </tbody>
+                    </table>
+                </div>
+    </div>
+    <%- include ("boostrapJs.ejs") %>
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                const orderTableBody = document.getElementById('order-table').getElementsByTagName('tbody')[0];
+
+                // Giả sử có một array chứa các đơn hàng
+                const orders = [
+                    { id: 1, date: '2023-10-22', total: '$100', status: 'Đang chờ' },
+                    { id: 2, date: '2023-10-21', total: '$150', status: 'Đã giao' },
+                    // Thêm các đơn hàng khác vào đây
+                ];
+
+                orders.forEach(order => {
+                    const newRow = orderTableBody.insertRow();
+
+                    newRow.innerHTML = `
+            <td>${order.id}</td>
+            <td>${order.date}</td>
+            <td>${order.total}</td>
+            <td>${order.status}</td>
+        `;
+                });
+            });
+
+        </script>
+</body>
+
+</html>

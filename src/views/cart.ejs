@@ -219,7 +219,7 @@
                      <div id="address" class="card-block p-0 col-12">
                         <div class="row align-item-center">
                            <div class="col-lg-8">
-                              <div class="iq-card">
+                              <div class="iq-card" id="card1">
                                  <div class="iq-card-header d-flex justify-content-between">
                                     <div class="iq-header-title">
                                        <h4 class="card-title">Thêm địa chỉ mới</h4>
@@ -289,8 +289,8 @@
                               </div>
                            </div>
 
-                           <div class="col-lg-4">
-                              <form action="" method="post">
+                           <div class="col-lg-4" id="chitiet">
+                              <!-- <form action="/orderContact" method="post">
                                  <div class="iq-card">
                                     <div class="iq-card-body">
                                        <h4 class="mb-2">
@@ -315,8 +315,9 @@
                                           </p>
                                        </div>
                                        <hr>
-                                       <a id="deliver-address" onclick="sendContact(this)" href="javascript:void();"
-                                          class="btn btn-primary d-block mt-1 next">Tiếp tục</a>
+                                       <button id="deliver-address" onclick="sendContact(this)"
+                                          href="javascript:void();" class="btn btn-primary d-block mt-1 next">Tiếp
+                                          tục</button>
 
 
 
@@ -324,17 +325,20 @@
                                     </div>
 
                                  </div>
-                              </form>
-                              <form action="" method="post">
-                                 <% if(contact.length> 0){ %>
-                                    <% contact.forEach(function(contact) { %>
+                              </form> -->
+
+                              <% if(contact){ %>
+                                 <% contact.forEach(function(contact) { %>
+                                    <form action="/orderContact" method="post">
                                        <div class="iq-card">
                                           <div class="iq-card-body">
                                              <h4 class="mb-2">
                                                 <%=contact.name%>
 
                                              </h4>
+                                             <input id="id-contact" type="text" value="<%=contact.id%>">
                                              <div class="shipping-address">
+                                                <input type="hidden" name="id" value=" <%=contact.id%>" disabled>
                                                 <p class="mb-0">
                                                    <%=contact.address%>
                                                 </p>
@@ -354,127 +358,132 @@
                                              </div>
 
                                              <hr>
-                                             <a id="deliver-address" onclick="sendContact(this)" href="
-                                                javascript:void();" class="btn btn-primary d-block mt-1 next">Tiếp
-                                                tục</a>
-                                             <button type="button" class="btn btn-danger" data-target="#deleteModal2"
-                                                style="width: 100%; margin-top: 10px;" data-toggle="modal"> Xoa
-                                             </button>
+                                             <button type="button" onclick=" sendContact(this)" id="send-contact" ;
+                                                style="width: 100%; margin-top: 10px;"
+                                                class="btn btn-primary d-block mt-1 next">Tiếp
+                                                tục</button>
+                                    </form>
+                                    <form action="/deleteContact/<%=contact.id %>" method="post">
+                                       <button class="btn btn-danger" style="width: 100%; margin-top: 10px;">
+                                          Xóa
+                                       </button>
+                                    </form>
 
-                                          </div>
+                           </div>
 
-                                       </div>
-                                       <div class="modal fade" id="deleteModal2">
-                                          <div class="modal-dialog">
-                                             <div class="modal-content">
-                                                <div class="modal-header">
-                                                   <h5 class="modal-title" id="exampleModalLabel">
-                                                      Confirm Delete
-                                                   </h5>
-                                                   <button type="button" class="close" data-dismiss="modal"
-                                                      aria-label="Close">
-                                                      <span aria-hidden="true" id="close-span">&times;</span>
-                                                   </button>
+                        </div>
+
+
+
+                        <% }); %>
+                           <% } else{ %>
+                              <p></p>
+                              <% } %>
+
+                                 <!-- <% contact.forEach((contact,index)=> {%>
+                                                <div class="modal fade" id="deleteModal2">
+                                                   <div class="modal-dialog">
+                                                      <div class="modal-content">
+                                                         <div class="modal-header">
+                                                            <h5 class="modal-title" id="exampleModalLabel">
+                                                               Confirm Delete
+                                                            </h5>
+                                                            <button type="button" class="close" data-dismiss="modal"
+                                                               aria-label="Close">
+                                                               <span aria-hidden="true" id="close-span">&times;</span>
+                                                            </button>
+                                                         </div>
+                                                         <div class="modal-body">
+                                                            <p>Bạn muốn xóa dia chi nay ?</p>
+                                                         </div>
+                                                         <div class="modal-footer">
+
+
+                                                            <p>
+                                                               <%=contact.id %>
+                                                            </p>
+
+
+                                                            <button class="btn btn-secondary" id="close-modal"
+                                                               class="close" data-dismiss="modal"
+                                                               aria-label="Close">No</button>
+                                                            <form action="/deleteContact/<%=contact.id %>"
+                                                               method="post">
+                                                               <button class="btn btn-danger">Yes</button>
+                                                            </form>
+                                                         </div>
+                                                      </div>
+                                                   </div>
                                                 </div>
-                                                <div class="modal-body">
-                                                   <p>Bạn muốn xóa dia chi nay ?</p>
-                                                </div>
-                                                <div class="modal-footer">
-                                                   <button class="btn btn-secondary" id="close-modal" class="close"
-                                                      data-dismiss="modal" aria-label="Close">No</button>
-                                                   <form action="/deleteContact/<%=contact.id %>" method="post">
-                                                      <button class="btn btn-danger">Yes</button>
-                                                   </form>
-                                                </div>
-                                             </div>
-                                          </div>
-                                       </div>
-
-                                       <% }); %>
-                                          <% } else{ %>
-                                             <p></p>
-                                             <% } %>
-
+                                                <% });%>
+                                                   <% %> -->
+                     </div>
+                  </div>
+               </div>
+               <div id="payment" class="card-block p-0 col-12">
+                  <div class="row align-item-center">
+                     <div class="col-lg-8">
+                        <div class="iq-card">
+                           <div class="iq-card-header d-flex justify-content-between">
+                              <div class="iq-header-title">
+                                 <h4 class="card-title">Lựa chọn thanh toán</h4>
+                              </div>
+                           </div>
+                           <div class="iq-card-body">
+                              <form class="mt-3">
+                                 <div class="d-flex align-items-center">
+                                    <span>Mã giảm giá: </span>
+                                    <div class="cvv-input ml-3 mr-3">
+                                       <input type="text" class="form-control" required="">
+                                    </div>
+                                    <button type="submit" class="btn btn-primary">Tiếp tục</button>
+                                 </div>
                               </form>
+                              <hr>
+                              <div class="card-lists">
+                                 <div class="form-group">
+                                    <div class="custom-control custom-radio">
+                                       <form action="/create_payment_oder" method="get">
+                                          <button name="vnpay" class="btn btn-primary">Thanh
+                                             toán VNPay
+                                          </button>
+                                       </form>
+                                    </div>
+
+                                    <div class="custom-control custom-radio" style="margin-top: 10px;">
+                                       <form action="/createCod" method="post">
+                                          <input type="text" name="paycod" id="pay-cod" value="" style="display: none;">
+                                          <button name="cod" class="btn btn-primary">Thanh
+                                             toán tiền mặt
+                                          </button>
+                                       </form>
+                                    </div>
+                                 </div>
+                              </div>
+                              <hr>
+                              <a id="deliver-address" href="javascript:void();"
+                                 class="btn btn-primary d-block mt-1 next">Thanh toán</a>
 
                            </div>
                         </div>
                      </div>
-                     <div id="payment" class="card-block p-0 col-12">
-                        <div class="row align-item-center">
-                           <div class="col-lg-8">
-                              <div class="iq-card">
-                                 <div class="iq-card-header d-flex justify-content-between">
-                                    <div class="iq-header-title">
-                                       <h4 class="card-title">Lựa chọn thanh toán</h4>
-                                    </div>
-                                 </div>
-                                 <div class="iq-card-body">
-                                    <form class="mt-3">
-                                       <div class="d-flex align-items-center">
-                                          <span>Mã giảm giá: </span>
-                                          <div class="cvv-input ml-3 mr-3">
-                                             <input type="text" class="form-control" required="">
-                                          </div>
-                                          <button type="submit" class="btn btn-primary">Tiếp tục</button>
-                                       </div>
-                                    </form>
-                                    <hr>
-                                    <div class="card-lists">
-                                       <div class="form-group">
-                                          <!-- <div class="custom-control custom-radio">
-                                             <input type="radio" id="credit" name="customRadio"
-                                                class="custom-control-input">
-                                             <label class="custom-control-label" for="credit"> Thẻ Tín dụng / Ghi
-                                                nợ /
-                                                ATM</label>
-                                          </div> -->
-                                          <div class="custom-control custom-radio">
-                                             <form action="/create_payment_oder" method="get">
-                                                <button name="vnpay" class="btn btn-primary">Thanh
-                                                   toán
-                                                   VNPay </button>
+                     <div class="col-lg-4">
+                        <div class="iq-card">
+                           <div class="iq-card-body">
+                              <h4 class="mb-2">Chi tiết</h4>
+                              <div class="d-flex justify-content-between">
+                                 <span id="quantity-final"></span>
+                                 <span id="total2"><strong></strong></span>
 
-                                             </form>
-
-                                             <!-- <label class="custom-control-label" for="netbaking">
-                                                </label> -->
-                                          </div>
-
-                                          <div class="custom-control custom-radio">
-                                             <input type="radio" id="cod" name="cod" class="custom-control-input">
-                                             <label class="custom-control-label" for="cod"> Thanh toán khi giao
-                                                hàng
-                                             </label>
-                                          </div>
-                                       </div>
-                                    </div>
-                                    <hr>
-                                    <a id="deliver-address" href="javascript:void();"
-                                       class="btn btn-primary d-block mt-1 next">Thanh toán</a>
-
-                                 </div>
                               </div>
-                           </div>
-                           <div class="col-lg-4">
-                              <div class="iq-card">
-                                 <div class="iq-card-body">
-                                    <h4 class="mb-2">Chi tiết</h4>
-                                    <div class="d-flex justify-content-between">
-                                       <span id="quantity-final"></span>
-                                       <span id="total2"><strong></strong></span>
-
-                                    </div>
-                                    <div class="d-flex justify-content-between">
-                                       <span>Phí vận chuyển</span>
-                                       <span class="text-success">Miễn phí</span>
-                                    </div>
-                                    <hr>
-                                    <div class="d-flex justify-content-between">
-                                       <span>Số tiền phải trả</span>
-                                       <span id="total-final"><strong>0đ</strong></span>
-                                    </div>
-                                 </div>
+                              <div class="d-flex justify-content-between">
+                                 <span>Phí vận chuyển</span>
+                                 <span id="phi-ship" class="text-success">30.000đ</span>
+                              </div>
+                              <hr>
+                              <div class="d-flex justify-content-between">
+                                 <span>Số tiền phải trả</span>
+                                 <span id="total-final"><strong>0đ</strong></span>
                               </div>
                            </div>
                         </div>
@@ -482,6 +491,8 @@
                   </div>
                </div>
             </div>
+   </div>
+   </div>
    </div>
    <!-- Wrapper END -->
    <!-- Footer -->
@@ -507,6 +518,8 @@
          let quantity2 = 0;
          function checkcart(e) {
             let checkbox = document.getElementsByName('checkbox')
+            let payment = document.getElementById('pay-cod')
+            console.log("payment", payment)
 
             let arr = []
             let check = e.checked;
@@ -521,6 +534,8 @@
             let tong = document.getElementById('total');
 
             let totalFinal = document.getElementById('total-final');
+            // let ship = document.getElementById('phi-ship').innerText
+
             let total2 = document.getElementById('total2')
             let quantityFinal = document.getElementById('quantity-final');
             if (check === true) {
@@ -534,7 +549,9 @@
                quantity2 += quantity3;
                tong.innerText = `${total.toLocaleString()} ₫`
                quantityFinal.innerText = `${quantity2} sản phẩm thanh toán`
-               totalFinal.innerText = `${total.toLocaleString()} ₫`
+               totalFinal.innerText = `${(total + 30000).toLocaleString()} ₫`
+               payment.value = total + 30000;
+               console.log('payment', payment.value)
                total2.innerText = `${total.toLocaleString()} ₫`
 
             }
@@ -616,26 +633,25 @@
 
          };
 
+         sendContact = (e) => {
+            const payment = document.querySelector('#payment');
+            const iqCard = document.querySelector('#card1');
+            const chitiet = document.querySelector('#chitiet');
 
-         // function createvnpay() {
-         //    const url = 'https://sandbox.vnpayment.vn/paymentv2/vpcpay.html';
+            const id = e.parentElement.childNodes[3].value;
 
-         //    fetch(url)
-         //       .then(response => {
-         //          if (!response.ok) {
-         //             throw new Error('Network response was not ok');
-         //          }
-         //          return response.text(); // hoặc response.json() nếu kết quả trả về là JSON
-         //       })
-         //       .then(data => {
-         //          console.log(data);
-         //       })
-         //       .catch(error => {
-         //          console.log('There was a problem with the fetch operation:', error.message);
-         //       });
+            payment.classList = "card-block p-0 col-12 show";
+            iqCard.style.display = "none";
+            chitiet.style.display = "none";
 
-         // }
-
+            fetch('orderContact', {
+               method: 'post',
+               headers: { 'content-type': 'application/json' },
+               body: JSON.stringify({ id })
+            }).then(res => res.json()).then(data => {
+               console.log(data.id)
+            })
+         }
       </script>
 </body>
 
