@@ -9,9 +9,6 @@ module.exports = {
         let result = await getcartSevice(email)
         let count = await coutcartSevice(email)
         let contact = await getContactsSevice(email)
-        console.log('contact', contact)
-
-        // let contact = await getContactSevice(email);
         res.render('cart.ejs', { profile: profile, listcart: result, count: count, contact: contact });
 
         return result
@@ -19,8 +16,11 @@ module.exports = {
     postCart: async (req, res) => {
         let email = req.session.email
         let { product_id, name, price } = req.body
+
+        price = price.replace(/,|₫/g, '').trim();
+
         let rs = await getcartSevice(email)
-        let result = await createCart(product_id, email)
+        let result = await createCart(product_id, email, price)
         if (!req.session.cart) {
             req.session.cart = []
         }
@@ -48,11 +48,13 @@ module.exports = {
     },
     updateCart: async (req, res) => {
         let quantity = req.body.quantity
+        let price = req.body.price;
 
         let id = req.body.id
+        let total = quantity * price
         let check = await checkquantity(id)
         let checkdata = check[0].quantity
-        let result = await updateQuantity(id, quantity)
+        let result = await updateQuantity(id, quantity, total);
         let sendata = result[0].quatity
         return res.json({
             checkdata,

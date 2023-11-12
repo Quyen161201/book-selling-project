@@ -103,16 +103,19 @@
                                                          </div>
                                                       </div>
                                                       <div class="col-sm-2">
-                                                         <button
-                                                            style="width: 24px; margin-left: 3px;margin-top: 8px; text-align: center; height: 25px; position: relative;"
-                                                            type="button" class="btn btn-danger"
-                                                            data-target="#deleteModal" data-toggle="modal"><i
-                                                               class="ri-delete-bin-line"
-                                                               style="position: absolute; top: 2px; right: 0px;"></i>
-                                                         </button>
+                                                         <form action="/deleteCart/<%=cart.cartId %>" method="post">
+                                                            <button
+                                                               style="width: 24px; margin-left: 3px;margin-top: 8px; text-align: center; height: 25px; position: relative;"
+                                                               class="btn btn-danger" data-target="#deleteModal"
+                                                               data-toggle="modal"><i class="ri-delete-bin-line"
+                                                                  style="position: absolute; top: 2px; right: 0px;"></i>
+                                                            </button>
+                                                         </form>
+
+
 
                                                       </div>
-                                                      <div class="modal fade" id="deleteModal">
+                                                      <!-- <div class="modal fade" id="deleteModal">
                                                          <div class="modal-dialog">
                                                             <div class="modal-content">
                                                                <div class="modal-header">
@@ -139,12 +142,14 @@
                                                                </div>
                                                             </div>
                                                          </div>
-                                                      </div>
+                                                      </div> -->
                                                    </div>
                                                 </div>
                                              </div>
                                           </li>
-                                          <% }); } %>
+                                          <% }); }else{ %>
+                                             <h5 style="text-align: center;">Giỏ hàng trống</h5>
+                                             <% } %>
                                     </ul>
                                  </div>
                               </div>
@@ -160,9 +165,10 @@
                                     <hr>
                                     <p><b>Chi tiết</b></p>
                                     <div class="d-flex justify-content-between mb-1">
-                                       <span>Tổng</span>
-                                       <span id="total">
 
+
+                                       <span>Tổng </span>
+                                       <span id="total" style="color: rgb(241, 27, 27);">
                                        </span>
                                     </div>
                                     <!-- <div class="d-flex justify-content-between mb-1">
@@ -336,7 +342,7 @@
                                                 <%=contact.name%>
 
                                              </h4>
-                                             <input id="id-contact" type="text" value="<%=contact.id%>">
+                                             <input id="id-contact" type="hidden" value="<%=contact.id%>" disabled>
                                              <div class="shipping-address">
                                                 <input type="hidden" name="id" value=" <%=contact.id%>" disabled>
                                                 <p class="mb-0">
@@ -514,14 +520,14 @@
    <%- include ("boostrapJs.ejs") %>
 
       <script>
+         let arrCart = [];
+         let cart = {};
          let total = 0;
          let quantity2 = 0;
          function checkcart(e) {
             let checkbox = document.getElementsByName('checkbox')
             let payment = document.getElementById('pay-cod')
-            console.log("payment", payment)
-
-            let arr = []
+            let nameProduct = document.getElementById('name-product');
             let check = e.checked;
 
             let btnminus = e.parentElement.parentElement.parentElement.childNodes[7].childNodes[1].childNodes[1].children[0].childNodes[1].childNodes[1];
@@ -529,38 +535,50 @@
             let btnplus = e.parentElement.parentElement.parentElement.childNodes[7].childNodes[1].childNodes[1].children[0].childNodes[1].childNodes[9];
             let productname = e.parentElement.parentElement.parentElement.childNodes[5].childNodes[1].childNodes[1].innerText
 
+
             let price = e.parentElement.parentElement.parentElement.childNodes[7].childNodes[1].childNodes[1].children[0].childNodes[1].childNodes[7].value;
             let quantity = e.parentElement.parentElement.parentElement.childNodes[7].childNodes[1].childNodes[1].children[0].childNodes[1].childNodes[3].value;
-            let tong = document.getElementById('total');
+
 
             let totalFinal = document.getElementById('total-final');
             // let ship = document.getElementById('phi-ship').innerText
-
+            let tong = document.getElementById('total');
             let total2 = document.getElementById('total2')
             let quantityFinal = document.getElementById('quantity-final');
+
             if (check === true) {
-               total += quantity * price
+
+
+               total += quantity * price;
+
+               arrCart.push(e.value)
+               console.log("order", arrCart)
 
                btnminus.setAttribute('disabled', '');
                btninput.setAttribute('disabled', '');
                btnplus.setAttribute('disabled', '');
-               console.log(price)
+
                let quantity3 = Number(quantity)
-               quantity2 += quantity3;
+               quantity2++;
                tong.innerText = `${total.toLocaleString()} ₫`
                quantityFinal.innerText = `${quantity2} sản phẩm thanh toán`
                totalFinal.innerText = `${(total + 30000).toLocaleString()} ₫`
                payment.value = total + 30000;
-               console.log('payment', payment.value)
+
                total2.innerText = `${total.toLocaleString()} ₫`
+               // nameProduct.innerHTML += `${productname} x ${quantity} : ${(quantity * price).toLocaleString()} ₫ <br>`
 
             }
 
             else {
+               arrCart = arrCart.filter(item => item != e.value);
+
+               quantity2--;
                total -= quantity * price
                btnminus.removeAttribute('disabled');
                btninput.removeAttribute('disabled');
-               btnplus.removeAttribute('disabled')
+               btnplus.removeAttribute('disabled');
+               // nameProduct.innerHTML -= `${productname} x ${quantity} : ${(quantity * price).toLocaleString()} ₫ <br>`
                tong.innerText = `${total.toLocaleString()} ₫`
 
             }
@@ -573,6 +591,13 @@
                alert("Bạn chưa chọn sản phẩm")
                window.location.assign('/getcart')
             }
+            else {
+               fetch('updateCart', {
+                  method: 'post',
+                  headers: { 'content-type': 'application/json' },
+                  body: JSON.stringify({ quantity: e.value, id: id.value, price: price })
+               }).then(res => res.json()).then(data => { })
+            }
          }
          function sendata(e) {
             let modal = document.querySelector('.modal')
@@ -582,15 +607,15 @@
             let total = soluong * price
             let id = e.parentElement.childNodes[5];
             let span = e.parentElement.parentElement.childNodes[3].childNodes[1]
-            console.log(span)
+            console.log('total', total)
             span.innerText = `${total.toLocaleString()} ₫`
 
             fetch('updateCart', {
                method: 'post',
                headers: { 'content-type': 'application/json' },
-               body: JSON.stringify({ quantity: e.value, id: id.value })
+               body: JSON.stringify({ quantity: e.value, id: id.value, price: price })
             }).then(res => res.json()).then(data => {
-               console.log(e.value)
+
                if (data.checkdata >= e.value) {
                   let btnPlus = e.parentElement.childNodes[9]
 
@@ -600,6 +625,7 @@
 
                   let a = span.innerText = `${(data.sendata * price).toLocaleString()} ₫`
                   e.value = data.sendata
+                  window.location.assign('/getcart')
 
 
                }
@@ -623,15 +649,65 @@
                   modal.classList = "modal fade show";
                   modal.style.display = "block";
                   e.value = data.sendata
-
-
                }
-
-
-
             })
 
          };
+         function send(e) {
+            let modal = document.querySelector('.modal')
+            let id = e.parentElement.childNodes[5]
+            let quantity = e.parentElement.childNodes[3]
+
+            let price = e.parentElement.parentElement.childNodes[1].childNodes[7].value
+
+            setTimeout(() => {
+               fetch('updateCart', {
+                  method: 'post',
+                  headers: { 'content-type': 'application/json' },
+                  body: JSON.stringify({ quantity: quantity.value, id: id.value, price: price })
+               }).then(res => res.json()).then(data => {
+                  console.log(data);
+                  if (data.checkdata >= quantity.value) {
+                     let btnPlus = e.parentElement.childNodes[9]
+                     btnPlus.removeAttribute('disabled', '');
+
+                  }
+                  else {
+                     alert('Số lượng bạn chọn  vượt quá số lượng trong kho');
+                     e.setAttribute('disabled', '');
+
+                     quantity.value -= 1
+                     window.location.assign('/getcart')
+                  }
+                  let closeModal = document.querySelector('#close-modal')
+                  closeModal.onclick = (e) => {
+                     modal.style.display = "none";
+                     modal.classList = "modal fade";
+                     let spanClose = closeSpan.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.childNodes[1].childNodes[1].childNodes[3].childNodes[1]
+
+                     spanClose.innerText = `${(data.sendata * price).toLocaleString()} ₫`
+                  }
+                  let closeSpan = document.querySelector('#close-span')
+                  closeSpan.onclick = (e) => {
+                     modal.style.display = "none";
+                     modal.classList = "modal fade";
+                     let spanClose = closeSpan.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.childNodes[1].childNodes[1].childNodes[3].childNodes[1]
+                     spanClose.innerText = `${(data.sendata * price).toLocaleString()} ₫`
+                  }
+
+                  if (quantity.value <= 0) {
+                     modal.classList = "modal fade show";
+                     modal.style.display = "block";
+                     quantity.value = data.sendata
+
+                  }
+
+               })
+            }, 200);
+
+
+
+         }
 
          sendContact = (e) => {
             const payment = document.querySelector('#payment');
@@ -647,9 +723,9 @@
             fetch('orderContact', {
                method: 'post',
                headers: { 'content-type': 'application/json' },
-               body: JSON.stringify({ id })
+               body: JSON.stringify({ id, arrCart })
             }).then(res => res.json()).then(data => {
-               console.log(data.id)
+
             })
          }
       </script>

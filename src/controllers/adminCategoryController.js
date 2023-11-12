@@ -21,7 +21,7 @@ module.exports = {
 
         let rs = await getUpdateCategory(id)
 
-        res.render('adminUpdate-category.ejs', { category: rs })
+        res.render('admin-update-category.ejs', { category: rs })
     },
     postAdminCategoryUpdate: async (req, res) => {
         let { name, id } = req.body

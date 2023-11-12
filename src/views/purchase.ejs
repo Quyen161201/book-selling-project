@@ -34,53 +34,168 @@
 </head>
 
 <body>
-    <div class="wrapper">
-        <!-- Sidebar  -->
-        <%- include ("sidebarIndex.ejs") %>
-            <!-- TOP Nav Bar -->
-            <%- include ("sidebar-top-index.ejs") %>
-                <div id="order-container">
 
-                    <table id="order-table">
-                        <thead>
-                            <tr>
-                                <th>Tên đơn hàng</th>
-                                <th>Ngày đặt hàng</th>
-                                <th>Tổng tiền</th>
-                                <th>Trạng thái</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <!-- Các dòng đơn hàng sẽ được thêm vào đây bằng JavaScript -->
-                        </tbody>
-                    </table>
+    <!-- Sidebar  -->
+    <%- include ("sidebarIndex.ejs") %>
+        <!-- TOP Nav Bar -->
+        <%- include ("sidebar-top-index.ejs") %>
+            <div id="content-page" class="content-page">
+                <div class="container-fluid checkout-content">
+                    <div class="row">
+                        <div id="cart" class="card-block show p-0 col-12">
+                            <div class="row align-item-center">
+                                <div class="col-lg-12">
+                                    <div class="iq-card">
+                                        <div
+                                            class="iq-card-header d-flex justify-content-between iq-border-bottom mb-0">
+                                            <div class="iq-header-title">
+                                                <h4 class="card-title">Đơn hàng của tôi</h4>
+                                            </div>
+                                        </div>
+                                        <div style=" margin-bottom: 100px;">
+
+                                            <% if(puchase_product.length>0){ %>
+
+                                                <% for (let i=0; i < puchase_product.length; i++) { %>
+                                                    <% if (puchase_product[i][0].status==0) { %>
+                                                        <span style="color: rgb(100, 97, 97); margin-left: 20px;">Đang
+                                                            xử
+                                                            lý</span>
+                                                        <% } else if (puchase_product[i][0].status==1) { %>
+                                                            <span style="color: #a59360;margin-left: 20px;">Đang vận
+                                                                chuyển</span>
+                                                            <% } else if (puchase_product[i][0].status==2) { %>
+                                                                <span
+                                                                    style="color: rgb(64, 167, 69);margin-left: 20px;">Hoàn
+                                                                    thành</span>
+                                                                <% } else { %>
+                                                                    <span
+                                                                        style="color: rgb(190, 52, 64);margin-left: 20px;">Thất
+                                                                        bại</span>
+                                                                    <% } %>
+                                                                        <% for (let j=0; j < puchase_product[i].length;
+                                                                            j++) { %>
+                                                                            <div class="iq-card-body">
+
+                                                                                <ul class=" list-inline p-0 m-0">
+
+                                                                                    <li class="checkout-product">
+                                                                                        <div
+                                                                                            class="row align-items-center">
+
+                                                                                            <div class="col-sm-3">
+
+                                                                                                <span
+                                                                                                    class="checkout-product-img">
+                                                                                                    <a
+                                                                                                        href="javascript:void();"><img
+                                                                                                            class="img-fluid rounded"
+                                                                                                            src="/images/browse-books/<%= puchase_product[i][j].thumbnail %>"
+                                                                                                            alt=""></a>
+                                                                                                </span>
+                                                                                            </div>
+                                                                                            <div class="col-sm-3">
+                                                                                                <div
+                                                                                                    class="checkout-product-details">
+                                                                                                    <h5>
+                                                                                                        <%= puchase_product[i][j].productName
+                                                                                                            %>
+                                                                                                    </h5>
+                                                                                                    <div class="price">
+                                                                                                        <h5>
+                                                                                                            <%= puchase_product[i][j].unitPrice.toLocaleString()
+                                                                                                                %> ₫
+                                                                                                        </h5>
+                                                                                                    </div>
+                                                                                                </div>
+                                                                                            </div>
+
+                                                                                            <div class="col-sm-6">
+                                                                                                <div class="row">
+                                                                                                    <div
+                                                                                                        class="col-sm-6">
+                                                                                                        <div
+                                                                                                            class="row align-items-center mt-2">
+                                                                                                            <div
+                                                                                                                class="col-sm-7 col-md-6">
+                                                                                                                <span>x
+                                                                                                                    <%= puchase_product[i][j].
+                                                                                                                        quatity
+                                                                                                                        %>
+                                                                                                                </span>
+                                                                                                            </div>
+                                                                                                            <div
+                                                                                                                class="col-sm-5 col-md-6">
+                                                                                                                <span
+                                                                                                                    class="product-price">
+                                                                                                                    <%=
+                                                                                                                        puchase_product[i][j].total.toLocaleString()%>
+                                                                                                                        ₫
+                                                                                                                </span>
+                                                                                                            </div>
+                                                                                                        </div>
+                                                                                                    </div>
+
+                                                                                                    <div
+                                                                                                        class="col-sm-6">
+                                                                                                        <form
+                                                                                                            action="/repurchase"
+                                                                                                            method="post">
+                                                                                                            <input
+                                                                                                                type="hidden"
+                                                                                                                name="repurchase"
+                                                                                                                value="<%= puchase_product[i][j].cartId %>">
+                                                                                                            <button
+                                                                                                                style="width: 100px; margin-left: 3px; text-align: center; height: 30px; position: relative; background-color: #50b5ff; color: #ddd;"
+                                                                                                                class="btn "
+                                                                                                                data-target="#deleteModal"
+                                                                                                                data-toggle="modal">Mua
+                                                                                                                lại
+                                                                                                            </button>
+                                                                                                        </form>
+                                                                                                    </div>
+                                                                                                </div>
+                                                                                            </div>
+
+                                                                                        </div>
+
+                                                                                    </li>
+
+                                                                                </ul>
+
+                                                                            </div>
+
+                                                                            <% } %>
+                                                                                <div
+                                                                                    style="float: right; margin-right: 20px;">
+                                                                                    <span style="color: red;">
+                                                                                        Tổng tiền :
+                                                                                        <%=puchase_product[i][0].totalOrder.toLocaleString()%>
+                                                                                            ₫
+
+                                                                                    </span>
+                                                                                </div>
+                                                                                <hr style="margin-top: 40px;">
+                                                                                <% } %>
+                                                                                    <% } else{ %>
+                                                                                        <h5 style="text-align: center;">
+                                                                                            Chưa có đơn hàng</h5>
+                                                                                        <% } %>
+
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-    </div>
-    <%- include ("boostrapJs.ejs") %>
-        <script>
-            document.addEventListener('DOMContentLoaded', function () {
-                const orderTableBody = document.getElementById('order-table').getElementsByTagName('tbody')[0];
+            </div>
+            <footer class="iq-footer">
+                <%- include ("footer.ejs") %>
+            </footer>
+            <%- include ("boostrapJs.ejs") %>
 
-                // Giả sử có một array chứa các đơn hàng
-                const orders = [
-                    { id: 1, date: '2023-10-22', total: '$100', status: 'Đang chờ' },
-                    { id: 2, date: '2023-10-21', total: '$150', status: 'Đã giao' },
-                    // Thêm các đơn hàng khác vào đây
-                ];
-
-                orders.forEach(order => {
-                    const newRow = orderTableBody.insertRow();
-
-                    newRow.innerHTML = `
-            <td>${order.id}</td>
-            <td>${order.date}</td>
-            <td>${order.total}</td>
-            <td>${order.status}</td>
-        `;
-                });
-            });
-
-        </script>
 </body>
 
 </html>

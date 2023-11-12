@@ -136,13 +136,16 @@
                                                                             src="/images/browse-books/<%=listUpdateBook.thumbnail%>"
                                                                             alt="" width="200px" class=" rounded-lg"
                                                                             height="240px">
+                                                                        <input type="hidden"
+                                                                            value="<%=listUpdateBook.thumbnail%>"
+                                                                            name="fakethumbnail">
                                                                     </div>
                                                                 </div>
                                                                 <div class="updateFile"
                                                                     style="background-color: #19a2a4; border-radius: 50%; width: 50px; height: 50px; bottom: -5px;left: 184px;position: absolute; ">
                                                                     <input style="cursor: pointer;" type="file"
                                                                         accept="image/png, image/jpeg" name="image"
-                                                                        id="upload" class="custom-file-input" multiple>
+                                                                        id="upload" class="custom-file-input">
                                                                     <label for=""
                                                                         style="position: absolute;right: 16px;top: 14px; "><i
                                                                             class="fa-solid fa-pen-nib"

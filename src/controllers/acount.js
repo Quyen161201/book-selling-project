@@ -29,7 +29,7 @@ module.exports = {
 
             res.render('sign-in.ejs')
         }
-        else res.redirect('/admin-books')
+        else res.redirect('/index')
     },
     postLogin: async (req, res) => {
         let { email, password } = req.body

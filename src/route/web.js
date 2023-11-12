@@ -13,14 +13,14 @@ const { checkveryfi } = require('../controllers/mailerController')
 const { checkSesssion } = require('../middleware/userMiddle');
 const { notifycation } = require('../middleware/notifycation');
 
-const { orderContact } = require('../controllers/orderController');
-const { createVnpay, createOder, getPaymentSuccess, returnUrlPayment } = require('../controllers/bankkingVnpay');
+const { orderProduct } = require('../controllers/orderController');
+const { createVnpay, createOder, returnUrlPayment } = require('../controllers/bankkingVnpay');
 const { createCod } = require('../controllers/paycod');
 
 const { profile, postprofile, updatepass, sendMail, postcode, forgetPass, updateContact } = require('../controllers/profileController')
 
 const { getCart, postCart, updateCart, deleteCart, postContact, deleteContact } = require('../controllers/cartController')
-const { getPurchase } = require('../controllers/purchaseController');
+const { getPurchase, repurchase } = require('../controllers/purchaseController');
 
 // index
 router.get('/index', getindex);
@@ -78,6 +78,7 @@ router.post('/deleteContact/:id', deleteContact)
 
 // quản lý đơn hàng
 router.get('/purchase', checkSesssion, getPurchase)
+router.post('/repurchase', checkSesssion, repurchase)
 
 //profile
 router.get('/profile', checkSesssion, profile);
@@ -97,7 +98,7 @@ router.post('/forgetPassword', forgetPass);
 router.post('/notification', notifycation);
 
 // Gửi thông tin khách hàng trang thanh toán
-router.post('/orderContact', orderContact)
+router.post('/orderContact', checkSesssion, orderProduct)
 
 // thanh toán vn pay
 router.post('/create_payment_url', checkSesssion, createVnpay);

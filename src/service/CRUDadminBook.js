@@ -41,7 +41,7 @@ module.exports = {
     },
     getListImageSevice: async (productID) => {
         try {
-            let [results, fields] = await connection.query('SELECT * FROM images where product_id= ?', [productID]);
+            let [results, fields] = await connection.query('SELECT name FROM images where product_id= ?', [productID]);
 
             return results
         } catch (error) {
@@ -105,9 +105,12 @@ module.exports = {
                 for (let i = 0; i < arrRs.length; i++) {
                     image_values.push([arrRs[i], data.productID]);
                 }
+                if (arrImg.length > 0) {
 
-                let deleteImg = await connection.query('delete from images where product_id=?', [data.productID]);
-                let upadateImg = await connection.query('insert into images(name, product_id) values ?', [image_values])
+                    let deleteImg = await connection.query('delete from images where product_id=?', [data.productID]);
+                    let upadateImg = await connection.query('insert into images(name, product_id) values ?', [image_values])
+                }
+                else { console.log('>>>> không có ảnh') }
 
                 return results
             }

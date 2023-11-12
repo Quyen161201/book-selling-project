@@ -1,7 +1,13 @@
+const { orderProductSevice } = require('../service/orderSevice')
+
 module.exports = {
     createCod: async (req, res) => {
-        let a = req.body.paycod;
-        console.log('payment', a);
-        res.send('ok')
+        const email = req.session.email;
+        const data = req.session.orderProduct;
+        const payment_status = 0;
+        const result = await orderProductSevice(data, payment_status, email);
+
+        res.render('success.ejs', { code: "00" });
+
     }
 }

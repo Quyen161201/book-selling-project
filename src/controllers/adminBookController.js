@@ -74,18 +74,24 @@ module.exports = {
     },
 
     postUpdateBook: async (req, res) => {
-        let { productID, name, price, quantity, desciption, author, category, } = req.body;
-        console.log(productID, name, price, quantity, "data")
+        let { productID, name, price, quantity, desciption, author, category, fakethumbnail } = req.body;
+
         let bookUrl = "";
         let bookUrlImge = "";
         let resultImg = ""
         let bookUrlarrImg = "";
         let resultArrImg;
-        if (!req.files) {
+
+        if (req.files && req.files.image) {
+
+            resultImg = await uploadSingleFile(req.files.image);
+            bookUrlImge = resultImg;
 
         }
         else {
-
+            bookUrlImge = fakethumbnail;
+        }
+        if (req.files && req.files.gallery) {
             if (req.files.gallery.length > 1) {
                 resultArrImg = await uploatMutiFile(req.files.gallery);
                 bookUrlarrImg = resultArrImg;
@@ -94,15 +100,17 @@ module.exports = {
             else {
                 resultArrImg = await uploadSingleFile(req.files.gallery);
                 bookUrlarrImg = resultArrImg;
-
-            }
-            if (req.files.image) {
-                resultImg = await uploadSingleFile(req.files.image);
-                bookUrlImge = resultImg;
             }
 
-
+        } else {
+            console.log('req.files.gallery is null or undefined');
+            let listImage = await getListImageSevice(productID);
+            const newlistImage = listImage.map(obj => obj.name);
+            console.log('newlisst>>>', newlistImage);
+            bookUrlarrImg = newlistImage
         }
+        // else {
+
         if (!req.files) {
 
         }

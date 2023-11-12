@@ -3,6 +3,7 @@ module.exports = {
     getProfile: async (email) => {
         let [userid] = await connection.query('select user_id from res_users where email=?', [email])
         let user_id = userid[0].user_id
+        console.log('user_id: ' + user_id)
         let [result] = await connection.query('select * from customers c, res_users r where c.user_id=r.user_id and c.user_id =?', [user_id]);
 
         let profile = result && result.length > 0 ? result[0] : {};
@@ -13,7 +14,8 @@ module.exports = {
         try {
             if (email) {
                 let [result] = await connection.query('select phone from res_users where email=?', [email])
-                console.log(result)
+
+
                 let contact = result && result.length > 0 ? result[0] : {};
                 return contact;
             }
@@ -32,7 +34,7 @@ module.exports = {
             let [customerid] = await connection.query('select id from customers where user_id=?', [user_id]);
             if (customerid != "") {
                 let [id] = await connection.query('select id from customers where id=?', [customerid[0].id]);
-                console.log('id', id[0].id)
+
                 if (customerid[0].id != id[0].id) {
 
                     let [result] = await connection.query('insert into customers(user_id,firstname,lastname,city,address,district,thumbnail,birddate,sex,ward) values (?,?,?,?,?,?,?,?,?,?)',
@@ -45,7 +47,7 @@ module.exports = {
                     return result
                 }
                 else {
-                    console.log('not ok')
+
                     let [updateCus] = await connection.query('update customers set firstname=?,lastname=?,city=?,address=?,district=?,thumbnail=?,birddate=?,sex=?,ward=? where id=?', [data.fname, data.lname, data.city, data.address, data.district, data.thumbnail, data.date, data.customRadio1, data.ward, customerid[0].id]);
                     let [updatecontact] = await connection.query('update contact_customer set address=?,district=?,ward=?,city=?,phone=?,name=?,create_at=now() where customer_id=?', [data.address, data.district, data.ward, data.city, phoneNum.phone, `${data.fname} ${data.lname} `, customerid[0].id,])
 
@@ -85,7 +87,7 @@ module.exports = {
     updateContactSevice: async (email, phone, checkemail) => {
         try {
 
-            console.log(checkemail, 'checkemail')
+
             let [checkmail] = await connection.query('select email from res_users where email=? limit 1', [email]);
             let [checkphone] = await connection.query('select phone from res_users where  phone=? limit 1', [phone]);
 
@@ -132,7 +134,7 @@ module.exports = {
             // }
             // const customer_id = customerid[0].id;
             let [result] = await connection.query('select * from contact_customer where user_id=?', [user_id])
-            console.log('rs', result)
+
             return result;
 
 

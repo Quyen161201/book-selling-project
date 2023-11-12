@@ -1,6 +1,6 @@
 const axios = require('axios');
 const moment = require('moment');
-
+const { orderProductSevice } = require('../service/orderSevice')
 // const crypto = require('crypto');
 // import dateFormat from 'dateformat';
 // const querystring = require('qs');
@@ -10,9 +10,10 @@ module.exports = {
 
 
     createOder: (req, res) => {
-        res.render('order.ejs', { title: 'Tạo mới đơn hàng', amount: 10000 })
+
+        res.render('order.ejs', { title: 'Tạo mới đơn hàng', amount: req.session.orderProduct.totalOrder })
     },
-    returnUrlPayment: (req, res) => {
+    returnUrlPayment: async (req, res) => {
         function sortObject(obj) {
             let sorted = {};
             let str = [];
@@ -49,8 +50,12 @@ module.exports = {
 
         if (secureHash === signed) {
             //Kiem tra xem du lieu trong db co hop le hay khong va thong bao ket qua
+            const email = req.session.email;
+            const data = req.session.orderProduct;
+            const payment_status = 1;
+            const result = await orderProductSevice(data, payment_status, email);
 
-            res.render('success.ejs', { code: vnp_Params['vnp_ResponseCode'] })
+            res.render('success.ejs', { code: vnp_Params['vnp_ResponseCode'] });
         } else {
             res.render('error.ejs', { code: '97' })
         }
@@ -83,7 +88,7 @@ module.exports = {
         let tmnCode = 'EU2KXDL3';
         let secretKey = 'SECTWBHKWQTUUYQMGVRHPZCHHNVDKUGA';
         let vnpUrl = 'https://sandbox.vnpayment.vn/paymentv2/vpcpay.html';
-        let returnUrl = "http://localhost:8086/returnUrl";
+        let returnUrl = "http://localhost:8086/purchase";
         // var tmnCode = process.env.vnp_TmnCode;
         // var secretKey = process.env.vnp_HashSecret
         // var vnpUrl = process.env.vnp_Url
@@ -92,9 +97,9 @@ module.exports = {
         let date = new Date();
         let createDate = moment(date).format('YYYYMMDDHHmmss');
         let orderId = moment(date).format('DDHHmmss');
-        let amount = req.body.amount;
+        let amount = req.session.orderProduct.totalOrder;
         let bankCode = req.body.bankCode;
-        console.log(bankCode)
+
         // let orderInfo = req.body.orderDescription;
         // let orderType = req.body.orderType;
         let locale = req.body.language;
@@ -130,6 +135,7 @@ module.exports = {
 
         vnp_Params['vnp_SecureHash'] = signed;
         vnpUrl += '?' + querystring.stringify(vnp_Params, { encode: false });
+        console.log(vnpUrl, '>>>::vnurl')
 
         res.redirect(vnpUrl)
 
