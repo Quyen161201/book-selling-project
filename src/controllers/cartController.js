@@ -29,6 +29,7 @@ module.exports = {
 
         for (let i = 0; i < req.session.cart.length; i++) {
 
+
             if (req.session.cart[i].product_id === product_id) {
                 req.session.cart[i].quantity += 1
                 count++;

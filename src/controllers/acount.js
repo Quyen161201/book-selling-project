@@ -34,7 +34,6 @@ module.exports = {
     postLogin: async (req, res) => {
         let { email, password } = req.body
         let result = await postLoginSevice(email, password)
-        console.log(result)
         if (result.length > 0) {
             let passw = result[0].password
 
@@ -44,7 +43,7 @@ module.exports = {
                 let session = req.session
 
                 session.email = email;
-                res.redirect('/admin-books')
+                res.redirect('/index')
 
                 let rs = {
                     error: 0,

@@ -58,20 +58,19 @@
 
                                                 <% for (let i=0; i < puchase_product.length; i++) { %>
                                                     <% if (puchase_product[i][0].status==0) { %>
-                                                        <span style="color: rgb(100, 97, 97); margin-left: 20px;">Đang
-                                                            xử
-                                                            lý</span>
+                                                        <div class="badge badge-pill badge-secondary"
+                                                            style="margin-left: 20px;">Đang xử lý</div>
                                                         <% } else if (puchase_product[i][0].status==1) { %>
-                                                            <span style="color: #a59360;margin-left: 20px;">Đang vận
-                                                                chuyển</span>
+                                                            <div class="badge badge-pill badge-info"
+                                                                style="margin-left: 20px;">Đang vận chuyển</div>
                                                             <% } else if (puchase_product[i][0].status==2) { %>
-                                                                <span
-                                                                    style="color: rgb(64, 167, 69);margin-left: 20px;">Hoàn
-                                                                    thành</span>
+                                                                <div class="badge badge-pill badge-success"
+                                                                    style="margin-left: 20px;">Giao hàng thành công
+                                                                </div>
                                                                 <% } else { %>
-                                                                    <span
-                                                                        style="color: rgb(190, 52, 64);margin-left: 20px;">Thất
-                                                                        bại</span>
+                                                                    <div class="badge badge-pill badge-danger"
+                                                                        style="margin-left: 20px;">Giao hàng thất bại
+                                                                    </div>
                                                                     <% } %>
                                                                         <% for (let j=0; j < puchase_product[i].length;
                                                                             j++) { %>

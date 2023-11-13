@@ -27,8 +27,5 @@ const bookDetails = async (req, res) => {
     res.render('book-page.ejs', { profile: profile, bookDetails: results, listcart: result, listImg: rsImg, count: count })
 }
 
-const getDasboard = async (req, res) => {
-    return res.render('admin-dashboard.ejs')
 
-}
-module.exports = { getindex, getDasboard, bookDetails }
+module.exports = { getindex, bookDetails }

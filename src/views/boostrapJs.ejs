@@ -109,8 +109,14 @@
             $('#serch').on("focus", function (e) {
                 $('.result-serch').show();
             })
-            $('#serch').on("blur", function (e) {
+            $('.result-serch').on("click", function (e) {
+                // var x = event.clientX; // Tọa độ x của chuột trên màn hình
+                // var y = event.clientY; // Tọa độ y của chuột trên màn hình
+
+                // In tọa độ ra console (có thể thay đổi thành xử lý khác)
+                // console.log('Tọa độ x: ' + x + ', Tọa độ y: ' + y);
                 $('.result-serch').hide();
+
             })
 
             let index = 0;

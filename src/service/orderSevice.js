@@ -25,7 +25,7 @@ module.exports = {
             let [rs] = await connection.query('select user_id from res_users where email=?', [email])
             let user_id = rs[0].user_id
 
-            let [result] = await connection.query('insert into orderdetails(quantity,totalOrder,discount,user_id,contact_id,create_at,payment_status) values (?,?,?,?,?,now(),?)', [data.cartItem.length, data.totalOrder, 0, user_id, data.idContact, payment_status]);
+            let [result] = await connection.query('insert into orderdetails(quantity,totalOrder,discount,user_id,contact_id,create_at,payment_status,invoice) values (?,?,?,?,?,now(),?,?)', [data.cartItem.length, data.totalOrder, 0, user_id, data.idContact, payment_status, data.invoice]);
 
             // insert vao table cart_order
             let arrCart = data.cartItem;
@@ -39,10 +39,19 @@ module.exports = {
             let [rsCart] = await connection.query('insert into cart_order(cart_id,order_id) values ?', [cart_values]);
 
             // ẩn cart đã mua khỏi giỏ hàng
-            let [hiddenCart] = await connection.query('update cart set status=? where cartId in(?)', [0, arrCart]);
-            console.log('hiden', hiddenCart)
+            let [hiddenCart] = await connection.query('update cart set status=? where cartId in(?) and user_id=?', [0, arrCart, user_id]);
+            console.log('hiden', hiddenCart);
+
 
             return result
+        }
+        catch (error) {
+            console.log(error);
+        }
+    },
+    listOrderSevice: async () => {
+        try {
+            let [List_order] = await connection.query('select total from cart where cartId=?', [cartItem])
         }
         catch (error) {
             console.log(error);
