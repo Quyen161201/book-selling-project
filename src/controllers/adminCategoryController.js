@@ -1,14 +1,23 @@
-const { adimCategoryCreate, getAdimCategory, getUpdateCategory, postUpdateCategory, postDeleteAuthorSevice } = require('../service/CRUDadminCategory')
+const { adimCategoryCreate, getAdimCategory, getUpdateCategory, postUpdateCategory, postDeleteAuthorSevice } = require('../service/CRUDadminCategory');
+const { coutcartSevice, getcartSevice } = require('../service/cartSevice')
+const { getProfile } = require('../service/profileSevice');
 module.exports = {
 
     getAdminCategory: async (req, res) => {
+        let email = req.session.email;
         let result = await getAdimCategory();
         let rs = result.result
-
-        res.render('admin-category.ejs', { listCategory: rs })
+        let cart = await getcartSevice(email)
+        let count = await coutcartSevice(email)
+        let profile = await getProfile(email)
+        res.render('admin-category.ejs', { listCategory: rs, listcart: cart, count: count, profile: profile, })
     },
     getAdminCategoryCreate: async (req, res) => {
-        res.render('admin-add-category.ejs')
+        let email = req.session.email;
+        let cart = await getcartSevice(email)
+        let count = await coutcartSevice(email)
+        let profile = await getProfile(email)
+        res.render('admin-add-category.ejs', { listcart: cart, count: count, profile: profile })
     },
     postAdminCategoryCreate: async (req, res) => {
         let name = req.body.name;
@@ -18,10 +27,13 @@ module.exports = {
     },
     getAdminUpdateCategory: async (req, res) => {
         const id = req.params.id
-
+        let email = req.session.email;
+        let cart = await getcartSevice(email)
+        let count = await coutcartSevice(email)
+        let profile = await getProfile(email)
         let rs = await getUpdateCategory(id)
 
-        res.render('admin-update-category.ejs', { category: rs })
+        res.render('admin-update-category.ejs', { category: rs, listcart: cart, count: count, profile: profile })
     },
     postAdminCategoryUpdate: async (req, res) => {
         let { name, id } = req.body

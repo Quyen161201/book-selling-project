@@ -3,18 +3,27 @@ const { uploadSingleFile, uploatMutiFile } = require('../service/uploadFile');
 const { postCreateAutorSevice, getAuthorService, postUpdateAuthorSevice, postDeleteAuthorSevice } = require('../service/CRUDadminAuthor')
 const { getlistAuthorSevice } = require('../service/CRUDadminBook')
 const fileUpload = require('express-fileupload');
-
+const { coutcartSevice, getcartSevice } = require('../service/cartSevice')
+const { getProfile } = require('../service/profileSevice');
 module.exports = {
     // hiển thị
-    getAdminAuthors: async (req, res) => {
-        let rs = await getlistAuthorSevice();
 
-        res.render('admin-author.ejs', { listAuthor: rs });
+    getAdminAuthors: async (req, res) => {
+        let email = req.session.email;
+        let rs = await getlistAuthorSevice();
+        let result = await getcartSevice(email)
+        let count = await coutcartSevice(email)
+        let profile = await getProfile(email)
+        res.render('admin-author.ejs', { listAuthor: rs, listcart: result, count: count, profile: profile });
 
     },
     //thêm
     getCreateAuthors: async (req, res) => {
-        res.render('admin-add-author.ejs')
+        let email = req.session.email;
+        let result = await getcartSevice(email)
+        let count = await coutcartSevice(email)
+        let profile = await getProfile(email)
+        res.render('admin-add-author.ejs', { listcart: result, count: count, profile: profile })
     },
     postCreateAuthor: async (req, res) => {
         let { name, description } = req.body;
@@ -27,10 +36,14 @@ module.exports = {
     },
     // sữa
     getUpdateAuthors: async (req, res) => {
+        let email = req.session.email;
+        let result = await getcartSevice(email)
+        let count = await coutcartSevice(email)
+        let profile = await getProfile(email)
         let id = req.params.id;
         let rs = await getAuthorService(id)
-        console.log('update', rs)
-        res.render('admin-update-author.ejs', { author: rs })
+
+        res.render('admin-update-author.ejs', { author: rs, listcart: result, count: count, profile: profile })
     },
     postUpdateAuthor: async (req, res) => {
         let { id, name, description } = req.body;

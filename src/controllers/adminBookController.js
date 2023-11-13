@@ -1,19 +1,26 @@
 const connection = require('../config/database')
 const { uploadSingleFile, uploatMutiFile } = require('../service/uploadFile')
-const fileUpload = require('express-fileupload');
 const { postCreateBookSevice, getAdminBooksSevice, getlistCategorySevice, getlistAuthorSevice, getCategory, getUpdateBookSevice, postUpdateBookSevice, getListImageSevice, postAdminDeleteSevice } = require('../service/CRUDadminBook')
+const { coutcartSevice, getcartSevice } = require('../service/cartSevice')
+const { getProfile } = require('../service/profileSevice');
 module.exports = {
     getAdminBooks: async (req, res) => {
+        let email = req.session.email
         let results = await getAdminBooksSevice();
-
-        return res.render('admin-books.ejs', { listAdminBooks: results })
+        let result = await getcartSevice(email)
+        let count = await coutcartSevice(email)
+        let profile = await getProfile(email)
+        return res.render('admin-books.ejs', { listAdminBooks: results, listcart: result, count: count, profile: profile, })
     },
     getAddBooks: async (req, res) => {
         let id = req.params.id;
+        let email = req.session.email;
         let resultsCate = await getlistCategorySevice();
-
+        let result = await getcartSevice(email)
+        let count = await coutcartSevice(email)
+        let profile = await getProfile(email)
         let resultAuthor = await getlistAuthorSevice()
-        res.render('admin-add-book.ejs', { listCategory: resultsCate, listAuthor: resultAuthor })
+        res.render('admin-add-book.ejs', { listCategory: resultsCate, listAuthor: resultAuthor, listcart: result, count: count, profile: profile, })
 
     },
     createBook: async (req, res) => {
@@ -63,14 +70,18 @@ module.exports = {
     },
     getUpdatebook: async (req, res) => {
         let productID = req.params.id
+        let email = req.session.email;
         let result = await getUpdateBookSevice(productID)
         let resultsCate = await getCategory(productID);
         let rsCategory = await getlistCategorySevice()
         console.log('category', resultsCate)
         let resultAuthor = await getlistAuthorSevice();
         let listImage = await getListImageSevice(productID);
+        let cart = await getcartSevice(email)
+        let count = await coutcartSevice(email)
+        let profile = await getProfile(email)
 
-        res.render("admin-update-book.ejs", { listUpdateBook: result, listCate: rsCategory, listCategory: resultsCate, listAuthor: resultAuthor, listImage: listImage })
+        res.render("admin-update-book.ejs", { listUpdateBook: result, listCate: rsCategory, listCategory: resultsCate, listAuthor: resultAuthor, listImage: listImage, listcart: cart, count: count, profile: profile, })
     },
 
     postUpdateBook: async (req, res) => {
