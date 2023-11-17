@@ -25,10 +25,10 @@ const { createCod } = require('../controllers/paycod');
 const { profile, postprofile, updatepass, sendMail, postcode, forgetPass, updateContact } = require('../controllers/profileController')
 
 const { getCart, postCart, updateCart, deleteCart, postContact, deleteContact } = require('../controllers/cartController')
-const { getPurchase, repurchase } = require('../controllers/purchaseController');
+const { getPurchase, repurchase, updatePurchaseAdmin } = require('../controllers/purchaseController');
 
 // index
-router.get('/index', checkLogin, checkPermissionUser, getindex);
+router.get('/index', checkLogin, getindex);
 //dashboard
 router.get('/admin-dashboard', checkLogin, checkPermissionAdmin, getDasboard);
 
@@ -84,6 +84,7 @@ router.post('/deleteContact/:id', checkPermissionUser, deleteContact)
 // quản lý đơn hàng
 router.get('/purchase', checkLogin, checkPermissionUser, getPurchase)
 router.post('/repurchase', checkLogin, checkPermissionUser, repurchase)
+router.post('/updatePurchaseAdmin/:id', checkLogin, checkPermissionAdmin, updatePurchaseAdmin)
 
 //profile
 router.get('/profile', checkLogin, checkPermissionUser, profile);
@@ -95,12 +96,12 @@ router.post('/updateContact', checkLogin, checkPermissionUser, updateContact);
 
 
 // veryfi email
-router.get('/veryfi', checkveryfi);
+router.get('/veryfi', checkLogin, checkveryfi);
 
-router.post('/sendMail', sendMail);
-router.post('/postCode', postcode);
-router.post('/forgetPassword', forgetPass);
-router.post('/notification', notifycation);
+router.post('/sendMail', checkLogin, sendMail);
+router.post('/postCode', checkLogin, postcode);
+router.post('/forgetPassword', checkLogin, forgetPass);
+router.post('/notification', checkLogin, notifycation);
 
 // Gửi thông tin khách hàng trang thanh toán
 router.post('/orderContact', checkLogin, orderProduct)

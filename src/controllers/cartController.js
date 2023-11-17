@@ -5,22 +5,23 @@ const { getProfile, getContactsSevice, createContactSevice, deleteContactSevice 
 module.exports = {
     getCart: async (req, res, next) => {
         let email = req.session.email
-        let profile = await getProfile(email)
-        let result = await getcartSevice(email)
-        let count = await coutcartSevice(email)
-        let contact = await getContactsSevice(email)
+        let user_id = req.data[0].user_id
+        let profile = await getProfile(user_id)
+        let result = await getcartSevice(user_id)
+        let count = await coutcartSevice(user_id)
+        let contact = await getContactsSevice(user_id)
         res.render('cart.ejs', { profile: profile, listcart: result, count: count, contact: contact });
 
         return result
     },
     postCart: async (req, res) => {
-        let email = req.session.email
+        let user_id = req.data[0].user_id;
         let { product_id, name, price } = req.body
 
         price = price.replace(/,|₫/g, '').trim();
 
-        let rs = await getcartSevice(email)
-        let result = await createCart(product_id, email, price)
+        let rs = await getcartSevice(user_id)
+        let result = await createCart(product_id, user_id, price)
         if (!req.session.cart) {
             req.session.cart = []
         }

@@ -1,21 +1,17 @@
 const connection = require('../config/database');
 module.exports = {
-    getProfile: async (email) => {
-        let [userid] = await connection.query('select user_id from res_users where email=?', [email])
-        let user_id = userid[0].user_id
-        console.log('user_id: ' + user_id)
+    getProfile: async (user_id) => {
+
         let [result] = await connection.query('select * from customers c, res_users r where c.user_id=r.user_id and c.user_id =?', [user_id]);
 
         let profile = result && result.length > 0 ? result[0] : {};
 
         return profile
     },
-    getContactSevice: async (email) => {
+    getContactSevice: async (user_id) => {
         try {
-            if (email) {
-                let [result] = await connection.query('select phone from res_users where email=?', [email])
-
-
+            if (user_id) {
+                let [result] = await connection.query('select email,phone from res_users where user_id=?', [user_id])
                 let contact = result && result.length > 0 ? result[0] : {};
                 return contact;
             }
@@ -27,11 +23,9 @@ module.exports = {
     createProfile: async (data) => {
         try {
 
-            let [userid] = await connection.query('select user_id from res_users where email=?', [data.email])
-            let user_id = userid[0].user_id
-            let [phone] = await connection.query('select phone from res_users where email=?', [data.email])
+            let [phone] = await connection.query('select phone from res_users where user_id=?', [data.user_id])
             let phoneNum = phone && phone.length > 0 ? phone[0] : {};
-            let [customerid] = await connection.query('select id from customers where user_id=?', [user_id]);
+            let [customerid] = await connection.query('select id from customers where user_id=?', [data.user_id]);
             if (customerid != "") {
                 let [id] = await connection.query('select id from customers where id=?', [customerid[0].id]);
 
@@ -40,8 +34,8 @@ module.exports = {
                     let [result] = await connection.query('insert into customers(user_id,firstname,lastname,city,address,district,thumbnail,birddate,sex,ward) values (?,?,?,?,?,?,?,?,?,?)',
                         [user_id, data.fname, data.lname, data.city, data.address, data.district, data.thumbnail, data.date, data.customRadio1, data.ward]);
 
-                    let [updateName] = await connection.query('update res_users set name = ? where user_id =?', [data.username, user_id]);
-                    let [updateContact] = await connection.query('insert into contact_customer(address,district,ward,city,phone,name,customer_id,create_at,user_id) values(?,?,?,?,?,?,?,now(),?)', [data.address, data.district, data.ward, data.city, phoneNum.phone, data.fname + data.lname, customerid[0].id, user_id]);
+                    let [updateName] = await connection.query('update res_users set name = ? where user_id =?', [data.username, data.user_id]);
+                    let [updateContact] = await connection.query('insert into contact_customer(address,district,ward,city,phone,name,customer_id,create_at,user_id) values(?,?,?,?,?,?,?,now(),?)', [data.address, data.district, data.ward, data.city, phoneNum.phone, data.fname + data.lname, customerid[0].id, data.user_id]);
 
 
                     return result
@@ -55,10 +49,10 @@ module.exports = {
             }
             else {
                 let [result] = await connection.query('insert into customers(user_id,firstname,lastname,city,address,district,thumbnail,birddate,sex,ward) values (?,?,?,?,?,?,?,?,?,?)',
-                    [user_id, data.fname, data.lname, data.city, data.address, data.district, data.thumbnail, data.date, data.customRadio1, data.ward]);
-                let [customerid] = await connection.query('select id from customers where user_id=?', [user_id]);
-                let [updateName] = await connection.query('update res_users set name = ? where user_id =?', [data.username, user_id]);
-                let [updateContact] = await connection.query('insert into contact_customer(address,district,customer_id,ward,city,phone,name,create_at,user_id) values(?,?,?,?,?,?,?,now(),?)', [data.address, data.district, customerid[0].id, data.ward, data.city, phoneNum.phone, data.fname + data.lname, user_id]);
+                    [data.user_id, data.fname, data.lname, data.city, data.address, data.district, data.thumbnail, data.date, data.customRadio1, data.ward]);
+                let [customerid] = await connection.query('select id from customers where user_id=?', [data.user_id]);
+                let [updateName] = await connection.query('update res_users set name = ? where user_id =?', [data.username, data.user_id]);
+                let [updateContact] = await connection.query('insert into contact_customer(address,district,customer_id,ward,city,phone,name,create_at,user_id) values(?,?,?,?,?,?,?,now(),?)', [data.address, data.district, customerid[0].id, data.ward, data.city, phoneNum.phone, data.fname + data.lname, data.user_id]);
 
 
                 return result
@@ -124,10 +118,10 @@ module.exports = {
             console.log(error);
         }
     },
-    getContactsSevice: async (email) => {
+    getContactsSevice: async (user_id) => {
         try {
-            let [userid] = await connection.query('select user_id from res_users where email=?', [email]);
-            let user_id = userid[0].user_id;
+            // let [userid] = await connection.query('select user_id from res_users where email=?', [email]);
+            // let user_id = userid[0].user_id;
             // let [customerid] = await connection.query('select id from customers where user_id=?', [user_id]);
             // if (customerid) {
 

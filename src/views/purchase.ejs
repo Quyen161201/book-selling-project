@@ -57,6 +57,10 @@
                                             <% if(puchase_product.length>0){ %>
 
                                                 <% for (let i=0; i < puchase_product.length; i++) { %>
+                                                    <div class="badge badge-pill badge-secondary"
+                                                        style="margin-left: 20px;">
+                                                        <%=puchase_product[i][0].invoice%>
+                                                    </div><br>
                                                     <% if (puchase_product[i][0].status==0) { %>
                                                         <div class="badge badge-pill badge-secondary"
                                                             style="margin-left: 20px;">Đang xử lý</div>
@@ -69,7 +73,8 @@
                                                                 </div>
                                                                 <% } else { %>
                                                                     <div class="badge badge-pill badge-danger"
-                                                                        style="margin-left: 20px;">Giao hàng thất bại
+                                                                        style="margin-left: 20px;">Giao
+                                                                        hàng thất bại
                                                                     </div>
                                                                     <% } %>
                                                                         <% for (let j=0; j < puchase_product[i].length;

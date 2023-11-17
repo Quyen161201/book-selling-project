@@ -20,10 +20,8 @@ module.exports = {
             console.log(error);
         }
     },
-    orderProductSevice: async (data, payment_status, email) => {
+    orderProductSevice: async (data, payment_status, user_id) => {
         try {
-            let [rs] = await connection.query('select user_id from res_users where email=?', [email])
-            let user_id = rs[0].user_id
 
             let [result] = await connection.query('insert into orderdetails(quantity,totalOrder,discount,user_id,contact_id,create_at,payment_status,invoice) values (?,?,?,?,?,now(),?,?)', [data.cartItem.length, data.totalOrder, 0, user_id, data.idContact, payment_status, data.invoice]);
 

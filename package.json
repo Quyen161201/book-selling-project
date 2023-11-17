@@ -30,6 +30,7 @@
     "import-modules": "^3.2.0",
     "jade": "^1.11.0",
     "jquery": "^3.7.0",
+    "jsonwebtoken": "^9.0.2",
     "module": "^1.2.5",
     "moment": "^2.29.4",
     "mysql2": "^3.5.2",

@@ -2,6 +2,7 @@ const { postRegisterSevice, postLoginSevice, updateVeryfiSevice } = require('../
 const nodemailer = require("nodemailer");
 const bcrypt = require('bcrypt');
 const { sendMailer } = require('../controllers/mailerController')
+var jwt = require('jsonwebtoken');
 
 module.exports = {
     getRegister: async (req, res) => {
@@ -25,7 +26,7 @@ module.exports = {
 
     },
     getLogin: async (req, res, next) => {
-        if (typeof req.session.email === 'undefined') {
+        if (typeof req.session.tokenLogin === 'undefined') {
 
             res.render('sign-in.ejs')
         }
@@ -40,9 +41,12 @@ module.exports = {
             let check = bcrypt.compareSync(password, passw); // true
 
             if (check === true) {
+                var token = jwt.sign({ user_id: result[0].user_id }, 'mk', { expiresIn: '1h' });
                 let session = req.session
 
-                session.email = email;
+                session.tokenLogin = token;
+                console.log('token login', req.session.tokenLogin)
+
                 res.redirect('/index')
 
                 let rs = {

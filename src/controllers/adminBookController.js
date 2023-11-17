@@ -5,20 +5,20 @@ const { coutcartSevice, getcartSevice } = require('../service/cartSevice')
 const { getProfile } = require('../service/profileSevice');
 module.exports = {
     getAdminBooks: async (req, res) => {
-        let email = req.session.email
+        let user_id = req.data[0].user_id
         let results = await getAdminBooksSevice();
-        let result = await getcartSevice(email)
-        let count = await coutcartSevice(email)
-        let profile = await getProfile(email)
+        let result = await getcartSevice(user_id)
+        let count = await coutcartSevice(user_id)
+        let profile = await getProfile(user_id)
         return res.render('admin-books.ejs', { listAdminBooks: results, listcart: result, count: count, profile: profile, })
     },
     getAddBooks: async (req, res) => {
         let id = req.params.id;
-        let email = req.session.email;
+        let user_id = req.data[0].user_id;
         let resultsCate = await getlistCategorySevice();
-        let result = await getcartSevice(email)
-        let count = await coutcartSevice(email)
-        let profile = await getProfile(email)
+        let result = await getcartSevice(user_id)
+        let count = await coutcartSevice(user_id)
+        let profile = await getProfile(user_id)
         let resultAuthor = await getlistAuthorSevice()
         res.render('admin-add-book.ejs', { listCategory: resultsCate, listAuthor: resultAuthor, listcart: result, count: count, profile: profile, })
 
@@ -70,16 +70,16 @@ module.exports = {
     },
     getUpdatebook: async (req, res) => {
         let productID = req.params.id
-        let email = req.session.email;
+        let user_id = req.data[0].user_id;
         let result = await getUpdateBookSevice(productID)
         let resultsCate = await getCategory(productID);
         let rsCategory = await getlistCategorySevice()
         console.log('category', resultsCate)
         let resultAuthor = await getlistAuthorSevice();
         let listImage = await getListImageSevice(productID);
-        let cart = await getcartSevice(email)
-        let count = await coutcartSevice(email)
-        let profile = await getProfile(email)
+        let cart = await getcartSevice(user_id)
+        let count = await coutcartSevice(user_id)
+        let profile = await getProfile(user_id)
 
         res.render("admin-update-book.ejs", { listUpdateBook: result, listCate: rsCategory, listCategory: resultsCate, listAuthor: resultAuthor, listImage: listImage, listcart: cart, count: count, profile: profile, })
     },

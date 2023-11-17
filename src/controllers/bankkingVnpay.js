@@ -50,10 +50,10 @@ module.exports = {
 
         if (secureHash === signed) {
             //Kiem tra xem du lieu trong db co hop le hay khong va thong bao ket qua
-            const email = req.session.email;
+            const user_id = req.data[0].user_id;
             const data = req.session.orderProduct;
             const payment_status = 1;
-            const result = await orderProductSevice(data, payment_status, email);
+            const result = await orderProductSevice(data, payment_status, user_id);
 
             res.render('success.ejs', { code: vnp_Params['vnp_ResponseCode'] });
         } else {

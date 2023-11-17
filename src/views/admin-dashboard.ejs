@@ -208,6 +208,7 @@
                                           <% bills.forEach(function(bill) { %>
                                              <tr>
                                                 <td>
+
                                                    <%= bill.name %>
                                                 </td>
                                                 <% var dateString=bill.create_at; var date="" ; var time="" ; if
@@ -225,7 +226,7 @@
                                                    <td>
                                                       <%=bill.totalOrder.toLocaleString()%>₫
                                                    </td>
-                                                   <td>
+                                                   <!-- <td>
                                                       <% if (bill.status==0) { %>
                                                          <div class="badge badge-pill badge-secondary">Đang xử lý</div>
 
@@ -241,9 +242,43 @@
                                                                      bại
                                                                   </div>
                                                                   <% } %>
-                                                                     <!--  -->
-                                                   </td>
-                                                   <td>Sao chép</td>
+                                                                       
+                                                   </td> -->
+                                                   <form action="/updatePurchaseAdmin/<%=bill.orderId%>" method="post">
+                                                      <td>
+                                                         <select class="form-select" name="status"
+                                                            aria-label="Default select example">
+                                                            <option selected value="">
+                                                               <% if (bill.status==0) { %>
+                                                                  <div class="badge badge-pill badge-secondary">Đang xử
+                                                                     lý</div>
+
+                                                                  <% } else if (bill.status==1) { %>
+                                                                     <div class="badge badge-pill badge-info">Đang vận
+                                                                        chuyển</div>
+                                                                     <% } else if (bill.status==2) { %>
+                                                                        <div class="badge badge-pill badge-success">Đã
+                                                                           giao
+                                                                           hàng</div>
+                                                                        <% } else { %>
+                                                                           <div class="badge badge-pill badge-danger">
+                                                                              Giao hàng
+                                                                              thất
+                                                                              bại
+                                                                           </div>
+                                                                           <% } %>
+                                                            </option>
+                                                            <option value="0">Đang xử lý</option>
+
+                                                            <option value="1">Đang giao hàng</option>
+                                                            <option value="2">Giao hàng thành công</option>
+                                                            <option value="3">Giao thất bại</option>
+                                                         </select>
+                                                      </td>
+                                                      <td> <button class="btn btn-primary btn-sm"
+                                                            style="background-color: #0dd6b8;">Cập nhật</button>
+                                                      </td>
+                                                   </form>
                                              </tr>
                                              <% }); %>
                                                 <% } else { %>

@@ -3,10 +3,10 @@ const { coutcartSevice, getcartSevice } = require('../service/cartSevice')
 const { getProfile } = require('../service/profileSevice');
 module.exports = {
     getDasboard: async (req, res) => {
-        let email = req.session.email;
-        let cart = await getcartSevice(email)
-        let count = await coutcartSevice(email)
-        let profile = await getProfile(email)
+        let user_id = req.data[0].user_id
+        let cart = await getcartSevice(user_id)
+        let count = await coutcartSevice(user_id)
+        let profile = await getProfile(user_id)
         let result = await dashboardSevice();
 
         let bills = result.list_bill;

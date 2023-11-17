@@ -11,18 +11,18 @@ const { sendMailer } = require('../controllers/mailerController')
 // const { assign } = require('nodemailer/lib/shared');
 module.exports = {
     profile: async (req, res) => {
-        let email = req.session.email
-        let data = await getProfile(email)
-        let result = await getcartSevice(email)
-        let count = await coutcartSevice(email)
-        let notifi = await getnotifiSevice(email)
-        let contact = await getContactSevice(email)
+        let user_id = req.data[0].user_id
+        let data = await getProfile(user_id)
+        let result = await getcartSevice(user_id)
+        let count = await coutcartSevice(user_id)
+        let notifi = await getnotifiSevice(user_id)
+        let contact = await getContactSevice(user_id)
 
 
-        res.render('profile-edit.ejs', { profile: data, contact: contact, email: email, listcart: result, count: count, notifi: notifi[0] })
+        res.render('profile-edit.ejs', { profile: data, contact: contact, listcart: result, count: count, notifi: notifi[0] })
     },
     postprofile: async (req, res) => {
-        let email = req.session.email
+        let user_id = req.data[0].user_id
         let { fname, lname, username, date, city, district, ward, address, customRadio1, fakethumbnail } = req.body;
         let bookUrlImge = "";
         if (!req.files || Object.keys(req.files).length === 0) {
@@ -33,13 +33,14 @@ module.exports = {
             resultImg = await uploadSingleFile(req.files.thumbnail);
             bookUrlImge = resultImg;
         }
-        let data = { thumbnail: bookUrlImge, fname, lname, username, date, city, district, ward, address, email, customRadio1 }
+        let data = { thumbnail: bookUrlImge, fname, lname, username, date, city, district, ward, address, user_id, customRadio1 }
         let rs = await createProfile(data);
 
         res.redirect('/profile')
     },
     updatepass: async (req, res) => {
-        let email = req.session.email
+        let user_id = req.data[0].user_id;
+        let email = req.data[0].email
         let { cpass, npass, vpass } = req.body.data;
         const hashedPassword = await bcrypt.hash(npass, 10);
         console.log('hashedPassword', hashedPassword)
@@ -75,12 +76,13 @@ module.exports = {
 
     },
     sendMail: async (req, res) => {
-        let email = req.session.email
+        let email = req.data[0].email
+        let user_id = req.data[0].user_id
 
         if (email) {
             let code = Math.random().toString().slice(2, 8)
-            let notifi = await getnotifiSevice(email)
-            console.log(notifi[0].email_notifi, 'notifi')
+            let notifi = await getnotifiSevice(user_id)
+
 
             if (req.session.code === null || !req.session.code && notifi[0].email_notifi == 1) {
                 let send = req.session.code = code;
@@ -132,7 +134,7 @@ module.exports = {
 
     },
     forgetPass: async (req, res, next) => {
-        let email = req.session.email;
+        let email = req.data[0].email;
         const hashedPassword = await bcrypt.hash(req.body.data.password, 10);
         let data = { email, npass: hashedPassword }
         if (email) {
@@ -158,7 +160,7 @@ module.exports = {
 
     },
     updateContact: async (req, res) => {
-        const checkemail = req.session.email;
+        const checkemail = req.data[0].email;
         let { cno, email } = req.body.data;
         let rs = await updateContactSevice(email, cno, checkemail);
 

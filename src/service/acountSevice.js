@@ -30,8 +30,9 @@ module.exports = {
 
     postLoginSevice: async (email, password) => {
         try {
-            let [check] = await connection.query('select email,password  from res_users where active =1 and email=?', [email])
+            let [check] = await connection.query('select user_id,email,password  from res_users where active =1 and email=? ', [email])
             return check
+
 
         } catch (error) {
             console.log(error)

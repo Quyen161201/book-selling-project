@@ -1,16 +1,16 @@
 const { getListBook, getUpdateBookSevice, getListImageSevice } = require('../service/CRUDadminBook')
 const { getProfile } = require('../service/profileSevice');
 const { coutcartSevice, getcartSevice } = require('../service/cartSevice')
-const { getPurchase, repurchaseService } = require('../service/purchaseSevice');
+const { getPurchase, repurchaseService, updatePurchaseSevice } = require('../service/purchaseSevice');
 
 module.exports = {
     getPurchase: async (req, res) => {
         let results = await getListBook()
-        let email = req.session.email
-        let profile = await getProfile(email)
-        let result = await getcartSevice(email)
-        let count = await coutcartSevice(email)
-        let listPuchases = await getPurchase(email);
+        let user_id = req.data[0].user_id;
+        let profile = await getProfile(user_id)
+        let result = await getcartSevice(user_id)
+        let count = await coutcartSevice(user_id)
+        let listPuchases = await getPurchase(user_id);
         console.log('puchases', listPuchases.puchase_product)
 
         const groupedPurchases = listPuchases.puchase_product.reduce((acc, purchase) => {
@@ -29,9 +29,17 @@ module.exports = {
         res.render('purchase.ejs', { listImg: results, profile: profile, listcart: result, count: count, puchase_product: newArrPurchase })
     },
     repurchase: async (req, res) => {
-        let email = req.session.email;
+        let user_id = req.data[0].user_id;
         let repurchase = req.body.repurchase
-        let rs = await repurchaseService(email, repurchase)
+        let rs = await repurchaseService(user_id, repurchase)
         res.redirect('/getCart')
+    },
+    updatePurchaseAdmin: async (req, res) => {
+        let id = req.params.id;
+        let status = req.body.status;
+        console.log(id, status)
+        let result = await updatePurchaseSevice(id, status);
+        console.log(result);
+        res.redirect('/admin-dashboard');
     }
 }

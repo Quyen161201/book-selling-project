@@ -1,18 +1,34 @@
-
-const { getRoleUsers } = require('../service/permissionSevice')
+var jwt = require('jsonwebtoken');
+const { getRoleUsers } = require('../service/permissionSevice');
+const { type } = require('os');
 
 module.exports = {
     checkLogin: async (req, res, next) => {
-        let email = req.session.email;
-        let data = await getRoleUsers(email);
-
-        if (typeof req.session.email === 'undefined') {
+        let token = req.session.tokenLogin
+        if (typeof token === 'undefined') {
             res.redirect('/adminLogin')
         }
         else {
-            req.data = data;
-            next()
+
+            ;
+            let user_id = jwt.verify(token, 'mk');
+
+            let id = user_id.user_id
+            let data = await getRoleUsers(id);
+
+            if (typeof data === 'undefined') {
+
+                res.redirect('/adminLogin')
+            }
+            else {
+                req.data = data;
+
+                next()
+
+            }
         }
+
+
     },
     checkPermissionAdmin: async (req, res, next) => {
 

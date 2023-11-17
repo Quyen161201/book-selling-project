@@ -9,20 +9,20 @@ module.exports = {
     // hiển thị
 
     getAdminAuthors: async (req, res) => {
-        let email = req.session.email;
+        let user_id = req.data[0].user_id
         let rs = await getlistAuthorSevice();
-        let result = await getcartSevice(email)
-        let count = await coutcartSevice(email)
-        let profile = await getProfile(email)
+        let result = await getcartSevice(user_id)
+        let count = await coutcartSevice(user_id)
+        let profile = await getProfile(user_id)
         res.render('admin-author.ejs', { listAuthor: rs, listcart: result, count: count, profile: profile });
 
     },
     //thêm
     getCreateAuthors: async (req, res) => {
-        let email = req.session.email;
-        let result = await getcartSevice(email)
-        let count = await coutcartSevice(email)
-        let profile = await getProfile(email)
+        let user_id = req.data[0].user_id
+        let result = await getcartSevice(user_id)
+        let count = await coutcartSevice(user_id)
+        let profile = await getProfile(user_id)
         res.render('admin-add-author.ejs', { listcart: result, count: count, profile: profile })
     },
     postCreateAuthor: async (req, res) => {
@@ -36,10 +36,10 @@ module.exports = {
     },
     // sữa
     getUpdateAuthors: async (req, res) => {
-        let email = req.session.email;
-        let result = await getcartSevice(email)
-        let count = await coutcartSevice(email)
-        let profile = await getProfile(email)
+        let user_id = req.data[0].user_id
+        let result = await getcartSevice(user_id)
+        let count = await coutcartSevice(user_id)
+        let profile = await getProfile(user_id)
         let id = req.params.id;
         let rs = await getAuthorService(id)
 

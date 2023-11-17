@@ -1,4 +1,5 @@
 
+
 const { notificationSevice } = require('../service/notificationSevice')
 
 module.exports = {
@@ -6,7 +7,7 @@ module.exports = {
         let checkmail = req.body.payload;
         let status = '';
         checkmail == true ? status = '1' : status = '0';
-        let email = req.session.email;
-        let rs = await notificationSevice(email, status);
+        let user_id = req.data[0].user_id;
+        let rs = await notificationSevice(user_id, status);
     }
 }
